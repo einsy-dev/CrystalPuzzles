@@ -1,4 +1,3 @@
-import './index.scss';
 import React, { useMemo } from 'react';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import ReactDOM from 'react-dom/client';
