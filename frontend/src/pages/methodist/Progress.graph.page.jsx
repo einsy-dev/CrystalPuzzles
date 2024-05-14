@@ -1,5 +1,7 @@
 import Page from '@components/page/Page';
-import UserCard from '@components/user.card/User.card';
+import UserCard from '@components/card/user.card/User.card';
+import avatar from '@assets/avatar/methodist.png';
+import { Link } from 'react-router-dom';
 
 export default function ProgressGraphPage() {
 	const tempArray = Array.from(
@@ -8,9 +10,11 @@ export default function ProgressGraphPage() {
 	);
 	return (
 		<Page title="График прогресса тренеров">
-			{tempArray.map((item, index) => {
-				return <UserCard key={index} name={item} />;
-			})}
+			{tempArray.map((_, index) => (
+				<Link to="/progress/view" key={index}>
+					<UserCard img={avatar} name="Дмитриева Анастасия Алексеевна" />
+				</Link>
+			))}
 		</Page>
 	);
 }

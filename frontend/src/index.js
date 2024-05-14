@@ -1,19 +1,29 @@
 import './index.scss';
+import React, { useMemo } from 'react';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
-import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './app/App';
-import { Provider } from 'react-redux';
-import store from './store';
+import { Provider, useSelector } from 'react-redux';
+import { RouterProvider } from 'react-router-dom';
+import store from '@app/store';
+import createRouter from './routes';
+import { selectUser } from '@entities/User/slice';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
 	<React.StrictMode>
 		<Provider store={store}>
-			<App />
+			<Root />
 		</Provider>
 	</React.StrictMode>
 );
+
+function Root() {
+	const { role } = useSelector(selectUser);
+	const router = useMemo(() => {
+		return createRouter(role);
+	}, [role]);
+	return <RouterProvider router={router} />;
+}
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
