@@ -1,3 +1,4 @@
+/* eslint-disable */
 // This a service worker file for receiving push notifitications.
 // See `Access registration token section` @ https://firebase.google.com/docs/cloud-messaging/js/client#retrieve-the-current-registration-token
 
