@@ -4,7 +4,7 @@ from typing import Optional, List
 from fastapi import Query
 from pydantic import Field
 
-from core.schemas.base import BaseModel, BaseFilterSchema
+from common.schema.base_schemas import BaseModel, BaseFilterSchema
 
 
 class StudentViewModel(BaseModel):
@@ -14,6 +14,7 @@ class StudentViewModel(BaseModel):
     lastname: Optional[str] = None
     is_man: bool
     birthday: Optional[datetime] = None
+    avatar: Optional[int]
 
 
 class StudentForGroupViewModel(BaseModel):
@@ -25,17 +26,13 @@ class GroupResponseModel(BaseModel):
     id: int
     name: str
     trainer_id: int
-    students: Optional[List[StudentForGroupViewModel]]
+    students: List[StudentForGroupViewModel]
 
 
 class StudentForGroupViewSchema(BaseModel):
     """ Добавление студента в группу """
     student_id: int
     group_id: int
-
-
-
-
 
 
 class CreateGroupSchema(BaseModel):
@@ -46,15 +43,9 @@ class CreateGroupSchema(BaseModel):
     date_update: datetime = Field(default_factory=datetime.now, hidden=True)
 
 
-class DataRangeBaseFilterSchema(BaseFilterSchema):
-    date_begin: datetime | None = Query(default=None, description="Дата начала")
-    date_end: datetime | None = Query(default=None, description="Дата конца")
-
-
-class GroupFilterSchema(DataRangeBaseFilterSchema):
+class GroupFilterSchema(BaseFilterSchema):
     """ Фильтрация и пагинация """
     trainer: int | None = Query(default=None, description="Тренер")
-
 
 
 class GroupViewSchemaForTable(BaseModel):

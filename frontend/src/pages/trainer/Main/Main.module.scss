@@ -1,0 +1,41 @@
+@use '~styles/mixins' as *;
+
+.wrapper {
+	width: 100%;
+	display: grid;
+	gap: 20px;
+	grid-template-columns: 2fr 1fr;
+	grid-template-areas:
+		'schedule  notifications'
+		'schedule  notifications';
+
+	@media (max-width: 1024px) {
+		grid-template-columns: 1fr;
+		grid-template-areas:
+			'schedule'
+			'notifications';
+	}
+
+	@include sm() {
+		grid-template-areas:
+			'notifications'
+			'schedule';
+	}
+}
+
+.notifications {
+	grid-area: notifications;
+
+	@include md() {
+		max-width: 300px;
+	}
+}
+
+.schedule_card {
+	grid-area: schedule;
+	padding: 20px 35px;
+
+	@include sm() {
+		padding: 10px;
+	}
+}

@@ -1,15 +1,16 @@
-import './index.scss';
+import '@app/styles/index.scss';
+import * as serviceWorker from './serviceWorkerRegistration';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './app/App';
 import { Provider } from 'react-redux';
-import store from './store';
+import store from '@app/providers/store';
+import RouterProvider from '@app/providers/router';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-	<React.StrictMode>
-		<Provider store={store}>
-			<App />
-		</Provider>
-	</React.StrictMode>
+	<Provider store={store}>
+		<RouterProvider />
+	</Provider>
 );
+
+serviceWorker.register();

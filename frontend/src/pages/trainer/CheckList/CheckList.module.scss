@@ -1,0 +1,37 @@
+@use '~styles/mixins' as *;
+
+.profile {
+	grid-area: profile;
+}
+
+.info {
+	grid-area: info;
+}
+
+.panel_container {
+	grid-area: panel;
+	display: flex;
+	flex-direction: column;
+	gap: var(--gap);
+}
+
+.exercises {
+	grid-area: exercises;
+}
+
+.profile,
+.info,
+.panel_container,
+.exercises {
+	width: 100%;
+}
+
+.wrapper {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	grid-template-areas:
+		'profile info panel'
+		'profile exercises exercises'
+		'. exercises exercises';
+	gap: var(--gap);
+}

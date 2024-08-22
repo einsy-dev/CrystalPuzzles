@@ -3,3 +3,21 @@
 	font-weight: $fw;
 	font-size: $fs;
 }
+
+@mixin sm() {
+	@media (max-width: 440px) {
+		@content;
+	}
+}
+
+@mixin md() {
+	@media (max-width: 840px) {
+		@content;
+	}
+}
+
+@mixin lg() {
+	@media (max-width: 1200px) {
+		@content;
+	}
+}

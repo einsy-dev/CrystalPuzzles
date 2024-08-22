@@ -1,18 +1,26 @@
-import './App.scss';
-import { useMemo } from 'react';
-import { RouterProvider } from 'react-router-dom';
-import createRouter from '../routes';
-import { useSelector } from 'react-redux';
+import styles from './App.module.scss';
+import { useState } from 'react';
+import { Outlet } from 'react-router-dom';
+import { Sidebar, Header, Footer } from '@widgets';
+import { NotificationModal } from '../shared/ui/popups/NotificationModal/NotificationModal';
 
 export default function App() {
-	const role = useSelector((state) => state.user.role);
-
-	const router = useMemo(() => {
-		return createRouter(role);
-	}, [role]);
+	const [notification, setNotification] = useState(false);
 	return (
-		<div className="app">
-			<RouterProvider router={router} />
-		</div>
+		<>
+			{notification && (
+				<NotificationModal onHide={() => setNotification(false)} />
+			)}
+			<div className={styles.container}>
+				<Header />
+				<div className={styles.app}>
+					<Sidebar />
+					<div className={styles.page}>
+						<Outlet />
+					</div>
+				</div>
+				<Footer />
+			</div>
+		</>
 	);
 }

@@ -1,0 +1,116 @@
+name: Docker-compose test
+
+on:
+  pull_request:
+  push:
+    branches:
+      [test]
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository from specific branch
+        uses: actions/checkout@v3
+        with:
+          ref: test 
+      - name: find_docker_compose
+        run: |
+          result=$(find $GITHUB_WORKSPACE -name "docker-compose.prod.yml")
+          if [ -z "$result" ]; then
+            echo "docker-compose.yml not found"
+            exit 1  # Завершить выполнение
+          else
+            directory=$(dirname "$result")
+            echo "Found docker-compose.yml at: $result"
+          fi
+          
+      - name: Set up Docker
+        uses: docker/setup-buildx-action@v3
+      - name: Set up Docker Compose
+        run: sudo apt-get update && sudo apt-get install docker-compose 
+      - name: Build and Start Docker Compose
+        run: docker compose up -d 
+      - name: Check Services list
+        run: docker-compose ps
+      - name: Check api
+        run: nc -z "127.0.0.1" "8001" && echo "api is available" || exit 1
+      - name: Check postgres
+        run: nc -z "127.0.0.1" "5432" && echo "postgres is available" || exit 1
+      - name: Check front
+        run: nc -z "127.0.0.1" "8080" && echo "front is available" || exit 1
+      - name: Check redis
+        run: nc -z "127.0.0.1" "6379" && echo "redis is available" || exit 1      
+        
+      - name: Shut Down Docker Compose
+        if: always() 
+        run: docker compose down        
+  
+  update_tag:
+    needs: tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 
+
+      - name: check tags
+        id: check-tag
+        run: |
+          git tag | tail -n 1 
+
+
+      - name: Get the latest tag
+        id: get-latest-tag
+        run: | 
+          # Get the most recent tag considering semantic versioning
+          LATEST_TAG=$(git tag --sort=-v:refname | grep -E "^v[0-9]+\.[0-9]+\.[0-9]+$" | head -n 1)
+          # echo "LATEST_TAG=$LATEST_TAG" >> $GITHUB_ENV
+          echo "Latest tag: $LATEST_TAG"
+          LATEST_TAG=$(git tag | tail -n 1)
+          echo "Latest tag: $LATEST_TAG"
+          echo "::set-output name=latest_tag::$LATEST_TAG"
+        shell: bash
+
+      - name: Increment patch version
+        id: increment-patch
+        run: |
+          LATEST_TAG=${{ steps.get-latest-tag.outputs.latest_tag }}
+          echo "Latest tag: $LATEST_TAG"
+          # Extract the version numbers
+          VERSION=${LATEST_TAG#v}  # Remove 'v' from the tag
+          echo "VERSION: $VERSION"
+          MAJOR=$(echo $VERSION | cut -d. -f1)
+          MINOR=$(echo $VERSION | cut -d. -f2)
+          PATCH=$(echo $VERSION | cut -d. -f3)
+
+          echo "MAJOR: $MAJOR"
+          echo "MINOR: $MINOR"
+          echo "PATCH: $PATCH"
+
+          # Increment the patch version
+          NEW_PATCH=$((PATCH + 1))
+          NEW_TAG="v$MAJOR.$MINOR.$NEW_PATCH"
+
+          # Output the new tag
+          echo "NEW_TAG=$NEW_TAG" >> $GITHUB_ENV
+          echo "New tag: $NEW_TAG"
+
+          echo "::set-output name=new_tag::$NEW_TAG"
+        shell: bash
+
+      - name: Create and push new tag
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+
+          NEW_TAG=${{ steps.increment-patch.outputs.new_tag }}
+          echo "New tag: $NEW_TAG"
+
+          # Create the new tag
+          git tag $NEW_TAG
+
+          # Push the new tag
+          git push origin $NEW_TAG
+        shell: bash
