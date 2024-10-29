@@ -1,21 +1,28 @@
 import { useEffect, useState } from 'react';
 import TimePicker from 'react-time-picker';
 import moment from 'moment';
-import { Button } from '@shared/ui';
 import { Lesson } from '@shared/api';
-import PlacesDropdown from 'features/placesDropdown/PlacesDropdown';
 import TrainersDropdown from 'features/trainersDropdown/TrainersDropdown';
+import PlacesDropdown from 'features/placesDropdown/PlacesDropdown';
+import { Button } from '@shared/ui';
 import { ReactComponent as CloseButton } from '@shared/assets/svg/close.svg';
 import 'react-time-picker/dist/TimePicker.css';
 import 'react-clock/dist/Clock.css';
-import styles from './Modal.module.scss';
+import styles from './ModalAddLesson.module.scss';
 
-export const AddTrainerSchedule = ({
+interface ModalAddLessonProps {
+	day: any;
+	data: any;
+	setActive: any;
+	closeModal: any;
+}
+
+export const ModalAddLesson = ({
 	day,
 	data,
 	setActive,
 	closeModal
-}: any) => {
+}: ModalAddLessonProps) => {
 	const [newLesson, setNewLesson]: any = useState({
 		space_id: null,
 		trainer_id: data?.trainer_id || data?.trainer?.id,

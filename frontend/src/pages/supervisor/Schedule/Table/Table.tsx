@@ -7,8 +7,8 @@ import Header from './Header/Header';
 import DaysList from './DaysList/DaysList';
 import DaysOfWeek from './DaysOfWeek/DaysOfWeek';
 import { Modal } from '@shared/ui';
-import { AddTrainerSchedule } from '../Modal/Modal';
 import ModalView from '../ModalView/ModalView';
+import { ModalAddLesson } from '../ModalAddLesson/ModalAddLesson';
 import styles from './Table.module.scss';
 
 interface TableProps {
@@ -61,7 +61,7 @@ const Table = ({ edit, data: { trainer_id }, className }: TableProps) => {
 					className={styles.modal}
 				>
 					{edit || editData ? (
-						<AddTrainerSchedule
+						<ModalAddLesson
 							day={modalActive}
 							data={editData ? editData : data}
 							setActive={setModalActive}
