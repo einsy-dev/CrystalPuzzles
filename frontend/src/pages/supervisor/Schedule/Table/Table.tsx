@@ -6,25 +6,22 @@ import { Lesson } from '@shared/api';
 import Header from './Header/Header';
 import DaysList from './DaysList/DaysList';
 import DaysOfWeek from './DaysOfWeek/DaysOfWeek';
+import { Modal } from '@shared/ui';
+import { AddTrainerSchedule } from '../Modal/Modal';
+import ModalView from '../ModalView/ModalView';
 import styles from './Table.module.scss';
 
 interface TableProps {
-	setModalActive: (active: any) => void;
-	modalActive: boolean;
 	edit: boolean;
 	data: any;
 	className?: string;
 }
 
-const Table = ({
-	setModalActive,
-	modalActive,
-	edit,
-	data: { trainer_id },
-	className
-}: TableProps) => {
-	const [date, setDate]: any = useState(moment().startOf('week'));
+const Table = ({ edit, data: { trainer_id }, className }: TableProps) => {
+	const [date, setDate] = useState<Moment>(moment().startOf('week'));
 	const [data, setData]: any = useState(initData(date));
+	const [modalActive, setModalActive] = useState<any | boolean>(false);
+	const [editData, setEditData] = useState(null);
 
 	useEffect(() => {
 		setData(initData(date));
@@ -56,6 +53,31 @@ const Table = ({
 				<DaysOfWeek />
 				<DaysList data={data} setModalActive={setModalActive} edit={edit} />
 			</div>
+
+			{modalActive && (
+				<Modal
+					active={modalActive}
+					setActive={setModalActive}
+					className={styles.modal}
+				>
+					{edit || editData ? (
+						<AddTrainerSchedule
+							day={modalActive}
+							data={editData ? editData : data}
+							setActive={setModalActive}
+							closeModal={() => setModalActive(false)}
+						/>
+					) : (
+						<ModalView
+							setEditData={setEditData}
+							day={modalActive}
+							data={data[modalActive]}
+							setActive={setModalActive}
+							closeModal={() => setModalActive(false)}
+						/>
+					)}
+				</Modal>
+			)}
 		</div>
 	);
 };

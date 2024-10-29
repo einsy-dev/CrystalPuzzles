@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import moment from 'moment';
-import { Button } from '../Button/Button';
+import { ScheduleButton } from '../ScheduleButton/ScheduleButton';
 import styles from './DaysList.module.scss';
 
 interface DaysListProps {
@@ -37,15 +37,13 @@ export default function DaysList({
 							</div>
 						</div>
 					) : null}
-
-					{edit ? (
-						<Button
-							className={styles.add_btn}
-							onclick={() => {
-								setModalActive(key);
-							}}
-						/>
-					) : null}
+					<ScheduleButton
+						edit={edit}
+						className={styles.add_btn}
+						onclick={() => {
+							setModalActive(key);
+						}}
+					/>
 				</li>
 			))}
 		</ul>

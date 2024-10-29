@@ -10,7 +10,7 @@ import 'react-time-picker/dist/TimePicker.css';
 import 'react-clock/dist/Clock.css';
 import styles from './Modal.module.scss';
 
-export const AddTreanerSchedule = ({
+export const AddTrainerSchedule = ({
 	day,
 	data,
 	setActive,
@@ -18,13 +18,16 @@ export const AddTreanerSchedule = ({
 }: any) => {
 	const [newLesson, setNewLesson]: any = useState({
 		space_id: null,
-		trainer_id: data?.trainer_id,
+		trainer_id: data?.trainer_id || data?.trainer?.id,
 		trainer_comments: null,
 		start: moment(day).set({ hour: 12, minute: 0 }).format()
 	});
 
 	useEffect(() => {
-		setNewLesson({ ...newLesson, trainer_id: data?.trainer_id });
+		setNewLesson({
+			...newLesson,
+			trainer_id: data?.trainer_id
+		});
 	}, [data.trainer_id]);
 
 	async function handleSubmit() {

@@ -28,9 +28,28 @@ interface StudentI {
 	student_id: number;
 }
 
+interface LessonI {
+	id: number;
+	space: {
+		id: number;
+		name: string;
+	};
+	start: string;
+	status: string;
+	trainer: {
+		firstname: string;
+		id: number;
+		lastname: string;
+		photo: string;
+		surname: string;
+	};
+	trainer_comments: string;
+}
+
 export type {
 	LessonCreateParams,
 	LessonGetParams,
 	LessonUpdateParams,
-	StudentI
+	StudentI,
+	LessonI
 };
