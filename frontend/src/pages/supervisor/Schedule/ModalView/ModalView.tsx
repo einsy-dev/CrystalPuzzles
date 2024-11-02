@@ -1,33 +1,36 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import moment from 'moment';
-import { v4 as uuid } from 'uuid';
 import joinName from 'entities/profile/assets/joinName';
 import { LessonI } from '@shared/api/lesson/lesson.interface';
 import { Lesson } from '@shared/api';
 import { Button, Modal } from '@shared/ui';
+import { deleteLesson } from '@app/providers/store/schedule';
+import { ModalEditLesson } from '../ModalEditLesson/ModalEditLesson';
 import styles from './ModalView.module.scss';
+import { useSelector } from 'react-redux';
+import { getCurrentDate } from '@app/providers/store/scheduleModal';
+import { RootState } from '@app/providers/store';
 
 interface ModalViewProps {
 	setActive?: (active: boolean) => void;
 	closeModal?: () => void;
-	data: LessonI[];
+	data?: LessonI[];
 	day?: Date | string;
-	setEditData: any;
 }
 
-export default function ModalView({
-	setActive,
-	closeModal,
-	data,
-	day,
-	setEditData
-}: ModalViewProps) {
-	const [error, setError] = useState<string | null>(null);
-	const [errModalActive, setErrModalActive] = useState(false);
-	const [localData, setLocalData] = useState<LessonI[]>(data);
-	// const [lesson, setData] = useState([]);
-	const [confirmDeleteActive, setConfirmDeleteActive] = useState(false);
+export const ModalView = ({ closeModal, data }: ModalViewProps) => {
+	const dispatch = useDispatch();
+	const lessons = useSelector((state: RootState) => state.schedule.lessons);
+	const cutternDate = useSelector(getCurrentDate);
+	const [editData, setEditData] = useState(null);
+
+	const [localData, setLocalData] = useState<any>(data);
+
 	const [itemToDelete, setItemToDelete] = useState<any | null>(null);
+	const [confirmDeleteActive, setConfirmDeleteActive] = useState(false);
+	const [errModalActive, setErrModalActive] = useState(false);
+	const [error, setError] = useState<string | null>(null);
 
 	const handleDelete = async (id: number) => {
 		const [, e] = await Lesson.delete(id);
@@ -35,57 +38,46 @@ export default function ModalView({
 			setError(e);
 			setErrModalActive(true);
 		} else {
-			setLocalData((prevData) => prevData.filter((item) => item.id !== id));
+			setLocalData((prevData: any) =>
+				prevData.filter((item: any) => item.id !== id)
+			);
+			dispatch(deleteLesson(id));
 		}
 		setConfirmDeleteActive(false);
 		setItemToDelete(null);
 	};
 
-	const requestDelete = (id: number) => {
+	const requestDelete = useCallback((id: number) => {
 		setItemToDelete(id);
 		setConfirmDeleteActive(true);
-	};
-
-	// тестирование ошибки
-	// const handleDelete = async (id: number) => {
-	// 	const testError = true;
-	// 	if (testError) {
-	// 		setError('Ошибка: Не удалось удалить запись');
-	// 		setErrModalActive(true);
-	// 		return;
-	// 	}
-
-	// 	const [, e] = await Lesson.delete(id);
-	// 	if (e) {
-	// 		setError(e);
-	// 		setErrModalActive(true);
-	// 	} else {
-	// 		setLocalData((prevData) => prevData.filter((item) => item.id !== id));
-	// 	}
-	// };
+	}, []);
 
 	return (
 		<div className={styles.component}>
 			<div onClick={closeModal}>x</div>
 
-			<div className={styles.content}></div>
-			<div>время</div>
-			<div>площадка</div>
-			<div>тренер</div>
-			<div>Комментарий</div>
-
-			{localData?.map((item: LessonI) => (
-				<div key={uuid()}>
+			<div className={styles.content}>
+				<div>тренер</div>
+				<div>время</div>
+				<div>площадка</div>
+				<div>Комментарий</div>
+			</div>
+			{lessons[cutternDate as string].map((item: any) => (
+				<div key={item.id}>
+					<div>{joinName(item.trainer)}</div>
 					<div>{moment(item.start).format('HH:mm')}</div>
 					<div>
 						<p>{item.space.name}</p>
 					</div>
-					<div>{joinName(item.trainer)}</div>
 					<div>{item.trainer_comments}</div>
 					<span onClick={() => setEditData(item)}>✎</span>
 					<div onClick={() => requestDelete(item.id)}>x</div>
 				</div>
 			))}
+
+			{editData && (
+				<ModalEditLesson closeModal={() => setEditData(null)} data={editData} />
+			)}
 
 			{error && (
 				<Modal active={errModalActive} setActive={setErrModalActive}>
@@ -117,4 +109,4 @@ export default function ModalView({
 			)}
 		</div>
 	);
-}
+};

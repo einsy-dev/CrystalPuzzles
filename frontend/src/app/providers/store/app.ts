@@ -1,11 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { RootState } from '.';
+import { type TrainerI } from './scheduleModal';
 // import Place from '@shared/api/place';
 
 interface AppState {
 	header: string;
 	places: any[] | null;
 	students: any[] | null;
-	trainers: any[] | null;
+	trainers: TrainerI[] | null;
 }
 
 const initialState: AppState = {
@@ -34,20 +36,12 @@ const appSlice = createSlice({
 	}
 });
 
-const selectHeader = (state: any) => state.app.header;
-const selectPlaces = (state: any) => state.app.places;
-const selectStudents = (state: any) => state.app.students;
-const selectTrainers = (state: any) => state.app.trainers;
+export const selectHeader = (state: RootState) => state.app.header;
+export const selectPlaces = (state: RootState) => state.app.places;
+export const selectStudents = (state: RootState) => state.app.students;
+export const selectTrainers = (state: RootState) => state.app.trainers;
 
-const { setHeader, setPlaces, setStudents, setTrainers } = appSlice.actions;
-export {
-	appSlice,
-	setHeader,
-	setPlaces,
-	setStudents,
-	setTrainers,
-	selectPlaces,
-	selectStudents,
-	selectTrainers,
-	selectHeader
-};
+export const { setHeader, setPlaces, setStudents, setTrainers } =
+	appSlice.actions;
+
+export { appSlice };

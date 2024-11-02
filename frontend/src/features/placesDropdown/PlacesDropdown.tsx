@@ -16,7 +16,7 @@ export default function PlacesDropdown({
 	className,
 	single
 }: PlacesDropdownProps) {
-	const [data, setData] = useState([]);
+	const [data, setData] = useState<any>([]);
 
 	const places = useSelector(selectPlaces);
 	const dispatch = useDispatch();

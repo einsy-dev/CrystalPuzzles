@@ -5,7 +5,7 @@ class Place {
 
 	async get() {
 		const data = await this.#host
-			.get(`/space`)
+			.get(`/space/`)
 			.then(({ data: { records } }) => [records, null])
 			.catch(() => [null, 'Не удалось получить места']);
 		return data;

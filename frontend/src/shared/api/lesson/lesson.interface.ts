@@ -8,9 +8,10 @@ interface LessonCreateParams {
 interface LessonGetParams {
 	start_date?: string;
 	end_date?: string;
-	trainer?: string;
+	trainer?: string | number;
 	limit?: number;
 	offset?: number;
+	page_size?: number;
 }
 
 interface LessonUpdateParams {
