@@ -6,7 +6,7 @@ import { Exercises } from '@widgets';
 import { FormEvent, useEffect, useState } from 'react';
 import StudentsDropdown from 'features/studentsDropdown/StudentsDropdown';
 import { CheckList } from '@shared/api';
-import { TrainingI } from '@shared/api/checklist/checkList.interface';
+import { TrainingI } from 'entities/checklist/api/checkList.interface';
 import { useLoaderData } from 'react-router-dom';
 
 interface CheckListPageProps {

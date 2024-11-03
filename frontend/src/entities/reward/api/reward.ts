@@ -1,4 +1,4 @@
-import { $authHost } from '../axios.instances';
+import { $authHost } from '../../../shared/api/axios.instances';
 
 class Reward {
 	#host = $authHost;

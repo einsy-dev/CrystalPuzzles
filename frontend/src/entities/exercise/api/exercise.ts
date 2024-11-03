@@ -1,4 +1,4 @@
-import { $authHost } from '../axios.instances';
+import { $authHost } from '../../../shared/api/axios.instances';
 import { ExerciseI, ExerciseUpdateI } from './exercise.interface';
 
 class Exercise {

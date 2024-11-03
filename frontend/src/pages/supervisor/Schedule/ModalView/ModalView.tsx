@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 import joinName from 'entities/profile/assets/joinName';
-import { LessonI } from '@shared/api/lesson/lesson.interface';
+import { LessonI } from 'entities/lesson/api/lesson.interface';
 import { Lesson } from '@shared/api';
 import { Button, Modal } from '@shared/ui';
 import { deleteLesson, selectLessons } from '@app/providers/store/schedule';

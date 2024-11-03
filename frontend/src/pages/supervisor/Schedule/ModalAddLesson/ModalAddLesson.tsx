@@ -8,7 +8,7 @@ import TrainersDropdown from 'features/trainersDropdown/TrainersDropdown';
 import PlacesDropdown from 'features/placesDropdown/PlacesDropdown';
 import { ReactComponent as CloseButton } from '@shared/assets/svg/close.svg';
 import { getCurrentTrainer } from '@app/providers/store';
-import { type LessonI } from '@shared/api/lesson/lesson.interface';
+import { type LessonI } from 'entities/lesson/api/lesson.interface';
 import 'react-time-picker/dist/TimePicker.css';
 import 'react-clock/dist/Clock.css';
 import styles from './ModalAddLesson.module.scss';
