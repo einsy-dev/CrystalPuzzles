@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { RootState } from '.';
 import { type TrainerI } from './scheduleModal';
+import { RootState } from './store';
 // import Place from '@shared/api/place';
 
 interface AppState {
@@ -44,4 +44,4 @@ export const selectTrainers = (state: RootState) => state.app.trainers;
 export const { setHeader, setPlaces, setStudents, setTrainers } =
 	appSlice.actions;
 
-export { appSlice };
+export const appSliceReducer = appSlice.reducer;

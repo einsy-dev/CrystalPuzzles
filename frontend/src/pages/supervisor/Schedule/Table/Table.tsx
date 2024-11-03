@@ -7,11 +7,10 @@ import Header from './Header/Header';
 import DaysList from './DaysList/DaysList';
 import DaysOfWeek from './DaysOfWeek/DaysOfWeek';
 import { Modal } from '@shared/ui';
+import { getCurrentTrainer, selectLessons } from '@app/providers/store';
+import { getLessons } from '@app/providers/store/service/getLessons';
 import { ModalView } from '../ModalView/ModalView';
 import { ModalAddLesson } from '../ModalAddLesson/ModalAddLesson';
-import { getCurrentTrainer } from '@app/providers/store/scheduleModal';
-import { getLessons } from '@app/providers/store/service/getLessons';
-import { selectLessons } from '@app/providers/store/schedule';
 import styles from './Table.module.scss';
 
 interface TableProps {

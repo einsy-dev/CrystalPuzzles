@@ -7,7 +7,7 @@ import { Button } from '@shared/ui';
 import TrainersDropdown from 'features/trainersDropdown/TrainersDropdown';
 import PlacesDropdown from 'features/placesDropdown/PlacesDropdown';
 import { ReactComponent as CloseButton } from '@shared/assets/svg/close.svg';
-import { getCurrentTrainer } from '@app/providers/store/scheduleModal';
+import { getCurrentTrainer } from '@app/providers/store';
 import { type LessonI } from '@shared/api/lesson/lesson.interface';
 import 'react-time-picker/dist/TimePicker.css';
 import 'react-clock/dist/Clock.css';

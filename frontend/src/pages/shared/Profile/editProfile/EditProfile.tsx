@@ -1,19 +1,19 @@
-import { Dispatch, FormEvent, useState } from 'react';
+import { Dispatch, FormEvent, SetStateAction, useState } from 'react';
 import { useSelector } from 'react-redux';
 import moment from 'moment';
 import { Auth, User } from '@shared/api';
 import { Button, Modal, Title } from '@shared/ui';
-import { selectProfile } from '@app/providers/store/profile';
-import avatar from '@shared/assets/avatar/0.png';
 import { mapUserForm } from '@entities';
-import { ReactComponent as CloseButton } from '@shared/assets/svg/close.svg';
 import joinName from 'entities/profile/assets/joinName';
 import UploadAvatar from './uploadAvatar/UploadAvatar';
+import { selectProfile } from '@app/providers/store';
+import { ReactComponent as CloseButton } from '@shared/assets/svg/close.svg';
+import avatar from '@shared/assets/avatar/0.png';
 import styles from './EditProfile.module.scss';
 
 interface EditProfileProps {
 	active: boolean;
-	setActive: Dispatch<React.SetStateAction<boolean>>;
+	setActive: Dispatch<SetStateAction<boolean>>;
 	onClick?: () => void;
 }
 
@@ -92,6 +92,7 @@ export default function EditProfile({
 								className={styles.input}
 								data-key="name"
 								type="text"
+								//TODO: изменить тип в функции ??
 								defaultValue={joinName(profile)}
 							/>
 						</div>

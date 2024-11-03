@@ -1,13 +1,13 @@
-import styles from './Schedule.module.scss';
 import { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import moment from 'moment';
 import { Page, Wrapper } from '@shared/ui';
 import { CalendarBlock } from '@features';
 import ScheduleItem from './ScheduleItem/ScheduleItem';
 import { Lesson } from '@api';
-import moment from 'moment';
 import ScheduleRouteTo from '@shared/lib/scheduleRouteTo';
-import { useSelector } from 'react-redux';
-import { selectProfile } from '@app/providers/store/profile';
+import { selectProfile } from '@app/providers/store';
+import styles from './Schedule.module.scss';
 
 interface SchedulePageProps {
 	title: string;
@@ -17,7 +17,7 @@ interface SchedulePageProps {
 export default function SchedulePage({ link, title }: SchedulePageProps) {
 	const { id } = useSelector(selectProfile);
 	const [data, setData] = useState<any>([]);
-	const [date, setDate]: any = useState({
+	const [date, setDate] = useState({
 		from: moment().startOf('day'),
 		to: moment().endOf('day')
 	});

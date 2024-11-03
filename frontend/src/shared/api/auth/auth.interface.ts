@@ -15,11 +15,11 @@ interface LoginParams {
 }
 
 interface ExtentionParams {
-	phone_number?: 'string';
-	area?: 'string';
-	accompanying?: 'string';
-	health_data?: 'string';
-	triggers?: 'string';
+	phone_number?: string;
+	area?: string;
+	accompanying?: string;
+	health_data?: string;
+	triggers?: string;
 }
 interface EditProfileParams {
 	firstname?: string;

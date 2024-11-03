@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import moment from 'moment';
-import { RootState } from '.';
+import { RootState } from './store';
 import { type LessonI } from '@shared/api/lesson/lesson.interface';
 
 interface LessonsState {
@@ -57,4 +57,4 @@ export const selectLessons = (state: RootState) => state.schedule.lessons;
 
 export const { createLessons, setLessons, deleteLesson, updateLesson } =
 	scheduleSlice.actions;
-export { scheduleSlice };
+export const scheduleSliceReducer = scheduleSlice.reducer;

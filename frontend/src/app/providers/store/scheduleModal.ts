@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { RootState } from '.';
+import { RootState } from './store';
 
 export interface TrainerI {
 	id: number;
@@ -45,4 +45,4 @@ export const getCurrentDate = (state: RootState) =>
 	state.scheduleModal.currentDate;
 
 export const { setCurrentTrainer, setCurrentDate } = scheduleModalSlice.actions;
-export { scheduleModalSlice };
+export const scheduleModalSliceReducer = scheduleModalSlice.reducer;

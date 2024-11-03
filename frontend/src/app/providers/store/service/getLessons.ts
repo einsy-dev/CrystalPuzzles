@@ -1,7 +1,7 @@
 import moment, { Moment } from 'moment';
 import { Lesson } from '@shared/api';
 import { setLessons } from '../schedule';
-import store from '../';
+import store from '../store';
 
 export const getLessons = async (trainer_id: string | number, date: Moment) => {
 	const dispatch = store.dispatch;

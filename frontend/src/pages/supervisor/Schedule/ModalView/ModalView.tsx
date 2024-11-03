@@ -1,16 +1,14 @@
 import { useCallback, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 import joinName from 'entities/profile/assets/joinName';
 import { LessonI } from '@shared/api/lesson/lesson.interface';
 import { Lesson } from '@shared/api';
 import { Button, Modal } from '@shared/ui';
-import { deleteLesson } from '@app/providers/store/schedule';
+import { deleteLesson, selectLessons } from '@app/providers/store/schedule';
+import { getCurrentDate } from '@app/providers/store';
 import { ModalEditLesson } from '../ModalEditLesson/ModalEditLesson';
 import styles from './ModalView.module.scss';
-import { useSelector } from 'react-redux';
-import { getCurrentDate } from '@app/providers/store/scheduleModal';
-import { RootState } from '@app/providers/store';
 
 interface ModalViewProps {
 	setActive?: (active: boolean) => void;
@@ -21,7 +19,7 @@ interface ModalViewProps {
 
 export const ModalView = ({ closeModal, data }: ModalViewProps) => {
 	const dispatch = useDispatch();
-	const lessons = useSelector((state: RootState) => state.schedule.lessons);
+	const lessons = useSelector(selectLessons);
 	const cutternDate = useSelector(getCurrentDate);
 	const [editData, setEditData] = useState(null);
 
