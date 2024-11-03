@@ -1,32 +1,39 @@
+import { useSelector, useDispatch } from 'react-redux';
 import classNames from 'classnames';
 import moment from 'moment';
-import { Button } from '../Button/Button';
+import { ScheduleButton } from '../ScheduleButton/ScheduleButton';
+import { setCurrentDate } from '@app/providers/store/scheduleModal';
+import { selectLessons } from '@app/providers/store/schedule';
 import styles from './DaysList.module.scss';
 
 interface DaysListProps {
 	setModalActive: (day: string) => void;
 	edit: boolean;
-	data: any;
 }
 
-export default function DaysList({
-	setModalActive,
-	edit,
-	data
-}: DaysListProps) {
+export default function DaysList({ setModalActive, edit }: DaysListProps) {
+	const dispatch = useDispatch();
+	const lessons = useSelector(selectLessons);
+	const data = lessons;
+
 	return (
 		<ul className={classNames(styles.grid, styles.days)}>
-			{Object.keys(data).map((key: any, index: number) => (
+			{Object.keys(data).map((key, index) => (
 				<li key={index} className={styles.day}>
 					<span> {moment(key).format('D')}</span>
-					{data[key] ? (
-						<div className={styles.active}>
+					{data ? (
+						<div
+							className={classNames(styles.active, {
+								[styles.activeWithLessons]: data[key].length > 0
+							})}
+						>
 							<div className={styles.schedule}>
 								{data[key]
+									.slice()
 									.sort((a: any, b: any) =>
-										moment(a.start).isSameOrAfter(b.start)
+										moment(a.start).diff(moment(b.start))
 									)
-									.map((el: any, i: number) => (
+									.map((el, i) => (
 										<div key={i}>
 											<span className={styles.time}>
 												{moment(el.start).format('HH:mm')}
@@ -37,15 +44,14 @@ export default function DaysList({
 							</div>
 						</div>
 					) : null}
-
-					{edit ? (
-						<Button
-							className={styles.add_btn}
-							onclick={() => {
-								setModalActive(key);
-							}}
-						/>
-					) : null}
+					<ScheduleButton
+						edit={edit}
+						className={styles.add_btn}
+						onclick={() => {
+							dispatch(setCurrentDate(key));
+							setModalActive(key);
+						}}
+					/>
 				</li>
 			))}
 		</ul>

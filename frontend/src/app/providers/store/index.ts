@@ -1,15 +1,30 @@
-import { combineSlices, configureStore } from '@reduxjs/toolkit';
-import { profileSlice } from './profile';
-import { appSlice } from './app';
+export {
+	appSliceReducer,
+	setHeader,
+	setPlaces,
+	setStudents,
+	setTrainers,
+	selectHeader,
+	selectPlaces,
+	selectStudents,
+	selectTrainers
+} from './app';
 
-const mainReducer = combineSlices(profileSlice, appSlice);
+export {
+	scheduleSliceReducer,
+	createLessons,
+	setLessons,
+	deleteLesson,
+	updateLesson,
+	selectLessons
+} from './schedule';
 
-const store = configureStore({
-	reducer: mainReducer,
-	middleware: (getDefaultMiddleware: any) =>
-		getDefaultMiddleware({
-			serializableCheck: false
-		})
-});
+export { profileSliceReducer, setProfile, selectProfile } from './profile';
 
-export default store;
+export {
+	scheduleModalSliceReducer,
+	setCurrentTrainer,
+	setCurrentDate,
+	getCurrentDate,
+	getCurrentTrainer
+} from './scheduleModal';

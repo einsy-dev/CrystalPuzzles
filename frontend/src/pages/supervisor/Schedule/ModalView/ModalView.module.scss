@@ -1,0 +1,40 @@
+@use '~styles/mixins' as *;
+
+.component {
+	padding: 20px;
+	width: 60vw;
+	height: 70vh;
+	background-color: var(--white-color);
+	overflow-y: scroll;
+
+	&::-webkit-scrollbar {
+		width: 0;
+	}
+
+	@include md() {
+		width: 80vw;
+	}
+
+	@include sm() {
+		width: 85vw;
+	}
+}
+
+.error_content,
+.confirm_modal {
+	padding: 20px;
+	text-align: center;
+	font: var(--fw-regular) var(--fz-btn-xs) / 2 var(--ff-first);
+}
+
+.btn_wrapper {
+	margin-top: 20px;
+	display: flex;
+	justify-content: space-evenly;
+}
+
+.content {
+	display: flex;
+	justify-content: space-between;
+	gap: 20px;
+}

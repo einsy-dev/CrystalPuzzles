@@ -8,9 +8,10 @@ interface LessonCreateParams {
 interface LessonGetParams {
 	start_date?: string;
 	end_date?: string;
-	trainer?: string;
+	trainer?: string | number | null;
 	limit?: number;
 	offset?: number;
+	page_size?: number;
 }
 
 interface LessonUpdateParams {
@@ -28,9 +29,28 @@ interface StudentI {
 	student_id: number;
 }
 
+interface LessonI {
+	id: number;
+	space: {
+		id: number;
+		name: string;
+	};
+	start: string;
+	status: string;
+	trainer: {
+		firstname: string;
+		id: number;
+		lastname: string;
+		photo: string;
+		surname: string;
+	};
+	trainer_comments: string;
+}
+
 export type {
 	LessonCreateParams,
 	LessonGetParams,
 	LessonUpdateParams,
-	StudentI
+	StudentI,
+	LessonI
 };

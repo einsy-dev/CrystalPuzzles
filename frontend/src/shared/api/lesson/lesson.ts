@@ -11,7 +11,7 @@ class Lesson {
 
 	async create(params: LessonCreateParams) {
 		const data = await this.#host
-			.post(`/lesson`, params)
+			.post(`/lesson/`, params)
 			.then(({ data }) => [data, null])
 			.catch(() => [null, 'Не удалось добавить урок']);
 		return data;
@@ -19,7 +19,7 @@ class Lesson {
 
 	async get(params: LessonGetParams) {
 		const data = await this.#host
-			.get(`/lesson`, { params: params })
+			.get(`/lesson/`, { params: params })
 			.then(({ data: { records } }) => [records, null])
 			.catch(() => [null, 'Не удалось получить уроки']);
 		return data;
@@ -53,7 +53,7 @@ class Lesson {
 	async addStudent(params: StudentI) {
 		const { lesson_id, student_id } = params;
 		const data = await this.#host
-			.put('/lesson/add-user' + lesson_id, student_id)
+			.put('/lesson/add-user/' + lesson_id, student_id)
 			.then(({ data }) => [data, null])
 			.catch(() => [null, 'Не удалось добавить студента']);
 		return data;
@@ -61,7 +61,7 @@ class Lesson {
 	async removeStudent(params: StudentI) {
 		const { lesson_id, student_id } = params;
 		const data = await this.#host
-			.put('/lesson/remove-user' + lesson_id, student_id)
+			.put('/lesson/remove-user/' + lesson_id, student_id)
 			.then(({ data }) => [data, null])
 			.catch(() => [null, 'Не удалось добавить студента']);
 		return data;

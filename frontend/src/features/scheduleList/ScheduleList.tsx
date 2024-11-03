@@ -1,11 +1,11 @@
-import moment from 'moment';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Lesson } from '@shared/api';
-import styles from './ScheduleList.module.scss';
-import ScheduleRouteTo from '@shared/lib/scheduleRouteTo';
-import { selectProfile } from '@app/providers/store/profile';
 import { useSelector } from 'react-redux';
+import moment from 'moment';
+import { Lesson } from '@shared/api';
+import ScheduleRouteTo from '@shared/lib/scheduleRouteTo';
+import { selectProfile } from '@app/providers/store';
+import styles from './ScheduleList.module.scss';
 
 interface ScheduleListProps {
 	today?: boolean;

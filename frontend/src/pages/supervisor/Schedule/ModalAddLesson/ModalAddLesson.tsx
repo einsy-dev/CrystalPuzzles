@@ -1,37 +1,58 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import TimePicker from 'react-time-picker';
 import moment from 'moment';
-import { Button } from '@shared/ui';
 import { Lesson } from '@shared/api';
-import PlacesDropdown from 'features/placesDropdown/PlacesDropdown';
+import { Button } from '@shared/ui';
 import TrainersDropdown from 'features/trainersDropdown/TrainersDropdown';
+import PlacesDropdown from 'features/placesDropdown/PlacesDropdown';
 import { ReactComponent as CloseButton } from '@shared/assets/svg/close.svg';
+import { getCurrentTrainer } from '@app/providers/store';
+import { type LessonI } from '@shared/api/lesson/lesson.interface';
 import 'react-time-picker/dist/TimePicker.css';
 import 'react-clock/dist/Clock.css';
-import styles from './Modal.module.scss';
+import styles from './ModalAddLesson.module.scss';
 
-export const AddTreanerSchedule = ({
+interface ModalAddLessonProps {
+	day: any;
+	data: { [key: string]: LessonI[] };
+	setActive: any;
+	closeModal: any;
+	onSubmit: () => void;
+}
+
+export const ModalAddLesson = ({
 	day,
-	data,
 	setActive,
-	closeModal
-}: any) => {
-	const [newLesson, setNewLesson]: any = useState({
+	closeModal,
+	onSubmit
+}: ModalAddLessonProps) => {
+	const currentTrainer = useSelector(getCurrentTrainer);
+	const [newLesson, setNewLesson] = useState<any>({
 		space_id: null,
-		trainer_id: data?.trainer_id,
+		trainer_id: currentTrainer?.id,
 		trainer_comments: null,
 		start: moment(day).set({ hour: 12, minute: 0 }).format()
 	});
-
-	useEffect(() => {
-		setNewLesson({ ...newLesson, trainer_id: data?.trainer_id });
-	}, [data.trainer_id]);
+	const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
 	async function handleSubmit() {
 		const { space_id, trainer_id, start } = newLesson;
-		if (!space_id || !trainer_id || !start) return;
+		if (!space_id || !trainer_id || !start) {
+			setErrorMessage(
+				'Пожалуйста, заполните все обязательные поля: тренер, площадка и время.'
+			);
+			return;
+		}
 		const [, err] = await Lesson.create(newLesson);
-		if (err) return;
+		if (err) {
+			setErrorMessage(
+				'Произошла ошибка при создании урока. Попробуйте ещё раз.'
+			);
+			return;
+		}
+		onSubmit();
+		setErrorMessage(null);
 		setActive(false);
 	}
 
@@ -72,11 +93,10 @@ export const AddTreanerSchedule = ({
 						}}
 						onChange={(e: any) => {
 							if (!e) return;
+							const [hour, minute] = e.split(':').map(Number);
 							setNewLesson((prev: any) => ({
 								...prev,
-								start: moment(day)
-									.set({ hour: e.split(':')[0], minute: e.split(':')[1] })
-									.format()
+								start: moment(day).set({ hour, minute }).format()
 							}));
 						}}
 						value={moment(newLesson.start).format('HH:mm')}
@@ -95,6 +115,7 @@ export const AddTreanerSchedule = ({
 						}))
 					}
 				></textarea>
+				{errorMessage && <div className={styles.error}>{errorMessage}</div>}
 				<Button className={styles.submit} onClick={handleSubmit} bgColor="dark">
 					Отправить
 				</Button>

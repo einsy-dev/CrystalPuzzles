@@ -1,8 +1,8 @@
-import styles from './ProfileCard.module.scss';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { selectProfile } from '@store/profile';
 import classNames from 'classnames';
+import { selectProfile } from '@app/providers/store';
+import styles from './ProfileCard.module.scss';
 
 interface ProfileProps {
 	className?: string;
