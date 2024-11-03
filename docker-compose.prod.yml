@@ -13,7 +13,7 @@ services:
       POSTGRES_PORT: ${PG_HOST}
       PGDATA: /var/lib/postgresql/data/pgdata
     volumes:
-      - ./pgdata:/var/lib/postgresql/data/pgdata
+      - pgdata:/var/lib/postgresql/data/pgdata:Z crystal
     healthcheck:
       test: pg_isready -U ${PG_USER} -d ${PG_DATABASE}
       interval: 10s
@@ -43,6 +43,8 @@ services:
     env_file:
       - .env
     command: sh -c "cd /backend && uvicorn main:app --reload --workers 1 --host 0.0.0.0 --port 8000"
+    volumes:
+      - static:/app/static
     depends_on:
       - db
       - redis
@@ -84,11 +86,15 @@ services:
       - frontend
       - backend
 
-  
-
 networks:
   backend:
     driver: bridge
 
   frontend:
     driver: bridge
+
+volumes:
+  pgdata:
+    driver: local
+  static:
+    driver: local
