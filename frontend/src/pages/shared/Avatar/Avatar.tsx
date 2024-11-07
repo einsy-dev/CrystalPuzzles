@@ -6,7 +6,7 @@ import { ReactComponent as UploadIcon } from '@shared/assets/svg/upload.svg';
 import LS from '@shared/lib/localStorage';
 import { useSelector } from 'react-redux';
 import { selectProfile } from '@store/profile';
-import { User } from '@shared/api';
+import { User } from '@entities';
 import avatar from '@shared/assets/avatar/0.png';
 
 interface AvatarPageProps {

@@ -1,6 +1,6 @@
 import { selectStudents, setStudents } from '@app/providers/store/app';
 import { DropDownButton } from '@features';
-import { User } from '@shared/api';
+import { User } from '@entities';
 import joinName from 'entities/profile/assets/joinName';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';

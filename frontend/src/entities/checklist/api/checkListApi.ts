@@ -1,7 +1,7 @@
 import { $authHost } from '../../../shared/api/axios.instances';
-import { CheckListI } from './checkList.interface';
+import { CheckListI } from './checkListApi.interface';
 
-class CheckList {
+export class CheckListApi {
 	#host = $authHost;
 	async create(params: CheckListI) {
 		const data = await this.#host
@@ -11,5 +11,3 @@ class CheckList {
 		return data;
 	}
 }
-
-export default new CheckList();

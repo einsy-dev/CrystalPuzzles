@@ -1,9 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { Profile } from '@entities';
-import { Auth } from '@api';
 import { RootState } from './store';
 
-const [profile, err] = await Auth.getProfile();
+const [profile, err] = await Profile.getProfile();
 
 const profileSlice = createSlice({
 	name: 'profile',

@@ -1,5 +1,5 @@
 import { serverUrl } from '@entities';
-import { User } from '@shared/api';
+import { User } from '@entities';
 import { Page } from '@shared/ui';
 import { UserCard } from '@shared/ui/card';
 import joinName from 'entities/profile/assets/joinName';

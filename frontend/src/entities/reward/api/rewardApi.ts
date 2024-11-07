@@ -1,7 +1,5 @@
 import { $authHost } from '../../../shared/api/axios.instances';
 
-class Reward {
+export class RewardApi {
 	#host = $authHost;
 }
-
-export default new Reward();

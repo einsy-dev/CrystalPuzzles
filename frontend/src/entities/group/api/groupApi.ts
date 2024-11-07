@@ -1,7 +1,7 @@
 import { $authHost } from '../../../shared/api/axios.instances';
-import { AddStudentI, GroupI } from './group.interface';
+import { AddStudentI, GroupI } from './groupApi.interface';
 
-class Group {
+export class GroupApi {
 	#host = $authHost;
 
 	async create(group: GroupI) {
@@ -52,4 +52,3 @@ class Group {
 		return data;
 	}
 }
-export default new Group();

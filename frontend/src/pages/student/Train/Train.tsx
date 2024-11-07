@@ -4,7 +4,7 @@ import { Page } from '@shared/ui';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
 import { CalendarButton } from '@features';
-import { Lesson } from '@shared/api';
+import { Lesson } from '@entities';
 
 interface TrainPageProps {
 	title: string;

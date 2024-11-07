@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import moment from 'moment';
 import { RootState } from './store';
-import { type LessonI } from 'entities/lesson/api/lesson.interface';
+import { type LessonI } from 'entities/lesson/api/lessonApi.interface';
 
 interface LessonsState {
 	lessons: { [key: string]: LessonI[] };

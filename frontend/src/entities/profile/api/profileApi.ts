@@ -4,9 +4,9 @@ import {
 	EditProfileParams,
 	LoginParams,
 	RegisterParams
-} from './auth.interface';
+} from './profileApi.interface';
 
-class Auth {
+export class ProfileApi {
 	#host = $authHost;
 
 	async getProfile() {
@@ -94,5 +94,3 @@ class Auth {
 		return data;
 	}
 }
-
-export default new Auth();

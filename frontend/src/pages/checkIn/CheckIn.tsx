@@ -7,7 +7,7 @@ import Password from './password/Password';
 import Politics from './policy/Policy';
 import { Button } from '@shared/ui';
 import { mapUserForm } from '@entities';
-import { Auth } from '@shared/api';
+import { Profile } from '@entities';
 
 export default function CheckInPage({ login = false }: any) {
 	const navigate = useNavigate();
@@ -22,9 +22,9 @@ export default function CheckInPage({ login = false }: any) {
 		const data = mapUserForm(e);
 		let err;
 		if (login) {
-			[, err] = await Auth.login(data);
+			[, err] = await Profile.login(data);
 		} else {
-			[, err] = await Auth.register(data);
+			[, err] = await Profile.register(data);
 		}
 		setErr(err);
 	}

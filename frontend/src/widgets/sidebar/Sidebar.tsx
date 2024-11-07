@@ -5,7 +5,6 @@ import { useSwipe, useResize } from '@hooks';
 import { selectProfile } from '@store/profile';
 import { ReactComponent as Arrow } from '@assets/svg/arrow.svg';
 import exit from 'assets/sidebar/exit.svg';
-import { Auth } from '@api';
 import { NavMenuList } from './navMenu/NavMenu';
 import { Account } from './accaunt/Account';
 
@@ -28,7 +27,7 @@ export default function Sidebar() {
 	}, []);
 
 	async function handleExit(): Promise<void> {
-		await Auth.logout();
+		await user.logout();
 	}
 
 	return (

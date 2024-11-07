@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import TimePicker from 'react-time-picker';
 import moment from 'moment';
-import { Lesson } from '@shared/api';
+import { Lesson } from '@entities';
 import { Button } from '@shared/ui';
 import PlacesDropdown from 'features/placesDropdown/PlacesDropdown';
 import { ReactComponent as CloseButton } from '@shared/assets/svg/close.svg';

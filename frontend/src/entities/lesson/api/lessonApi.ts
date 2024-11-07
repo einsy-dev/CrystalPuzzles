@@ -4,9 +4,9 @@ import {
 	LessonGetParams,
 	LessonUpdateParams,
 	StudentI
-} from './lesson.interface';
+} from './lessonApi.interface';
 
-class Lesson {
+export class LessonApi {
 	#host = $authHost;
 
 	async create(params: LessonCreateParams) {
@@ -67,5 +67,3 @@ class Lesson {
 		return data;
 	}
 }
-
-export default new Lesson();

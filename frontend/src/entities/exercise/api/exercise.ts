@@ -1,7 +1,7 @@
 import { $authHost } from '../../../shared/api/axios.instances';
 import { ExerciseI, ExerciseUpdateI } from './exercise.interface';
 
-class Exercise {
+export class ExerciseApi {
 	#host = $authHost;
 
 	async create(params: ExerciseI) {
@@ -44,5 +44,3 @@ class Exercise {
 		return data;
 	}
 }
-
-export default new Exercise();

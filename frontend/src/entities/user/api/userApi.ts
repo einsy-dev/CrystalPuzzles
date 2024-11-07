@@ -1,7 +1,7 @@
 import { $authHost } from '@shared/api/axios.instances';
-import { PasswordParams } from './user.inerface';
+import { PasswordParams } from './userApi.inerface';
 
-class User {
+export class UserApi {
 	#host = $authHost;
 
 	async getStudents({ search_string = '' } = {}) {
@@ -78,5 +78,3 @@ class User {
 		return data;
 	}
 }
-
-export default new User();

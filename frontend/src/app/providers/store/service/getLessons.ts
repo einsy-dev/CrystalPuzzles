@@ -1,5 +1,5 @@
 import moment, { Moment } from 'moment';
-import { Lesson } from '@shared/api';
+import { Lesson } from '@entities';
 import { setLessons } from '../schedule';
 import store from '../store';
 

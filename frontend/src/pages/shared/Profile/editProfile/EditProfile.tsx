@@ -1,7 +1,7 @@
 import { Dispatch, FormEvent, SetStateAction, useState } from 'react';
 import { useSelector } from 'react-redux';
 import moment from 'moment';
-import { Auth, User } from '@shared/api';
+import { Profile, User } from '@entities';
 import { Button, Modal, Title } from '@shared/ui';
 import { mapUserForm } from '@entities';
 import joinName from 'entities/profile/assets/joinName';
@@ -49,7 +49,7 @@ export default function EditProfile({
 			}
 		};
 
-		let [, err] = await Auth.updateProfile(newData);
+		let [, err] = await Profile.updateProfile(newData);
 		if (err) {
 			setErr(err);
 			return;

@@ -5,7 +5,7 @@ import { Page } from '@shared/ui';
 import { DateChanger, Feedback } from '@features';
 import { Exercises } from '@widgets';
 import classNames from 'classnames';
-import { Lesson } from '@shared/api';
+import { Lesson } from '@entities';
 
 interface ExercisePageProps {
 	title: string;

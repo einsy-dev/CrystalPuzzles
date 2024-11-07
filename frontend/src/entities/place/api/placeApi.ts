@@ -1,6 +1,6 @@
 import { $authHost } from '../../../shared/api/axios.instances';
 
-class Place {
+export class PlaceApi {
 	#host = $authHost;
 
 	async get() {
@@ -19,5 +19,3 @@ class Place {
 		return data;
 	}
 }
-
-export default new Place();
