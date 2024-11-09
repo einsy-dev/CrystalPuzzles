@@ -6,7 +6,7 @@ import styles from './ChangePass.module.scss';
 import { FormEvent, useState } from 'react';
 import Wrapper from '../wrapper/Wrapper';
 import Input from '../input/Input';
-import { Profile } from '@entities';
+import { Auth } from '@shared/api';
 
 export default function ChangePass() {
 	const [err, setErr] = useState<string | null>(null);
@@ -20,7 +20,7 @@ export default function ChangePass() {
 			return;
 		}
 
-		const [, err] = await Profile.changePassword(data);
+		const [, err] = await Auth.changePassword(data);
 		if (err) {
 			setErr(err);
 			return;

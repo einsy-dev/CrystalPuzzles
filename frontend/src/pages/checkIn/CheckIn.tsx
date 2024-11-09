@@ -1,17 +1,28 @@
 import styles from './CheckIn.module.scss';
-import { FormEvent, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { FormEvent, useEffect, useState } from 'react';
+import { Link, redirect, useNavigate } from 'react-router-dom';
 import Wrapper from './wrapper/Wrapper';
 import Input from './input/Input';
 import Password from './password/Password';
 import Politics from './policy/Policy';
 import { Button } from '@shared/ui';
 import { mapUserForm } from '@entities';
-import { Profile } from '@entities';
+import { Auth } from '@shared/api';
+import { useDispatch } from 'react-redux';
+import { selectProfile, setProfile } from '@app/providers/store';
+import { useSelector } from 'react-redux';
 
 export default function CheckInPage({ login = false }: any) {
-	const navigate = useNavigate();
 	const [err, setErr]: any = useState(null);
+	const dispatch = useDispatch();
+	const navigate = useNavigate();
+	const { role } = useSelector(selectProfile);
+
+	useEffect(() => {
+		if (role) {
+			navigate('/');
+		}
+	}, [role]);
 
 	function handleSubmit(e: FormEvent) {
 		e.preventDefault();
@@ -20,11 +31,16 @@ export default function CheckInPage({ login = false }: any) {
 
 	async function checkIn(e: FormEvent) {
 		const data = mapUserForm(e);
-		let err;
+		let profile, err;
 		if (login) {
-			[, err] = await Profile.login(data);
+			[profile, err] = await Auth.login(data);
 		} else {
-			[, err] = await Profile.register(data);
+			[profile, err] = await Auth.register(data);
+		}
+
+		if (!err) {
+			dispatch(setProfile(profile));
+			navigate('/', { replace: true });
 		}
 		setErr(err);
 	}

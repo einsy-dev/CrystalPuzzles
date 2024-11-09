@@ -1,7 +1,7 @@
 import { Dispatch, FormEvent, SetStateAction, useState } from 'react';
 import { useSelector } from 'react-redux';
 import moment from 'moment';
-import { Profile, User } from '@entities';
+import { User } from '@entities';
 import { Button, Modal, Title } from '@shared/ui';
 import { mapUserForm } from '@entities';
 import joinName from 'entities/profile/assets/joinName';
@@ -10,6 +10,7 @@ import { selectProfile } from '@app/providers/store';
 import { ReactComponent as CloseButton } from '@shared/assets/svg/close.svg';
 import avatar from '@shared/assets/avatar/0.png';
 import styles from './EditProfile.module.scss';
+import { Auth } from '@shared/api';
 
 interface EditProfileProps {
 	active: boolean;
@@ -49,7 +50,7 @@ export default function EditProfile({
 			}
 		};
 
-		let [, err] = await Profile.updateProfile(newData);
+		let [, err] = await Auth.updateProfile(newData);
 		if (err) {
 			setErr(err);
 			return;

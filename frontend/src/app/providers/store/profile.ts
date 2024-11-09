@@ -2,12 +2,10 @@ import { createSlice } from '@reduxjs/toolkit';
 import { Profile } from '@entities';
 import { RootState } from './store';
 
-const [profile, err] = await Profile.getProfile();
-
 const profileSlice = createSlice({
 	name: 'profile',
 	initialState: {
-		profile: err ? new Profile() : new Profile(profile)
+		profile: new Profile()
 	},
 	reducers: {
 		setProfile: (state, action) => {

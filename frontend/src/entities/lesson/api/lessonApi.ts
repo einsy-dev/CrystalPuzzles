@@ -1,4 +1,4 @@
-import { $authHost } from '../../../shared/api/axios.instances';
+import { AxiosConfig } from '@api';
 import {
 	LessonCreateParams,
 	LessonGetParams,
@@ -7,12 +7,12 @@ import {
 } from './lessonApi.interface';
 
 export class LessonApi {
-	#host = $authHost;
+	#host = AxiosConfig.$authHost;
 
 	async create(params: LessonCreateParams) {
 		const data = await this.#host
 			.post(`/lesson/`, params)
-			.then(({ data }) => [data, null])
+			.then(({ data }: any) => [data, null])
 			.catch(() => [null, 'Не удалось добавить урок']);
 		return data;
 	}
@@ -20,7 +20,7 @@ export class LessonApi {
 	async get(params: LessonGetParams) {
 		const data = await this.#host
 			.get(`/lesson/`, { params: params })
-			.then(({ data: { records } }) => [records, null])
+			.then(({ data: { records } }: any) => [records, null])
 			.catch(() => [null, 'Не удалось получить уроки']);
 		return data;
 	}
@@ -28,7 +28,7 @@ export class LessonApi {
 	async getById(id: string) {
 		const data = await this.#host
 			.get('/lesson/' + id)
-			.then(({ data }) => [data, null])
+			.then(({ data }: any) => [data, null])
 			.catch(() => [null, 'Не удалось получить урок']);
 		return data;
 	}
@@ -37,7 +37,7 @@ export class LessonApi {
 		const { id, ...rest } = params;
 		const data = await this.#host
 			.put('/lesson/' + id, rest)
-			.then(({ data }) => [data, null])
+			.then(({ data }: any) => [data, null])
 			.catch(() => [null, 'Не удалось обновить урок']);
 		return data;
 	}
@@ -45,7 +45,7 @@ export class LessonApi {
 	async delete(id: string | number) {
 		const data = await this.#host
 			.delete('/lesson/' + id)
-			.then(({ data }) => [data, null])
+			.then(({ data }: any) => [data, null])
 			.catch(() => [null, 'Не удалось удалить урок']);
 		return data;
 	}
@@ -54,7 +54,7 @@ export class LessonApi {
 		const { lesson_id, student_id } = params;
 		const data = await this.#host
 			.put('/lesson/add-user/' + lesson_id, student_id)
-			.then(({ data }) => [data, null])
+			.then(({ data }: any) => [data, null])
 			.catch(() => [null, 'Не удалось добавить студента']);
 		return data;
 	}
@@ -62,7 +62,7 @@ export class LessonApi {
 		const { lesson_id, student_id } = params;
 		const data = await this.#host
 			.put('/lesson/remove-user/' + lesson_id, student_id)
-			.then(({ data }) => [data, null])
+			.then(({ data }: any) => [data, null])
 			.catch(() => [null, 'Не удалось добавить студента']);
 		return data;
 	}

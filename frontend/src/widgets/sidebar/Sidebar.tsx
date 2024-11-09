@@ -7,6 +7,7 @@ import { ReactComponent as Arrow } from '@assets/svg/arrow.svg';
 import exit from 'assets/sidebar/exit.svg';
 import { NavMenuList } from './navMenu/NavMenu';
 import { Account } from './accaunt/Account';
+import { Auth } from '@shared/api';
 
 export default function Sidebar() {
 	const [isOpen, setIsOpen]: any = useState(false);
@@ -27,7 +28,7 @@ export default function Sidebar() {
 	}, []);
 
 	async function handleExit(): Promise<void> {
-		await user.logout();
+		await Auth.logout();
 	}
 
 	return (

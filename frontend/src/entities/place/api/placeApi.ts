@@ -1,12 +1,11 @@
-import { $authHost } from '../../../shared/api/axios.instances';
-
+import { AxiosConfig } from '@api';
 export class PlaceApi {
-	#host = $authHost;
+	#host = AxiosConfig.$authHost;
 
 	async get() {
 		const data = await this.#host
 			.get(`/space/`)
-			.then(({ data: { records } }) => [records, null])
+			.then(({ data: { records } }: any) => [records, null])
 			.catch(() => [null, 'Не удалось получить места']);
 		return data;
 	}
@@ -14,7 +13,7 @@ export class PlaceApi {
 	async getById(id: string | number) {
 		const data = await this.#host
 			.get('/space/' + id)
-			.then(({ data }) => [data, null])
+			.then(({ data }: any) => [data, null])
 			.catch(() => [null, 'Не удалось получить место']);
 		return data;
 	}

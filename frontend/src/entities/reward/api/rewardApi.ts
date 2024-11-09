@@ -1,5 +1,4 @@
-import { $authHost } from '../../../shared/api/axios.instances';
-
+import { AxiosConfig } from '@api';
 export class RewardApi {
-	#host = $authHost;
+	#host = AxiosConfig.$authHost;
 }
