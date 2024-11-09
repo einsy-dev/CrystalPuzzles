@@ -1,0 +1,78 @@
+.component {
+	position: relative;
+	padding: 16px;
+	min-height: 300px;
+	background-color: var(--white-color);
+	border: var(--border);
+	border-radius: var(--radius);
+	font: var(--fw-medium) var(--fz-btn) var(--ff-first);
+}
+
+.trainer_wrapper {
+	border-bottom: var(--border);
+
+	.trainer {
+		font-weight: var(--fw-regular);
+		padding-bottom: 5px;
+	}
+}
+
+.place_wrapper {
+	padding-top: 16px;
+	display: flex;
+	align-items: center;
+	gap: 20px;
+	border-bottom: var(--border);
+
+	.place {
+		padding-bottom: 5px;
+	}
+}
+
+.comment_wrapper {
+	.subtitle {
+		padding-top: 16px;
+		padding-bottom: 5px;
+		border-bottom: var(--border);
+	}
+}
+
+.text {
+	padding-top: 16px;
+	font: var(--fw-regular) var(--fz-text) var(--ff-first);
+}
+
+.icon_wrapper {
+	padding-top: 10px;
+	display: flex;
+	gap: 20px;
+	justify-content: end;
+}
+
+.icon {
+	cursor: pointer;
+}
+
+.confirm {
+	position: absolute;
+	inset: 0;
+	padding: 20px;
+	display: grid;
+	place-content: center;
+	background-color: #dae8f0;
+	border-radius: 20px;
+	z-index: 9;
+}
+
+.question {
+	padding-bottom: 30px;
+	text-align: center;
+}
+
+.btn_wrapper {
+	justify-self: center;
+}
+
+.btn {
+	margin-bottom: 30px;
+}
