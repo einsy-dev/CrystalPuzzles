@@ -23,7 +23,7 @@ export const ModalView = ({ closeModal, data }: ModalViewProps) => {
 	const cutternDate = useSelector(getCurrentDate);
 	const [editData, setEditData] = useState(null);
 
-	const [localData, setLocalData] = useState<any>(data);
+	const [, setLocalData] = useState<any>(data);
 
 	const [itemToDelete, setItemToDelete] = useState<any | null>(null);
 	const [confirmDeleteActive, setConfirmDeleteActive] = useState(false);

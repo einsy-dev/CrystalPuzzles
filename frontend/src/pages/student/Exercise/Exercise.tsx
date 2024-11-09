@@ -13,7 +13,7 @@ interface ExercisePageProps {
 
 export default function ExercisePage({ title }: ExercisePageProps) {
 	const { id }: any = useLoaderData();
-	const [data, setData] = useState<any>(null);
+	const [, setData] = useState<any>(null);
 	const [exercises, setExercises] = useState<any>([]);
 
 	useEffect(() => {

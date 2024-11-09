@@ -5,8 +5,6 @@ import {
 	LoginParams,
 	RegisterParams
 } from './auth.interface';
-import store from '@app/providers/store/store';
-import { setProfile } from '@app/providers/store';
 import { Profile } from '@entities';
 
 class Auth {

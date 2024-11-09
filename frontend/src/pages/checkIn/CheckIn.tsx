@@ -1,6 +1,6 @@
 import styles from './CheckIn.module.scss';
 import { FormEvent, useEffect, useState } from 'react';
-import { Link, redirect, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Wrapper from './wrapper/Wrapper';
 import Input from './input/Input';
 import Password from './password/Password';

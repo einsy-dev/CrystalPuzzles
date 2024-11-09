@@ -43,7 +43,6 @@ export const ModalEditLesson = ({
 	});
 	const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-
 	useEffect(() => {
 		if (data) {
 			setEditLesson({

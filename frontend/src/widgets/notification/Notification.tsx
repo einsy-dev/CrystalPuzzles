@@ -1,6 +1,6 @@
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import classNames from 'classnames';
-import { useResize } from '@shared/hooks';
+// import { useResize } from '@shared/hooks';
 import { Title } from '@shared/ui';
 import { NotificationItem } from './NotificationItem/NotificationItem';
 import { NotificationItemSeparate } from './NotificationItemSeparate/NotificationItemSeparate';
@@ -10,10 +10,10 @@ export default function Notification({
 	array = Array(2).fill(''),
 	className
 }: any) {
-	const navigate = useNavigate();
+	// const navigate = useNavigate();
 	const location = useLocation();
 	const isMainPage = location.pathname === '/';
-	const isMobile = useResize('sm');
+	// const isMobile = useResize('sm');
 
 	return (
 		<section
