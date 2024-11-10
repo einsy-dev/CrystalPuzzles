@@ -1,7 +1,7 @@
 @use '~styles/mixins' as *;
 
 .btn {
-	padding: var(--btn-padding) 30px;
+	padding: var(--padding-sm) 30px;
 	display: flex;
 	justify-content: center;
 	align-items: center;

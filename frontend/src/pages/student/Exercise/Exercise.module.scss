@@ -51,7 +51,7 @@
 
 .title {
 	margin-bottom: 12px;
-	padding: var(--btn-padding) var(--gap);
+	padding: var(--padding-sm) var(--gap);
 	font: var(--fw-medium) var(--fz-btn) var(--ff-first);
 	text-align: center;
 	background-color: var(--bg-date-picker);
@@ -82,7 +82,7 @@
 	height: 102px;
 	display: grid;
 	place-content: center;
-	padding: var(--btn-padding);
+	padding: var(--padding-sm);
 	// background-color: var(--btn-bg-color);
 	background-color: var(--bg-date-picker);
 	border: var(--border);
