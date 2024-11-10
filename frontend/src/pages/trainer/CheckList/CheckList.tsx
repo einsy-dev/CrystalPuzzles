@@ -46,7 +46,6 @@ export default function CheckListPage({ title }: CheckListPageProps) {
 	async function createCheckList(data: any) {
 		const [, err] = await CheckList.create(data);
 		if (err) return;
-		location.replace('/exercises/' + id);
 	}
 
 	return (

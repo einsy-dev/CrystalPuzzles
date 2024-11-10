@@ -3,11 +3,11 @@ import { Page } from '@shared/ui';
 import { FormEvent, useState } from 'react';
 import { Button } from '@shared/ui';
 import { ReactComponent as UploadIcon } from '@shared/assets/svg/upload.svg';
-import LS from '@shared/lib/localStorage';
 import { useSelector } from 'react-redux';
 import { selectProfile } from '@store/profile';
 import { User } from '@entities';
 import avatar from '@shared/assets/avatar/0.png';
+import { Auth } from '@shared/api';
 
 interface AvatarPageProps {
 	title: string;
@@ -22,13 +22,10 @@ export default function AvatarPage({ title }: AvatarPageProps) {
 	async function submitForm(e: FormEvent) {
 		e.preventDefault();
 		if (!userPhoto) return;
-		const [, err] = await User.setAvatar(userPhoto);
-		if (err) {
-			setErr(err);
-			return;
-		}
-		LS.remove('avatar');
-		location.replace('/');
+		await User.setAvatar(userPhoto).then(([, err]) => {
+			if (err) setErr(err);
+		});
+		await Auth.getProfile();
 	}
 
 	return (

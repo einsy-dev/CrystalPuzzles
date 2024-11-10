@@ -6,6 +6,8 @@ import {
 	RegisterParams
 } from './auth.interface';
 import { Profile } from '@entities';
+import store from '@app/providers/store/store';
+import { setProfile } from '@app/providers/store';
 
 class Auth {
 	#host = AxiosConfig.$host;
@@ -45,29 +47,30 @@ class Auth {
 		return data;
 	}
 
-	async updateToken() {
-		const data = await this.#host
-			.post('/auth/refresh-token')
-			.then(({ data: { access_token } }: { data: { access_token: string } }) =>
-				Cookies.set('token', access_token)
-			)
-			.catch(() => [null, 'Не удалось обновить токен']);
-		return data;
-	}
-
 	async getProfile() {
 		const data = await this.#authHost
 			.get('/profile')
 			.then(({ data }: { data: any }) => [new Profile(data), null])
 			.catch(() => [null, 'Не удалось получить профиль']);
+		store.dispatch(setProfile(data[0]));
 		return data;
 	}
 
 	async updateProfile(params: EditProfileParams) {
-		const data = await this.#host
+		const data = await this.#authHost
 			.put('/profile/edit', params)
 			.then(({ data }: { data: any }) => [data, null])
 			.catch(() => [null, 'Не удалось обновить профиль']);
+		return data;
+	}
+
+	async updateToken() {
+		const data = await this.#authHost
+			.post('/auth/refresh-token')
+			.then(({ data: { access_token } }: { data: { access_token: string } }) =>
+				Cookies.set('token', access_token)
+			)
+			.catch(() => [null, 'Не удалось обновить токен']);
 		return data;
 	}
 
@@ -80,7 +83,7 @@ class Auth {
 
 		const data = await this.#host
 			.post('/user/change-password', { old_password, new_password })
-			.then(() => location.replace('/'))
+			// .then(() => location.replace('/'))
 			.catch(() => [null, 'Не удалось изменить пароль']);
 
 		return data;
@@ -90,7 +93,7 @@ class Auth {
 		const data = await this.#host
 			.post('/auth/logout')
 			.then(() => Cookies.remove('token'))
-			.then(() => location.replace('/'))
+			// .then(() => location.replace('/'))
 			.catch(() => [null, 'Не удалось выйти']);
 		return data;
 	}

@@ -1,8 +1,8 @@
 import styles from './Account.module.scss';
-import avatar from '@shared/assets/avatar/0.png';
 import { roleAdapter } from '@entities';
 import { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
+import ProfileAvatar from 'entities/profile/ui/ProfileAvatar';
 
 export const Account = ({ user, className, isMobile }: any) => {
 	const position = useMemo(() => roleAdapter(user.role), [user]);
@@ -10,10 +10,8 @@ export const Account = ({ user, className, isMobile }: any) => {
 
 	return (
 		<div className={`${styles.accaunt_wrap} ${className}`}>
-			<img
-				src={user.photo ? user.photo : avatar}
+			<ProfileAvatar
 				className={styles.avatar}
-				alt=""
 				onClick={() => navigate('./profile', { state: { user } })}
 			/>
 			{!isMobile && (

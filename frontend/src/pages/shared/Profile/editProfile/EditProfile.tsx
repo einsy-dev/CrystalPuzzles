@@ -55,13 +55,12 @@ export default function EditProfile({
 			setErr(err);
 			return;
 		}
-		if (!userPhoto) location.replace('/');
 		[, err] = await User.setAvatar(userPhoto);
 		if (err) {
 			setErr(err);
 			return;
 		}
-		location.replace('/');
+		await Auth.getProfile();
 	}
 	return (
 		<Modal active={active} setActive={setActive} className={styles.modal}>
