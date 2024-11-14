@@ -13,7 +13,6 @@ interface LoginParams {
 	password: string;
 	reload?: boolean;
 }
-
 interface ExtentionParams {
 	phone_number?: string;
 	area?: string;

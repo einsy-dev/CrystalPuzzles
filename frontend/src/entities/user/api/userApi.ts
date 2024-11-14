@@ -1,13 +1,13 @@
-import { $authHost } from '@shared/api/axios.instances';
-import { PasswordParams } from './user.inerface';
+import { AxiosConfig } from '@api';
+import { PasswordParams } from './userApi.inerface';
 
-class User {
-	#host = $authHost;
+export class UserApi {
+	#host = AxiosConfig.$authHost;
 
 	async getStudents({ search_string = '' } = {}) {
 		const data = await this.#host
 			.get('/student', { params: { search_string } })
-			.then(({ data: { records } }) => [records, null])
+			.then(({ data: { records } }: any) => [records, null])
 			.catch(() => [null, 'Не удалось получить студентов']);
 		return data;
 	}
@@ -15,7 +15,7 @@ class User {
 	async getTrainers() {
 		const data = await this.#host
 			.get('/trainer')
-			.then(({ data: { records } }) => [records, null])
+			.then(({ data: { records } }: any) => [records, null])
 			.catch(() => [null, 'Не удалось получить тренеров']);
 		return data;
 	}
@@ -23,7 +23,7 @@ class User {
 	async getSupervisors() {
 		const data = await this.#host
 			.get('/supervisor')
-			.then(({ data: { records } }) => [records, null])
+			.then(({ data: { records } }: any) => [records, null])
 			.catch(() => [null, 'Не удалось получить супервайзеров']);
 		return data;
 	}
@@ -31,7 +31,7 @@ class User {
 	async getAdmins() {
 		const data = await this.#host
 			.get('/admin')
-			.then(({ data: { records } }) => [records, null])
+			.then(({ data: { records } }: any) => [records, null])
 			.catch(() => [null, 'Не удалось получить администраторов']);
 		return data;
 	}
@@ -39,7 +39,7 @@ class User {
 	async getAvatar() {
 		const data = await this.#host
 			.get('/profile/get-photo')
-			.then(({ data }) => [data, null])
+			.then(({ data }: any) => [data, null])
 			.catch(() => [null, 'Не удалось получить аватар']);
 		return data;
 	}
@@ -49,7 +49,7 @@ class User {
 		formData.append('file', avatar);
 		const data = await this.#host
 			.put('/profile/set-photo', formData)
-			.then(({ data }) => [data, null])
+			.then(({ data }: any) => [data, null])
 			.catch(() => [null, 'Не удалось загрузить аватар']);
 		return data;
 	}
@@ -57,7 +57,7 @@ class User {
 	async setDefaultAvatar(id = 1) {
 		const data = await this.#host
 			.put('/profile/set-avatar', { avatar_id: id })
-			.then(({ data }) => [data, null])
+			.then(({ data }: any) => [data, null])
 			.catch(() => [null, 'Не удалось установить аватар']);
 		return data;
 	}
@@ -65,7 +65,7 @@ class User {
 	async removeAvatar() {
 		const data = await this.#host
 			.delete('/profile/remove-photo')
-			.then(({ data }) => [data, null])
+			.then(({ data }: any) => [data, null])
 			.catch(() => [null, 'Не удалось удалить аватар']);
 		return data;
 	}
@@ -73,10 +73,8 @@ class User {
 	async updatePassword(params: PasswordParams) {
 		const data = await this.#host
 			.post('/user/change-password', params)
-			.then(({ data }) => [data, null])
+			.then(({ data }: any) => [data, null])
 			.catch(() => [null, 'Не удалось изменить пароль']);
 		return data;
 	}
 }
-
-export default new User();

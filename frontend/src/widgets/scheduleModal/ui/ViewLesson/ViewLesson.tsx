@@ -1,5 +1,5 @@
 import { ScheduleCard } from '@pages/shared/ScheduleCard/ScheduleCard';
-import { LessonI } from '@shared/api/lesson/lesson.interface';
+import { LessonI } from 'entities/lesson/api/lessonApi.interface';
 import styles from './ViewLesson.module.scss';
 
 interface ViewLessonProps {

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import moment from 'moment';
-import { Lesson } from '@shared/api';
+import { Lesson } from '@entities';
 import ScheduleRouteTo from '@shared/lib/scheduleRouteTo';
 import { selectProfile } from '@app/providers/store';
 import styles from './ScheduleList.module.scss';

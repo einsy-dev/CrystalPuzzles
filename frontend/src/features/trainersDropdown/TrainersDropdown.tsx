@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectTrainers, setTrainers } from '@app/providers/store/app';
 import { DropDownButton } from '@features';
-import { User } from '@shared/api';
+import { User } from '@entities';
 import joinName from 'entities/profile/assets/joinName';
 import {
 	getCurrentTrainer,

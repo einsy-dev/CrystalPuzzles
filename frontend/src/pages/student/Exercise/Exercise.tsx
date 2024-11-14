@@ -5,7 +5,7 @@ import { Page } from '@shared/ui';
 import { DateChanger, Feedback } from '@features';
 import { Exercises } from '@widgets';
 import classNames from 'classnames';
-import { Lesson } from '@shared/api';
+import { Lesson } from '@entities';
 
 interface ExercisePageProps {
 	title: string;
@@ -13,7 +13,7 @@ interface ExercisePageProps {
 
 export default function ExercisePage({ title }: ExercisePageProps) {
 	const { id }: any = useLoaderData();
-	const [data, setData] = useState<any>(null);
+	const [, setData] = useState<any>(null);
 	const [exercises, setExercises] = useState<any>([]);
 
 	useEffect(() => {

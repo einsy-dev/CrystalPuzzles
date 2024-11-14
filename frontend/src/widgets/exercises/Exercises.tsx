@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import ExerciseItem from './ExerciseItem/ExerciseItem';
 import styles from './Exercises.module.scss';
 import { useEffect, useState } from 'react';
-import { Exercise } from '@shared/api';
+import { Exercise } from '@entities';
 import { v4 as uuid } from 'uuid';
 
 export default function Exercises({ data, className, disabled, checked }: any) {

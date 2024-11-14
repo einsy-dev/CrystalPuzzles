@@ -1,10 +1,10 @@
 import { getCurrentDate, selectLessons } from '@app/providers/store';
 import { Tabs } from '@pages/shared/Tabs/Tabs';
-import { LessonI } from '@shared/api/lesson/lesson.interface';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { AddLesson } from '../AddLesson/AddLesson';
 import { ViewLesson } from '../ViewLesson/ViewLesson';
+import { type LessonI } from 'entities/lesson/api/lessonApi.interface';
 import styles from './ScheduleModal.module.scss';
 
 interface ScheduleModalProps {

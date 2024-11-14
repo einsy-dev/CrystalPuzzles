@@ -1,5 +1,6 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import { ErrorResponse } from 'react-router-dom';
 
 declare global {
 	interface Window {
@@ -7,31 +8,41 @@ declare global {
 	}
 }
 
-axios.defaults.baseURL = process.env.REACT_APP_SERVER_API || window.API_URL;
+class AxiosConfig {
+	$authHost: any;
+	$host: any;
 
-const $host = axios.create();
-
-const $authHost = axios.create();
-
-$authHost.interceptors.request.use((config) => {
-	const token = Cookies.get('token');
-	if (!token) return config;
-
-	config.headers.authorization = `Bearer ${token}`;
-	return config;
-});
-
-$authHost.interceptors.response.use(
-	(res) => res,
-	async (err) => {
-		if (
-			err.status === 403 &&
-			location.pathname !== '/login' &&
-			location.pathname !== '/registration'
-		) {
-			location.href = '/login';
-		}
+	constructor() {
+		this.init();
 	}
-);
 
-export { $host, $authHost };
+	init() {
+		axios.defaults.baseURL = process.env.REACT_APP_SERVER_API || window.API_URL;
+
+		this.$authHost = axios.create();
+		this.$host = axios.create();
+
+		this.$authHost.interceptors.request.use((config: any) => {
+			const token = Cookies.get('token');
+			if (!token) return config;
+
+			config.headers.authorization = `Bearer ${token}`;
+			return config;
+		});
+
+		this.$authHost.interceptors.response.use(
+			(res: Response) => res,
+			async (err: ErrorResponse) => {
+				if (
+					err.status === 403 &&
+					location.pathname !== '/login' &&
+					location.pathname !== '/registration'
+				) {
+					location.href = '/login';
+				}
+			}
+		);
+	}
+}
+
+export default new AxiosConfig();

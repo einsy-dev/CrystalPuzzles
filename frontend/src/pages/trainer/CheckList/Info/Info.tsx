@@ -1,4 +1,4 @@
-import { Lesson } from '@shared/api';
+import { Lesson } from '@entities';
 import styles from './Info.module.scss';
 import moment from 'moment';
 import { useState, useEffect } from 'react';

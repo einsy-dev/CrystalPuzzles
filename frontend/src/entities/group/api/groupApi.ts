@@ -1,13 +1,13 @@
-import { $authHost } from '../axios.instances';
-import { AddStudentI, GroupI } from './group.interface';
+import { AxiosConfig } from '@api';
+import { AddStudentI, GroupI } from './groupApi.interface';
 
-class Group {
-	#host = $authHost;
+export class GroupApi {
+	#host = AxiosConfig.$authHost;
 
 	async create(group: GroupI) {
 		const data = await this.#host
 			.post('/group', group)
-			.then(({ data }) => [data, null])
+			.then(({ data }: any) => [data, null])
 			.catch(() => [null, 'Не удалось создать группу']);
 		return data;
 	}
@@ -15,7 +15,7 @@ class Group {
 	async get() {
 		const data = await this.#host
 			.get('/group')
-			.then(({ data: { records } }) => [records, null])
+			.then(({ data: { records } }: any) => [records, null])
 			.catch(() => [null, 'Не удалось получить список групп']);
 		return data;
 	}
@@ -23,7 +23,7 @@ class Group {
 	async getById(id: string) {
 		const data = await this.#host
 			.get('/group/' + id)
-			.then(({ data }) => [data, null])
+			.then(({ data }: any) => [data, null])
 			.catch(() => [null, 'Не удалось получить группу']);
 		return data;
 	}
@@ -31,7 +31,7 @@ class Group {
 	async update(id: string, params: GroupI) {
 		const data = await this.#host
 			.put('/group/' + id, params)
-			.then(({ data }) => [data, null])
+			.then(({ data }: any) => [data, null])
 			.catch(() => [null, 'Не удалось обновить группу']);
 		return data;
 	}
@@ -39,7 +39,7 @@ class Group {
 	async delete(id: string) {
 		const data = await this.#host
 			.delete('/group/' + id)
-			.then(({ data }) => [data, null])
+			.then(({ data }: any) => [data, null])
 			.catch(() => [null, 'Не удалось удалить группу']);
 		return data;
 	}
@@ -47,9 +47,8 @@ class Group {
 	async addStudent(params: AddStudentI) {
 		const data = await this.#host
 			.post('/group/add-student/', params)
-			.then(({ data }) => [data, null])
+			.then(({ data }: any) => [data, null])
 			.catch(() => [null, 'Не удалось удалить группу']);
 		return data;
 	}
 }
-export default new Group();

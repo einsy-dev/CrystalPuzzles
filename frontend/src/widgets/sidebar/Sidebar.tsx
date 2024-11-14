@@ -5,9 +5,9 @@ import { useSwipe, useResize } from '@hooks';
 import { selectProfile } from '@store/profile';
 import { ReactComponent as Arrow } from '@assets/svg/arrow.svg';
 import exit from 'assets/sidebar/exit.svg';
-import { Auth } from '@api';
 import { NavMenuList } from './navMenu/NavMenu';
 import { Account } from './accaunt/Account';
+import { Auth } from '@shared/api';
 
 export default function Sidebar() {
 	const [isOpen, setIsOpen]: any = useState(false);

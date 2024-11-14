@@ -2,12 +2,12 @@ import { useState } from 'react';
 import moment from 'moment';
 import { useSelector } from 'react-redux';
 import TimePicker from 'react-time-picker';
-import { Lesson } from '@shared/api';
-import { LessonI } from '@shared/api/lesson/lesson.interface';
-import { getCurrentTrainer } from '@app/providers/store';
+import { Lesson } from '@entities';
 import { Button } from '@shared/ui';
 import TrainersDropdown from 'features/trainersDropdown/TrainersDropdown';
 import PlacesDropdown from 'features/placesDropdown/PlacesDropdown';
+import { getCurrentTrainer } from '@app/providers/store';
+import { type LessonI } from 'entities/lesson/api/lessonApi.interface';
 import 'react-time-picker/dist/TimePicker.css';
 import 'react-clock/dist/Clock.css';
 import styles from './AddLesson.module.scss';
@@ -18,7 +18,7 @@ interface AddLessonProps {
 	onSubmit: () => void;
 }
 
-export const AddLesson = ({ onSubmit, data, day }: AddLessonProps) => {
+export const AddLesson = ({ onSubmit, day }: AddLessonProps) => {
 	const currentTrainer = useSelector(getCurrentTrainer);
 	const [newLesson, setNewLesson] = useState<any>({
 		space_id: null,

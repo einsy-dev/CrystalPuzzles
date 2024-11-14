@@ -1,15 +1,13 @@
-import { $authHost } from '../axios.instances';
-import { CheckListI } from './checkList.interface';
+import { AxiosConfig } from '@api';
+import { CheckListI } from './checkListApi.interface';
 
-class CheckList {
-	#host = $authHost;
+export class CheckListApi {
+	#host = AxiosConfig.$authHost;
 	async create(params: CheckListI) {
 		const data = await this.#host
 			.post(`/lesson/create-check`, params)
-			.then(({ data }) => [data, null])
+			.then(({ data }: any) => [data, null])
 			.catch(() => [null, 'Не удалось создать чек-лист']);
 		return data;
 	}
 }
-
-export default new CheckList();

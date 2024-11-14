@@ -3,10 +3,9 @@ import CheckInPage from '@checkIn/CheckIn';
 import App from '@app/App';
 import { ProfilePage, ErrorPage } from '@pages/shared';
 import { redirect } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { selectProfile } from '@app/providers/store/profile';
 import ChangePass from '@pages/checkIn/changePass/ChangePass';
-import Cookies from 'js-cookie';
+import { selectProfile } from '@app/providers/store';
+import { useSelector } from 'react-redux';
 
 const MainRouter = (): any => {
 	const { role } = useSelector(selectProfile);
@@ -17,7 +16,6 @@ const MainRouter = (): any => {
 			errorElement: <ErrorPage />,
 			loader: () => {
 				if (!role || role === 'admin') {
-					Cookies.remove('token');
 					return redirect('/login');
 				}
 				return null;

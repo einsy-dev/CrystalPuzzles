@@ -1,4 +1,4 @@
-import { User } from '@shared/api';
+import { User } from '@entities';
 import styles from './Search.module.scss';
 import { RefObject, useEffect, useRef } from 'react';
 import {

@@ -1,7 +1,8 @@
 import { ReactNode } from 'react';
 import { serverUrl } from '../assets';
+import { ProfileApi } from '../api/profileApi';
 
-export class Profile {
+export class Profile extends ProfileApi {
 	id = null;
 	_role = null;
 	avatar = 0;
@@ -12,6 +13,7 @@ export class Profile {
 	extensions: any;
 	contact: string | number | readonly string[] | undefined;
 	constructor(data?: any) {
+		super();
 		if (!data) return;
 		const { role, avatar, photo, ...rest } = data;
 		this._role = role;
@@ -23,3 +25,5 @@ export class Profile {
 		return this._role;
 	}
 }
+
+export default Profile;

@@ -4,14 +4,14 @@ import classNames from 'classnames';
 import moment from 'moment';
 import { deleteLesson } from '@app/providers/store';
 import { Button, Modal } from '@shared/ui';
-import { Lesson } from '@shared/api';
 import joinName from 'entities/profile/assets/joinName';
 import { ReactComponent as ClockIcon } from '@shared/assets/svg/clock.svg';
 import { ReactComponent as Trash } from '@shared/assets/svg/trash.svg';
 import { ReactComponent as Pencil } from '@shared/assets/svg/pencil.svg';
-import { type LessonI } from '@shared/api/lesson/lesson.interface';
-import styles from './ScheduleCard.module.scss';
 import { ModalEditLesson } from '@pages/supervisor/Schedule/ModalEditLesson/ModalEditLesson';
+import { type LessonI } from 'entities/lesson/api/lessonApi.interface';
+import { Lesson } from '@entities';
+import styles from './ScheduleCard.module.scss';
 
 interface ScheduleCardProps {
 	className?: string;

@@ -5,8 +5,8 @@ import Info from './Info/Info';
 import { Exercises } from '@widgets';
 import { FormEvent, useEffect, useState } from 'react';
 import StudentsDropdown from 'features/studentsDropdown/StudentsDropdown';
-import { CheckList } from '@shared/api';
-import { TrainingI } from '@shared/api/checklist/checkList.interface';
+import { CheckList } from '@entities';
+import { TrainingI } from 'entities/checklist/api/checkListApi.interface';
 import { useLoaderData } from 'react-router-dom';
 
 interface CheckListPageProps {
@@ -46,7 +46,6 @@ export default function CheckListPage({ title }: CheckListPageProps) {
 	async function createCheckList(data: any) {
 		const [, err] = await CheckList.create(data);
 		if (err) return;
-		location.replace('/exercises/' + id);
 	}
 
 	return (
