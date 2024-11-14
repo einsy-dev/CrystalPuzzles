@@ -5,7 +5,7 @@
 	display: flex;
 	justify-content: flex-end;
 	align-items: center;
-	gap: var(--gap);
+	gap: var(--gap-sm);
 
 	@include md() {
 		padding: 10px 0;
@@ -26,7 +26,6 @@
 			font-size: 48px;
 			font-weight: 400;
 			@include md() {
-
 				font-size: 32px;
 				font-weight: 500;
 			}

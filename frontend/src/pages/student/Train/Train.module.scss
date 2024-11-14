@@ -2,7 +2,7 @@
 .container {
 	display: grid;
 	grid-template-columns: 2fr max-content;
-	gap: var(--gap);
+	gap: var(--gap-sm);
 	@include xl() {
 		grid-template-columns: 1fr;
 	}
@@ -22,7 +22,7 @@
 			display: flex;
 			flex-direction: column;
 			justify-content: space-between;
-			gap: var(--gap);
+			gap: var(--gap-sm);
 
 			.trainer_container,
 			.place_container {

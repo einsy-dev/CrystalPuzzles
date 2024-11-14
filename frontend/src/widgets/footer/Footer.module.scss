@@ -17,7 +17,7 @@
 	}
 	.socials {
 		display: flex;
-		gap: var(--gap);
+		gap: var(--gap-sm);
 		@include sm() {
 			gap: 5px;
 		}

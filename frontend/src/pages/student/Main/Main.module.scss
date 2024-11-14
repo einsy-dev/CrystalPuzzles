@@ -2,7 +2,7 @@
 
 .wrapper {
 	display: grid;
-	gap: var(--gap);
+	gap: var(--gap-sm);
 	grid-template-columns: 1fr 1fr 1fr;
 	grid-template-areas:
 		'reward train schedule'

@@ -7,19 +7,16 @@ import Header from './Header/Header';
 import DaysList from './DaysList/DaysList';
 import DaysOfWeek from './DaysOfWeek/DaysOfWeek';
 import { Modal } from '@shared/ui';
-import { getCurrentTrainer, selectLessons } from '@app/providers/store';
+import { getCurrentTrainer } from '@app/providers/store';
 import { getLessons } from '@app/providers/store/service/getLessons';
-import { ModalView } from '../ModalView/ModalView';
-import { ModalAddLesson } from '../ModalAddLesson/ModalAddLesson';
 import styles from './Table.module.scss';
+import { ScheduleModal } from 'widgets/scheduleModal/ui/ScheduleModal/ScheduleModal';
 
 interface TableProps {
-	edit: boolean;
 	className?: string;
 }
 
-const Table = ({ edit, className }: TableProps) => {
-	const lessons = useSelector(selectLessons);
+const Table = ({ className }: TableProps) => {
 	const currentTrainer = useSelector(getCurrentTrainer);
 	const trainer_id = currentTrainer?.id;
 	const [date, setDate] = useState<Moment>(moment().startOf('week'));
@@ -38,32 +35,17 @@ const Table = ({ edit, className }: TableProps) => {
 			<Header setStartDate={setDate} startDate={date} />
 			<div className={styles.grid_wrap}>
 				<DaysOfWeek />
-				<DaysList setModalActive={setModalActive} edit={edit} />
+				<DaysList setModalActive={setModalActive} />
 			</div>
 
 			{modalActive && (
-				<Modal
-					active={modalActive}
-					setActive={setModalActive}
-					className={styles.modal}
-				>
-					{/* {edit || editData ? ( */}
-					{edit ? (
-						<ModalAddLesson
-							day={modalActive}
-							data={lessons}
-							setActive={setModalActive}
-							closeModal={() => setModalActive(false)}
-							onSubmit={handleSubmit}
-						/>
-					) : (
-						<ModalView
-							day={modalActive}
-							data={lessons[modalActive]}
-							setActive={setModalActive}
-							closeModal={() => setModalActive(false)}
-						/>
-					)}
+				<Modal active={modalActive} setActive={setModalActive}>
+					<ScheduleModal
+						day={modalActive}
+						setActive={setModalActive}
+						closeModal={() => setModalActive(false)}
+						handleSubmit={handleSubmit}
+					/>
 				</Modal>
 			)}
 		</div>

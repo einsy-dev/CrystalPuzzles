@@ -1,24 +1,20 @@
-.component {
-	// padding: 20px;
-	width: 60vw;
-	height: 70vh;
-	background-color: var(--white-color);
-	overflow-y: scroll;
-
-	&::-webkit-scrollbar {
-		width: 0;
-	}
-}
-
 .header {
-	padding: 20px 32px;
+	padding: var(--margin-lg) var(--padding-lg);
 	display: flex;
-	gap: 60px;
-	background-color: #dae8f0;
+	justify-content: space-between;
+	align-items: center;
+	gap: calc(var(--gap-md) * 2);
+	background-color: var(--btn-bg-color);
 	border-bottom: var(--border);
 }
+
+.btn_wrapper {
+	display: flex;
+	gap: calc(var(--gap-md) * 2);
+}
+
 .tab {
-	font: 500 24px var(--ff-first);
+	font: var(--fw-medium) var(--fz-btn) var(--ff-first);
 	cursor: pointer;
 	background-color: transparent;
 	border: none;
@@ -35,4 +31,6 @@
 	text-decoration: underline;
 }
 
-
+.close_btn {
+	cursor: pointer;
+}

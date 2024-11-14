@@ -5,13 +5,12 @@ import { ScheduleButton } from '../ScheduleButton/ScheduleButton';
 import { setCurrentDate } from '@app/providers/store/scheduleModal';
 import { selectLessons } from '@app/providers/store/schedule';
 import styles from './DaysList.module.scss';
-
+import { ReactComponent as Pencil } from '@shared/assets/svg/pencil.svg';
 interface DaysListProps {
 	setModalActive: (day: string) => void;
-	edit: boolean;
 }
 
-export default function DaysList({ setModalActive, edit }: DaysListProps) {
+export default function DaysList({ setModalActive }: DaysListProps) {
 	const dispatch = useDispatch();
 	const lessons = useSelector(selectLessons);
 	const data = lessons;
@@ -20,7 +19,11 @@ export default function DaysList({ setModalActive, edit }: DaysListProps) {
 		<ul className={classNames(styles.grid, styles.days)}>
 			{Object.keys(data).map((key, index) => (
 				<li key={index} className={styles.day}>
-					<span> {moment(key).format('D')}</span>
+					<div className={styles.header}>
+						{moment(key).format('D')}
+						<Pencil width={'16px'} />
+					</div>
+
 					{data ? (
 						<div
 							className={classNames(styles.active, {
@@ -45,7 +48,6 @@ export default function DaysList({ setModalActive, edit }: DaysListProps) {
 						</div>
 					) : null}
 					<ScheduleButton
-						edit={edit}
 						className={styles.add_btn}
 						onclick={() => {
 							dispatch(setCurrentDate(key));

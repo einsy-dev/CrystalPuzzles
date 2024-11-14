@@ -4,7 +4,6 @@ import {
 	ProfilePage,
 	UsersSearchPage
 } from '@pages/shared';
-
 import {
 	MainPage,
 	ProgressPage,
@@ -13,7 +12,6 @@ import {
 	UsersListPage,
 	SchedulePage
 } from '@supervisor';
-
 import analytics from 'assets/sidebar/analytics.svg';
 import progress from 'assets/sidebar/progress.svg';
 import tables from 'assets/sidebar/tables.svg';
@@ -61,12 +59,24 @@ const supervisorRouter = [
 		path: '/schedule',
 		element: <SchedulePage title="Расписание" />,
 		local: 'Расписание',
-		img: schedule
+		img: schedule,
+		children: [
+			{
+				path: '/schedule/:day',
+				element: <div>test</div>, // List view
+				loader: ({ params: { day } }: any) => ({ day })
+			},
+			{
+				path: '/schedule/create/:day', // create  отсюда забираем день, дату и какой компонент, какое состояние view или create
+				element: <div>text</div>,
+				loader: ({ params: { day } }: any) => ({ day }) //useLoaderData(звбирает дату лоадера)
+			}
+		]
 	},
-	{
-		path: '/schedule/edit',
-		element: <SchedulePage edit title="Составить расписание" />
-	},
+	// {
+	// 	path: '/schedule/edit',
+	// 	element: <SchedulePage title="Составить расписание" />
+	// },
 	{
 		path: '/feedback',
 		element: <FeedbackPage title="Обратная связь" />,

@@ -1,7 +1,11 @@
+@use '~styles/mixins' as *;
+
 .component {
 	position: relative;
 	padding: 16px;
-	min-height: 300px;
+	max-height: 350px;
+	display: flex;
+	flex-direction: column;
 	background-color: var(--white-color);
 	border: var(--border);
 	border-radius: var(--radius);
@@ -38,12 +42,21 @@
 }
 
 .text {
+	max-height: 80px;
+	overflow-y: scroll;
 	padding-top: 16px;
+	padding-right: 5px;
 	font: var(--fw-regular) var(--fz-text) var(--ff-first);
+
+	// &::-webkit-scrollbar {
+	// 	display: none;
+	// }
+	@include custom-scrollbar(5px, var(--accent-color), 5px);
 }
 
 .icon_wrapper {
-	padding-top: 10px;
+	margin-top: auto;
+	padding-top: 16px;
 	display: flex;
 	gap: 20px;
 	justify-content: end;

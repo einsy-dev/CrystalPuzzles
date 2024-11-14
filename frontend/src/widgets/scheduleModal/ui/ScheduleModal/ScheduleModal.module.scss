@@ -3,7 +3,6 @@
 .component {
 	width: 60vw;
 	height: 70vh;
-	background-color: var(--white-color);
 	background-color: #eef1f4;
 	overflow-y: scroll;
 
@@ -31,11 +30,4 @@
 	margin-top: 20px;
 	display: flex;
 	justify-content: space-evenly;
-}
-
-.cards_content {
-	padding: 32px;
-	display: grid;
-	grid-template-columns: repeat(2, 1fr);
-	gap: 50px;
 }

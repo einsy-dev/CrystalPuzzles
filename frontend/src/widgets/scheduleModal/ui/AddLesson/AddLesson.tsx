@@ -1,32 +1,24 @@
 import { useState } from 'react';
+import moment from 'moment';
 import { useSelector } from 'react-redux';
 import TimePicker from 'react-time-picker';
-import moment from 'moment';
 import { Lesson } from '@shared/api';
+import { LessonI } from '@shared/api/lesson/lesson.interface';
+import { getCurrentTrainer } from '@app/providers/store';
 import { Button } from '@shared/ui';
 import TrainersDropdown from 'features/trainersDropdown/TrainersDropdown';
 import PlacesDropdown from 'features/placesDropdown/PlacesDropdown';
-import { ReactComponent as CloseButton } from '@shared/assets/svg/close.svg';
-import { getCurrentTrainer } from '@app/providers/store';
-import { type LessonI } from '@shared/api/lesson/lesson.interface';
 import 'react-time-picker/dist/TimePicker.css';
 import 'react-clock/dist/Clock.css';
-import styles from './ModalAddLesson.module.scss';
+import styles from './AddLesson.module.scss';
 
-interface ModalAddLessonProps {
+interface AddLessonProps {
 	day: any;
 	data: { [key: string]: LessonI[] };
-	setActive: any;
-	closeModal: any;
 	onSubmit: () => void;
 }
 
-export const ModalAddLesson = ({
-	day,
-	setActive,
-	closeModal,
-	onSubmit
-}: ModalAddLessonProps) => {
+export const AddLesson = ({ onSubmit, data, day }: AddLessonProps) => {
 	const currentTrainer = useSelector(getCurrentTrainer);
 	const [newLesson, setNewLesson] = useState<any>({
 		space_id: null,
@@ -53,18 +45,10 @@ export const ModalAddLesson = ({
 		}
 		onSubmit();
 		setErrorMessage(null);
-		setActive(false);
 	}
 
-	//TODO: почистить стили
 	return (
 		<div className={styles.container}>
-			{/* <DateChanger day={day} className={styles.header} /> */}
-			<header className={styles.header}>
-				<button className={styles.close_btn} onClick={closeModal}>
-					<CloseButton className={styles.icon} width={16} />
-				</button>
-			</header>
 			<main className={styles.main}>
 				<TrainersDropdown
 					state={newLesson.trainer_id}

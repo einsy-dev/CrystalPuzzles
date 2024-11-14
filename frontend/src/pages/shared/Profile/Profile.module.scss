@@ -3,7 +3,7 @@
 .container {
 	width: 100%;
 	display: grid;
-	gap: var(--gap);
+	gap: var(--gap-sm);
 	grid-template-columns: 1fr 2fr;
 	grid-template-areas:
 		'student name'
@@ -17,7 +17,7 @@
 			'name info'
 			'button info';
 	}
-	
+
 	@media (max-width: 550px) {
 		grid-template-columns: 40% 60%;
 		grid-template-areas:
@@ -39,7 +39,7 @@
 	grid-area: student;
 	display: flex;
 	flex-direction: column;
-	gap: var(--gap);
+	gap: var(--gap-sm);
 }
 
 .avatar {
