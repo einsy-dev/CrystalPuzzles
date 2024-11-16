@@ -12,7 +12,7 @@ export const Account = ({ user, className, isMobile }: any) => {
 		<div className={`${styles.accaunt_wrap} ${className}`}>
 			<ProfileAvatar
 				className={styles.avatar}
-				onClick={() => navigate('./profile', { state: { user } })}
+				onClick={() => navigate('/profile', { state: { user } })}
 			/>
 			{!isMobile && (
 				<div>
