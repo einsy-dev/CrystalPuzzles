@@ -3,12 +3,14 @@ import { scheduleSliceReducer } from './schedule';
 import { profileSliceReducer } from './profile';
 import { appSliceReducer } from './app';
 import { scheduleModalSliceReducer } from './scheduleModal';
+import { notificationSliceReducer } from './notification';
 
 const mainReducer = combineSlices({
 	app: appSliceReducer,
 	profile: profileSliceReducer,
 	schedule: scheduleSliceReducer,
-	scheduleModal: scheduleModalSliceReducer
+	scheduleModal: scheduleModalSliceReducer,
+	notification: notificationSliceReducer
 });
 
 const store = configureStore({
