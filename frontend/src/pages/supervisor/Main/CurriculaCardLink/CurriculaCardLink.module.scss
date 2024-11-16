@@ -1,0 +1,47 @@
+@use '~styles/mixins' as *;
+
+.evaluation {
+	width: 100%;
+	max-height: 347px;
+}
+
+.container {
+	padding-top: 26px;
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 8px 6px;
+
+	@include sm() {
+		padding-top: 20px;
+	}
+}
+
+.month_wrapper {
+	position: relative;
+	padding: 30px 16px;
+	border: var(--border);
+	border-radius: var(--radius-xs);
+	display: grid;
+	place-content: center;
+	cursor: pointer;
+
+	@include sm() {
+		padding: 16px;
+	}
+}
+
+.month {
+	font: var(--fw-regular) 16px var(--ff-second);
+}
+
+.icon {
+	position: absolute;
+	top: 8px;
+	right: 10px;
+
+	@include sm() {
+		width: 10px;
+		top: 5px;
+		right: 5px;
+	}
+}

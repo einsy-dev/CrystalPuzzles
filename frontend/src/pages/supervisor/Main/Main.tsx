@@ -3,9 +3,9 @@ import { Page, CardLink, Button } from '@shared/ui';
 import { useResize } from '@shared/hooks';
 import { ScheduleList } from '@features';
 import { Notification } from '@widgets';
-import { EvaluationCardLink } from './EvaluationCardLink/EvaluationCardLink';
 import { AnalyticCardLink } from './AnalyticCardLink/AnalyticCardLink';
 import { ProgressCardLink } from './ProgressCardLink/ProgressCardLink';
+import { CurriculaCardLink } from './CurriculaCardLink/CurriculaCardLink';
 import styles from './Main.module.scss';
 
 interface MainPageProps {
@@ -20,7 +20,7 @@ export default function MainPage({ title }: MainPageProps) {
 		<Page title={title} className={styles.page_wrapper}>
 			<ProgressCardLink className={styles.progress} />
 			<AnalyticCardLink className={styles.analytic} />
-			<EvaluationCardLink className={styles.evaluation} />
+			<CurriculaCardLink className={styles.plan} />
 			<CardLink
 				to="/schedule"
 				title={'Расписание'}
@@ -30,7 +30,7 @@ export default function MainPage({ title }: MainPageProps) {
 			</CardLink>
 			{isMobile ? (
 				<Link to={'/notifications'}>
-					<Button title="Уведомления" />
+					<Button title="Уведомления" className={styles.btn} />
 				</Link>
 			) : (
 				<Notification className={styles.notification} />

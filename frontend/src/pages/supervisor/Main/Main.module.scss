@@ -7,35 +7,46 @@
 	grid-template-columns: repeat(3, 1fr);
 	grid-template-rows: auto;
 	grid-template-areas:
-		'progress analytic evaluation'
+		'progress analytic plan'
 		'schedule schedule notification'
 		'schedule schedule buttons';
 
 	@include xl() {
-		grid-template-columns: 2fr 3fr;
+		grid-template-columns: 1fr 1fr;
 		grid-template-areas:
 			'progress notification'
 			'progress schedule'
 			'analytic schedule'
-			'evaluation buttons';
+			'plan buttons';
+	}
+
+	@include lg() {
+		grid-template-columns: 1fr 1fr;
+		grid-template-areas:
+			'schedule schedule'
+			'notification notification'
+			'progress analytic'
+			'plan plan'
+			'buttons buttons';
 	}
 
 	@include md() {
 		grid-template-columns: repeat(2, 1fr);
 		grid-template-areas:
 			'progress analytic'
-			'evaluation notification'
+			'plan notification'
 			'schedule schedule'
 			'buttons buttons';
 	}
+
 	@include sm() {
 		gap: 10px;
-		grid-template-columns: 2fr 1fr;
+		grid-template-columns: 1fr 1fr;
 		grid-template-areas:
 			'schedule  buttons'
 			'schedule notification'
 			'progress analytic'
-			'evaluation evaluation';
+			'plan plan';
 	}
 }
 
@@ -47,8 +58,8 @@
 	grid-area: analytic;
 }
 
-.evaluation {
-	grid-area: evaluation;
+.plan {
+	grid-area: plan;
 }
 
 .notification {
@@ -98,4 +109,8 @@
 		flex-direction: column;
 		gap: 10px;
 	}
+}
+
+.btn {
+	width: 100%;
 }
