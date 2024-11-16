@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import moment from 'moment';
 import { useSelector } from 'react-redux';
 import TimePicker from 'react-time-picker';
@@ -8,9 +8,10 @@ import TrainersDropdown from 'features/trainersDropdown/TrainersDropdown';
 import PlacesDropdown from 'features/placesDropdown/PlacesDropdown';
 import { getCurrentTrainer } from '@app/providers/store';
 import { type LessonI } from 'entities/lesson/api/lessonApi.interface';
-import 'react-time-picker/dist/TimePicker.css';
-import 'react-clock/dist/Clock.css';
+// import 'react-time-picker/dist/TimePicker.css';
+// import 'react-clock/dist/Clock.css';
 import styles from './AddLesson.module.scss';
+import { CustomTimePicker } from '@shared/ui/customTimePicker/CustomTimePicker';
 
 interface AddLessonProps {
 	day: any;
@@ -46,7 +47,7 @@ export const AddLesson = ({ onSubmit, day }: AddLessonProps) => {
 		onSubmit();
 		setErrorMessage(null);
 	}
-
+//TODO: переделать
 	return (
 		<div className={styles.container}>
 			<main className={styles.main}>
@@ -66,30 +67,47 @@ export const AddLesson = ({ onSubmit, day }: AddLessonProps) => {
 					className={styles.place}
 					single
 				/>
-				<div className={styles.time_wrapper}>
-					<TimePicker
-						className={styles.time}
-						maxDetail="minute"
-						onInput={(e) => {
-							if (e.target.value.length >= 2) {
-								e.target.value = e.target.value.slice(0, 2);
-							}
-						}}
-						onChange={(e: any) => {
-							if (!e) return;
-							const [hour, minute] = e.split(':').map(Number);
-							setNewLesson((prev: any) => ({
-								...prev,
-								start: moment(day).set({ hour, minute }).format()
-							}));
-						}}
-						value={moment(newLesson.start).format('HH:mm')}
-						format="HH:mm"
-						locale="sv-sv"
-						disableClock
-						clearIcon={null}
-					/>
-				</div>
+				{/* <TimePicker
+					className={styles.time}
+					maxDetail="minute"
+					onInput={(e) => {
+						if (e.target.value.length >= 2) {
+							e.target.value = e.target.value.slice(0, 2);
+						}
+					}}
+					onChange={(e: any) => {
+						if (!e) return;
+						const [hour, minute] = e.split(':').map(Number);
+						setNewLesson((prev: any) => ({
+							...prev,
+							start: moment(day).set({ hour, minute }).format()
+						}));
+					}}
+					value={moment(newLesson.start).format('HH:mm')}
+					format="HH:mm"
+					locale="sv-sv"
+					disableClock
+					clearIcon={null}
+				/> */}
+
+				<CustomTimePicker
+					className={styles.time}
+					value={moment(newLesson.start).format('HH:mm')}
+					onInput={(e: any) => {
+						if (e.target.value.length >= 2) {
+							e.target.value = e.target.value.slice(0, 2);
+						}
+					}}
+					onChange={(e: any) => {
+						if (!e) return;
+						const [hour, minute] = e.split(':').map(Number);
+						setNewLesson((prev: any) => ({
+							...prev,
+							start: moment(day).set({ hour, minute }).format()
+						}));
+					}}
+				/>
+
 				<textarea
 					className={styles.textarea}
 					onChange={(e) =>
