@@ -7,6 +7,7 @@ import ChangePass from '@pages/checkIn/changePass/ChangePass';
 import { selectProfile } from '@app/providers/store';
 import { useSelector } from 'react-redux';
 import { Auth } from '@shared/api';
+import Cookies from 'js-cookie';
 
 const MainRouter = (): any => {
 	const { role } = useSelector(selectProfile);
@@ -17,9 +18,16 @@ const MainRouter = (): any => {
 			errorElement: <ErrorPage />,
 			loader: async () => {
 				if (!role) {
-					await Auth.getProfile();
+					const [, err] = await Auth.getProfile();
+					if (err) {
+						return redirect('/login');
+					}
 				} else if (role === 'admin') {
 					return redirect('/login');
+				}
+				const savedPath = Cookies.get('path') || '/';
+				if (savedPath !== '/') {
+					return redirect(savedPath);
 				}
 				return null;
 			},
@@ -39,15 +47,6 @@ const MainRouter = (): any => {
 		},
 		{
 			path: '/',
-			loader: async () => {
-				if (!role) {
-					await Auth.getProfile();
-				}
-				if (role !== 'admin') {
-					return redirect('/');
-				}
-				return null;
-			},
 			children: [
 				{
 					path: 'login',

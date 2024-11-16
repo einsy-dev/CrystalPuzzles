@@ -74,17 +74,19 @@ export const NavMenuList = ({ role, isMobile }: any) => {
 					</div>
 
 					<ul className={`${styles.menu} ${isOpen ? styles.active : ''}`}>
-						{list?.map((item: any, index: any) => {
-							return (
-								item.local && (
-									<li className={styles.item} key={index}>
-										<NavLink to={item.path} className={styles.link}>
-											{item.local}
-										</NavLink>
-									</li>
-								)
-							);
-						})}
+						{list.length
+							? list?.map((item: any, index: any) => {
+									return (
+										item.local && (
+											<li className={styles.item} key={index}>
+												<NavLink to={item.path} className={styles.link}>
+													{item.local}
+												</NavLink>
+											</li>
+										)
+									);
+								})
+							: null}
 					</ul>
 				</nav>
 			)}

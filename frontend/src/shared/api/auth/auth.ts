@@ -83,19 +83,19 @@ class Auth {
 	}): Promise<void | any> {
 		const { old_password, new_password } = params;
 
-		const data = await this.#host
+		const data = await this.#authHost
 			.post('/user/change-password', { old_password, new_password })
-			// .then(() => location.replace('/'))
 			.catch(() => [null, 'Не удалось изменить пароль']);
-
 		return data;
 	}
 
 	async logout() {
-		const data = await this.#host
+		const data = await this.#authHost
 			.post('/auth/logout')
-			.then(() => Cookies.remove('token'))
-			// .then(() => location.replace('/'))
+			.then(() => Cookies.remove('token', { sameSite: 'strict' }))
+			.then(() => {
+				store.dispatch(setProfile(new Profile()));
+			})
 			.catch(() => [null, 'Не удалось выйти']);
 		return data;
 	}
