@@ -1,6 +1,4 @@
 import TimePicker from 'react-time-picker';
-import styles from './CustomTimePicker.module.scss';
-import classNames from 'classnames';
 
 interface CustomTimePickerProps {
 	value: string;
@@ -9,7 +7,7 @@ interface CustomTimePickerProps {
 	className?: string;
 	onInput?: any;
 }
-//TODO: удалить
+
 export const CustomTimePicker = ({
 	value,
 	onChange,
@@ -17,7 +15,7 @@ export const CustomTimePicker = ({
 }: CustomTimePickerProps) => {
 	return (
 		<TimePicker
-			className={classNames(styles.time, className)}
+			className={className}
 			maxDetail="minute"
 			onChange={onChange}
 			value={value}
