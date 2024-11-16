@@ -7,7 +7,7 @@
 		'date btn'
 		'exercises card'
 		'feedback wrapper';
-	gap: var(--gap);
+	gap: var(--gap-sm);
 	position: relative;
 
 	@include md() {
@@ -38,7 +38,7 @@
 	grid-area: card;
 	display: flex;
 	flex-direction: column;
-	gap: var(--gap);
+	gap: var(--gap-sm);
 
 	@include md() {
 		margin: 70px auto 0 auto;

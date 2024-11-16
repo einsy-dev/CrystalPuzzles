@@ -1,0 +1,6 @@
+.cards_content {
+	padding: 32px;
+	display: grid;
+	grid-template-columns: repeat(2, calc(50% - 27px));
+	gap: 50px;
+}

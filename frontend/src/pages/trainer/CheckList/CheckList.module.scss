@@ -1,14 +1,13 @@
 @use '~styles/mixins' as *;
 
 .wrapper {
-
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
 	grid-template-areas:
 		'profile info panel'
 		'profile exercises exercises'
 		'. exercises exercises';
-	gap: var(--gap);
+	gap: var(--gap-sm);
 
 	@include xl() {
 		grid-template-columns: 1fr 1fr;
@@ -41,17 +40,16 @@
 			'exercises exercises';
 	}
 	@include sm() {
-
 		grid-template-columns: 1fr;
 		grid-template-areas:
 			'profile'
 			'info'
 			'panel'
 			'exercises';
-			img {
-				width: 200px;
-				margin: 0 auto;
-			}
+		img {
+			width: 200px;
+			margin: 0 auto;
+		}
 	}
 }
 
@@ -67,7 +65,7 @@
 	grid-area: panel;
 	display: flex;
 	flex-direction: column;
-	gap: var(--gap);
+	gap: var(--gap-sm);
 }
 
 .exercises {

@@ -1,32 +1,25 @@
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
+import moment from 'moment';
 import { useSelector } from 'react-redux';
 import TimePicker from 'react-time-picker';
-import moment from 'moment';
 import { Lesson } from '@entities';
 import { Button } from '@shared/ui';
 import TrainersDropdown from 'features/trainersDropdown/TrainersDropdown';
 import PlacesDropdown from 'features/placesDropdown/PlacesDropdown';
-import { ReactComponent as CloseButton } from '@shared/assets/svg/close.svg';
 import { getCurrentTrainer } from '@app/providers/store';
 import { type LessonI } from 'entities/lesson/api/lessonApi.interface';
-import 'react-time-picker/dist/TimePicker.css';
-import 'react-clock/dist/Clock.css';
-import styles from './ModalAddLesson.module.scss';
+// import 'react-time-picker/dist/TimePicker.css';
+// import 'react-clock/dist/Clock.css';
+import styles from './AddLesson.module.scss';
+import { CustomTimePicker } from '@shared/ui/customTimePicker/CustomTimePicker';
 
-interface ModalAddLessonProps {
+interface AddLessonProps {
 	day: any;
 	data: { [key: string]: LessonI[] };
-	setActive: any;
-	closeModal: any;
 	onSubmit: () => void;
 }
 
-export const ModalAddLesson = ({
-	day,
-	setActive,
-	closeModal,
-	onSubmit
-}: ModalAddLessonProps) => {
+export const AddLesson = ({ onSubmit, day }: AddLessonProps) => {
 	const currentTrainer = useSelector(getCurrentTrainer);
 	const [newLesson, setNewLesson] = useState<any>({
 		space_id: null,
@@ -53,18 +46,10 @@ export const ModalAddLesson = ({
 		}
 		onSubmit();
 		setErrorMessage(null);
-		setActive(false);
 	}
-
-	//TODO: почистить стили
+//TODO: переделать
 	return (
 		<div className={styles.container}>
-			{/* <DateChanger day={day} className={styles.header} /> */}
-			<header className={styles.header}>
-				<button className={styles.close_btn} onClick={closeModal}>
-					<CloseButton className={styles.icon} width={16} />
-				</button>
-			</header>
 			<main className={styles.main}>
 				<TrainersDropdown
 					state={newLesson.trainer_id}
@@ -82,30 +67,47 @@ export const ModalAddLesson = ({
 					className={styles.place}
 					single
 				/>
-				<div className={styles.time_wrapper}>
-					<TimePicker
-						className={styles.time}
-						maxDetail="minute"
-						onInput={(e) => {
-							if (e.target.value.length >= 2) {
-								e.target.value = e.target.value.slice(0, 2);
-							}
-						}}
-						onChange={(e: any) => {
-							if (!e) return;
-							const [hour, minute] = e.split(':').map(Number);
-							setNewLesson((prev: any) => ({
-								...prev,
-								start: moment(day).set({ hour, minute }).format()
-							}));
-						}}
-						value={moment(newLesson.start).format('HH:mm')}
-						format="HH:mm"
-						locale="sv-sv"
-						disableClock
-						clearIcon={null}
-					/>
-				</div>
+				{/* <TimePicker
+					className={styles.time}
+					maxDetail="minute"
+					onInput={(e) => {
+						if (e.target.value.length >= 2) {
+							e.target.value = e.target.value.slice(0, 2);
+						}
+					}}
+					onChange={(e: any) => {
+						if (!e) return;
+						const [hour, minute] = e.split(':').map(Number);
+						setNewLesson((prev: any) => ({
+							...prev,
+							start: moment(day).set({ hour, minute }).format()
+						}));
+					}}
+					value={moment(newLesson.start).format('HH:mm')}
+					format="HH:mm"
+					locale="sv-sv"
+					disableClock
+					clearIcon={null}
+				/> */}
+
+				<CustomTimePicker
+					className={styles.time}
+					value={moment(newLesson.start).format('HH:mm')}
+					onInput={(e: any) => {
+						if (e.target.value.length >= 2) {
+							e.target.value = e.target.value.slice(0, 2);
+						}
+					}}
+					onChange={(e: any) => {
+						if (!e) return;
+						const [hour, minute] = e.split(':').map(Number);
+						setNewLesson((prev: any) => ({
+							...prev,
+							start: moment(day).set({ hour, minute }).format()
+						}));
+					}}
+				/>
+
 				<textarea
 					className={styles.textarea}
 					onChange={(e) =>

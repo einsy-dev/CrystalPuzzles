@@ -4,7 +4,7 @@
 	width: 100%;
 	display: grid;
 	grid-template-columns: 2fr 1fr;
-	gap: var(--gap);
+	gap: var(--gap-sm);
 	grid-template-areas:
 		'date reward'
 		'list reward'
@@ -51,7 +51,7 @@
 
 .title {
 	margin-bottom: 12px;
-	padding: var(--btn-padding) var(--gap);
+	padding: var(--padding-sm) var(--gap-sm);
 	font: var(--fw-medium) var(--fz-btn) var(--ff-first);
 	text-align: center;
 	background-color: var(--bg-date-picker);
@@ -69,7 +69,7 @@
 	display: grid;
 	grid-template-columns: repeat(6, 1fr);
 	justify-content: space-between;
-	gap: var(--gap);
+	gap: var(--gap-sm);
 
 	@include sm() {
 		grid-template-columns: repeat(3, 1fr);
@@ -82,7 +82,7 @@
 	height: 102px;
 	display: grid;
 	place-content: center;
-	padding: var(--btn-padding);
+	padding: var(--padding-sm);
 	// background-color: var(--btn-bg-color);
 	background-color: var(--bg-date-picker);
 	border: var(--border);

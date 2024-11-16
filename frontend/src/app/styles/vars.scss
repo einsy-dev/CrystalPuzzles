@@ -19,30 +19,49 @@
 	--white-color: #fff;
 
 	/* font-size */
-	--fz-main-heading: 48px;
-	--fz-btn: 24px;
 	--fz-btn-xs: 18px;
-	--fz-mob-btn: 1rem;
 	--fz-text: 20px;
+	--fz-btn: 24px;
+	--fz-main-heading: 48px;
+	--fz-mob-btn: 1rem;
 
 	/* font-family */
 	--ff-first: 'Roboto', sans-serif;
 	--ff-second: 'Rubik', sans-serif;
 
 	/* font-weight */
+	--fw-light: 300;
 	--fw-regular: 400;
 	--fw-medium: 500;
 	--fw-semibold: 600;
 	--fw-bold: 700;
+	--fw-black: 900;
 
 	/* Border */
 	--border: 1.5px solid #0e1079;
 
 	/* Radius */
-	--radius: 20px;
+	--radius-xs: 5px;
+	--radius-sm: 10px;
 	--radius-btn: 13px;
+	--radius: 20px;
+	--radius-round: 50%;
 
 	/* Padding */
-	--btn-padding: 16px;
-	--gap: 20px;
+	--padding-xs: 8px;
+	--padding-sm: 16px;
+	--padding-md: 24px;
+	--padding-lg: 32px;
+
+	/* gap */
+	--gap-xs: 10px;
+	--gap-sm: 20px;
+	--gap-md: 30px;
+
+	/* Margin */
+	--margin-xs: 5px;
+	--margin-sm: 10px;
+	--margin-md: 20px;
+	--margin-lg: 30px;
+	--margin-xl: 40px;
 }

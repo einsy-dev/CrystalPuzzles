@@ -1,10 +1,9 @@
 @use '~styles/mixins' as *;
 
 .component {
-	padding: 20px;
 	width: 60vw;
 	height: 70vh;
-	background-color: var(--white-color);
+	background-color: #eef1f4;
 	overflow-y: scroll;
 
 	&::-webkit-scrollbar {
@@ -31,10 +30,4 @@
 	margin-top: 20px;
 	display: flex;
 	justify-content: space-evenly;
-}
-
-.content {
-	display: flex;
-	justify-content: space-between;
-	gap: 20px;
 }
