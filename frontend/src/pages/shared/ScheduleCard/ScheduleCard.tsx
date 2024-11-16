@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import classNames from 'classnames';
-import TimePicker from 'react-time-picker';
 import moment from 'moment';
 import {
 	deleteLesson,
@@ -9,7 +8,7 @@ import {
 	getCurrentTrainer,
 	updateLesson
 } from '@app/providers/store';
-import { Button, Modal } from '@shared/ui';
+import { Button, CustomTimePicker, Modal } from '@shared/ui';
 import joinName from 'entities/profile/assets/joinName';
 import { ReactComponent as ClockIcon } from '@shared/assets/svg/clock.svg';
 import { ReactComponent as Trash } from '@shared/assets/svg/trash.svg';
@@ -20,7 +19,6 @@ import PlacesDropdown from 'features/placesDropdown/PlacesDropdown';
 import { Lesson } from '@entities';
 import { type LessonI } from 'entities/lesson/api/lessonApi.interface';
 import 'react-time-picker/dist/TimePicker.css';
-import 'react-clock/dist/Clock.css';
 import styles from './ScheduleCard.module.scss';
 
 interface ScheduleCardProps {
@@ -79,9 +77,9 @@ export const ScheduleCard = ({ item, className }: ScheduleCardProps) => {
 
 				<div>
 					{isEditing ? (
-						<TimePicker
+						<CustomTimePicker
 							className={styles.time}
-							maxDetail="minute"
+							value={moment(editLesson.start).format('HH:mm')}
 							onChange={(time: string | null) => {
 								if (time) {
 									const [hour, minute] = time
@@ -93,11 +91,6 @@ export const ScheduleCard = ({ item, className }: ScheduleCardProps) => {
 									}));
 								}
 							}}
-							value={moment(editLesson.start).format('HH:mm')}
-							format="HH:mm"
-							locale="sv-sv"
-							disableClock
-							clearIcon={null}
 						/>
 					) : (
 						<p className={styles.time}>{moment(item.start).format('HH:mm')}</p>
