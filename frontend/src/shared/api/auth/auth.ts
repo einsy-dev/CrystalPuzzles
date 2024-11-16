@@ -38,7 +38,7 @@ class Auth {
 			.post('/auth/login', formData)
 			.then(
 				({ data: { access_token } }: { data: { access_token: string } }) => {
-					Cookies.set('token', access_token);
+					Cookies.set('token', access_token, { sameSite: 'strict' });
 					return [null, null];
 				}
 			)
@@ -52,7 +52,9 @@ class Auth {
 			.get('/profile')
 			.then(({ data }: { data: any }) => [new Profile(data), null])
 			.catch(() => [null, 'Не удалось получить профиль']);
-		store.dispatch(setProfile(data[0]));
+		if (data[0]) {
+			store.dispatch(setProfile(data[0]));
+		}
 		return data;
 	}
 
