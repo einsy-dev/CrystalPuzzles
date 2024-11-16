@@ -6,6 +6,8 @@ import { redirect } from 'react-router-dom';
 import ChangePass from '@pages/checkIn/changePass/ChangePass';
 import { selectProfile } from '@app/providers/store';
 import { useSelector } from 'react-redux';
+import { Auth } from '@shared/api';
+import path from 'path';
 
 const MainRouter = (): any => {
 	const { role } = useSelector(selectProfile);
@@ -14,8 +16,10 @@ const MainRouter = (): any => {
 			path: '/',
 			element: <App />,
 			errorElement: <ErrorPage />,
-			loader: () => {
-				if (!role || role === 'admin') {
+			loader: async () => {
+				if (!role) {
+					await Auth.getProfile();
+				} else if (role === 'admin') {
 					return redirect('/login');
 				}
 				return null;
@@ -35,16 +39,30 @@ const MainRouter = (): any => {
 			]
 		},
 		{
-			path: 'login',
-			element: <CheckInPage login />
-		},
-		{
-			path: 'registration',
-			element: <CheckInPage />
-		},
-		{
-			path: 'change-password',
-			element: <ChangePass />
+			path: '/',
+			loader: async () => {
+				if (!role) {
+					await Auth.getProfile();
+				}
+				if (role !== 'admin') {
+					return redirect('/');
+				}
+				return null;
+			},
+			children: [
+				{
+					path: 'login',
+					element: <CheckInPage login />
+				},
+				{
+					path: 'registration',
+					element: <CheckInPage />
+				},
+				{
+					path: 'change-password',
+					element: <ChangePass />
+				}
+			]
 		}
 	];
 };
