@@ -4,7 +4,7 @@
 	background-color: var(--bg-card-second);
 	border: var(--border);
 	border-radius: var(--radius);
-	cursor: pointer;
+	// cursor: pointer;
 	overflow: hidden;
 }
 
@@ -59,6 +59,7 @@
 	padding: 10px 22px;
 	display: flex;
 	justify-content: space-between;
+	cursor: pointer;
 
 	span {
 		font: var(--fw-regular) var(--fz-text) var(--ff-second);
@@ -68,4 +69,5 @@
 	width: 28px;
 	height: 28px;
 	border: 1.5px solid #252525;
+	cursor: pointer;
 }

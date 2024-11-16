@@ -66,9 +66,13 @@ export default function DropdownButton({
 			>
 				{data?.length
 					? data.map((item: any) => (
-							<div key={item.id} className={styles.list_item}>
+							<div
+								key={item.id}
+								className={styles.list_item}
+								onClick={() => handleCheckboxChange(item.id)}
+							>
 								{/* // data должна содержать name *нужно размапить */}
-								<label htmlFor={item.id}>{item.name}</label>
+								<div>{item.name}</div>
 								<input
 									type="checkbox"
 									className={styles.checkbox}
@@ -76,7 +80,7 @@ export default function DropdownButton({
 									checked={
 										single ? state === item.id : state?.includes(item.id)
 									}
-									onChange={() => handleCheckboxChange(item.id)}
+									// onChange={() => handleCheckboxChange(item.id)}
 								/>
 							</div>
 						))
