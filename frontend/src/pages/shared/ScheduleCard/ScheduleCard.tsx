@@ -13,7 +13,8 @@ import joinName from 'entities/profile/assets/joinName';
 import { ReactComponent as ClockIcon } from '@shared/assets/svg/clock.svg';
 import { ReactComponent as Trash } from '@shared/assets/svg/trash.svg';
 import { ReactComponent as Pencil } from '@shared/assets/svg/pencil.svg';
-import { ReactComponent as CloseButton } from '@shared/assets/svg/close.svg';
+import { ReactComponent as CircleCloseIcon } from '@shared/assets/svg/circle-close.svg';
+import { ReactComponent as SaveIcon } from '@shared/assets/svg/circle-save.svg';
 import { getLessons } from '@app/providers/store/service/getLessons';
 import PlacesDropdown from 'features/placesDropdown/PlacesDropdown';
 import { Lesson } from '@entities';
@@ -28,12 +29,12 @@ interface ScheduleCardProps {
 
 export const ScheduleCard = ({ item, className }: ScheduleCardProps) => {
 	const dispatch = useDispatch();
+	const currentTrainer = useSelector(getCurrentTrainer);
+	const currentDate = useSelector(getCurrentDate);
+	const trainer_id = currentTrainer?.id;
 	const [confirmDeleteActive, setConfirmDeleteActive] = useState(false);
 	const [error, setError] = useState<string | null>(null);
 	const [errModalActive, setErrModalActive] = useState(false);
-	const currentTrainer = useSelector(getCurrentTrainer);
-	const trainer_id = currentTrainer?.id;
-	const currentDate = useSelector(getCurrentDate);
 	const [isEditing, setIsEditing] = useState(false);
 	const [editLesson, setEditLesson] = useState({
 		id: item?.id,
@@ -93,7 +94,7 @@ export const ScheduleCard = ({ item, className }: ScheduleCardProps) => {
 							}}
 						/>
 					) : (
-						<p className={styles.time}>{moment(item.start).format('HH:mm')}</p>
+						<p>{moment(item.start).format('HH:mm')}</p>
 					)}
 
 					{isEditing ? (
@@ -131,16 +132,17 @@ export const ScheduleCard = ({ item, className }: ScheduleCardProps) => {
 			<div className={styles.icon_wrapper}>
 				{isEditing ? (
 					<>
-						<Button
-							className={styles.icon}
+						<SaveIcon
 							onClick={handleUpdate}
-							title="Сохранить"
-							bgColor="dark"
-						/>
-						<CloseButton
 							className={styles.icon}
+							width={28}
+							height={28}
+						/>
+						<CircleCloseIcon
 							onClick={() => setIsEditing(false)}
-							width={16}
+							className={styles.icon}
+							width={28}
+							height={28}
 						/>
 					</>
 				) : (

@@ -47,10 +47,6 @@
 	padding-top: 16px;
 	padding-right: 5px;
 	font: var(--fw-regular) var(--fz-text) var(--ff-first);
-
-	// &::-webkit-scrollbar {
-	// 	display: none;
-	// }
 	@include custom-scrollbar(5px, var(--accent-color), 5px);
 }
 
@@ -89,3 +85,11 @@
 .btn {
 	margin-bottom: 30px;
 }
+
+
+:global(.react-time-picker__wrapper) {
+	font: var(--fw-medium) var(--fz-btn) var(--ff-first);
+	border: none;
+}
+
+
