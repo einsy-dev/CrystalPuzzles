@@ -27,11 +27,20 @@
 		'time .'
 		'textarea textarea'
 		'submit .';
+
+	@include md() {
+		grid-template-columns: 1fr;
+		grid-template-areas:
+			'trainer'
+			'place'
+			'time'
+			'textarea'
+			'submit';
+	}
 }
 
 .trainer {
 	grid-area: trainer;
-	// width: 347px;
 
 	@include md() {
 		width: 100%;
@@ -44,7 +53,6 @@
 
 .place {
 	grid-area: place;
-	// width: 347px;
 
 	@include md() {
 		width: 100%;
@@ -82,7 +90,7 @@
 :global(.react-time-picker) {
 	width: 100%;
 	background-color: #fff;
-	border-radius: var(--radius-btn)
+	border-radius: var(--radius-btn);
 }
 
 :global(.react-time-picker__wrapper) {
@@ -106,7 +114,6 @@
 }
 
 .textarea {
-	// margin-top: 30px;
 	grid-area: textarea;
 	padding: 20px;
 	width: 100%;
