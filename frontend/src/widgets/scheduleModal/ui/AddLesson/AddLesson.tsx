@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { Lesson } from '@entities';
 import { Button, CustomTimePicker } from '@shared/ui';
 import TrainersDropdown from 'features/trainersDropdown/TrainersDropdown';
-import PlacesDropdown from 'features/placesDropdown/PlacesDropdown';
+import PlacesDropdown from 'features/placesDropdown/PlacesDropdown/PlacesDropdown';
 import { getCurrentTrainer } from '@app/providers/store';
 import { type LessonI } from 'entities/lesson/api/lessonApi.interface';
 import 'react-time-picker/dist/TimePicker.css';

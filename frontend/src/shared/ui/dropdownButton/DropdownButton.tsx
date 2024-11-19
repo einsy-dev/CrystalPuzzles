@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import classNames from 'classnames';
 import { ReactComponent as SmallArrow } from '@shared/assets/svg/small_arrow.svg';
-// import { useClickOutside } from '@shared/hooks/useClickOutside';
+import Checkbox from '../checkbox/Checkbox';
 import styles from './DropdownButton.module.scss';
 
 interface DropdownButtonProps {
@@ -11,6 +11,7 @@ interface DropdownButtonProps {
 	state?: any;
 	setState: any;
 	single?: boolean;
+	editing?: boolean;
 }
 
 export default function DropdownButton({
@@ -19,11 +20,10 @@ export default function DropdownButton({
 	data,
 	state,
 	setState,
-	single = false
+	single = false,
+	editing = false
 }: DropdownButtonProps) {
 	const [open, setOpen] = useState(false);
-	// const [selectedIds, setSelectedIds] = useState<string[]>([]);
-	// const dropdownRef = useRef<HTMLDivElement>(null);
 
 	const handleCheckboxChange = (itemId: string) => {
 		if (single) {
@@ -37,18 +37,21 @@ export default function DropdownButton({
 		}
 	};
 
-	// useClickOutside({
-	// 	ref: dropdownRef,
-	// 	handleClickOutside: () => setOpen(false)
-	// });
-
 	return (
 		<div
-			className={classNames(styles.dropdown, className)}
+			className={classNames(
+				styles.dropdown,
+				className,
+				editing ? styles.dropdown_edit : ''
+			)}
 			onClick={() => setOpen((prev) => !prev)}
-			// ref={dropdownRef}
 		>
-			<button className={styles.dropdown_button}>
+			<button
+				className={classNames(
+					styles.dropdown_button,
+					editing ? styles.btn_edit : ''
+				)}
+			>
 				<span>{title}</span>
 				<SmallArrow
 					className={classNames(
@@ -61,7 +64,11 @@ export default function DropdownButton({
 			</button>
 
 			<form
-				className={classNames(styles.dropdown_list, open ? styles.active : '')}
+				className={classNames(
+					styles.dropdown_list,
+					open ? styles.active : '',
+					editing ? styles.edit_list : ''
+				)}
 				onClick={(e) => e.stopPropagation()}
 			>
 				{data?.length
@@ -72,15 +79,12 @@ export default function DropdownButton({
 								onClick={() => handleCheckboxChange(item.id)}
 							>
 								{/* // data должна содержать name *нужно размапить */}
-								<div>{item.name}</div>
-								<input
-									type="checkbox"
-									className={styles.checkbox}
+								<span>{item.name}</span>
+								<Checkbox
 									id={item.id}
 									checked={
 										single ? state === item.id : state?.includes(item.id)
 									}
-									// onChange={() => handleCheckboxChange(item.id)}
 								/>
 							</div>
 						))

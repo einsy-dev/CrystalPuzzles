@@ -1,5 +1,5 @@
-import { ReactComponent as CheckedIcon } from '@shared/assets/svg/checked.svg';
 import { v4 as uuid } from 'uuid';
+import { ReactComponent as CheckedIcon } from '@shared/assets/svg/checked.svg';
 import styles from './Checkbox.module.scss';
 
 interface CheckboxProps {
@@ -19,6 +19,7 @@ export default function Checkbox({ id, checked, disabled }: CheckboxProps) {
 				className={styles.checkbox}
 				checked={checked}
 				disabled={disabled}
+				readOnly
 			/>
 			<CheckedIcon className={styles.icon} />
 		</label>

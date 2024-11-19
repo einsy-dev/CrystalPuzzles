@@ -20,7 +20,7 @@ export const ScheduleModal = ({
 	handleSubmit
 }: ScheduleModalProps) => {
 	const lessons: Record<string, LessonI[]> = useSelector(selectLessons);
-	const currernDate = useSelector(getCurrentDate);
+	const currentDate = useSelector(getCurrentDate);
 	const [activeTab, setActiveTab] = useState('view');
 
 	return (
@@ -31,7 +31,7 @@ export const ScheduleModal = ({
 				changeTab={(key: string) => setActiveTab(key)}
 			/>
 			{activeTab === 'view' ? (
-				<ViewLesson lessons={lessons[currernDate as string] || []} />
+				<ViewLesson lessons={lessons[currentDate as string] || []} />
 			) : (
 				<AddLesson day={day} data={lessons} onSubmit={handleSubmit} />
 			)}

@@ -22,6 +22,7 @@
 }
 
 .place_wrapper {
+	position: relative;
 	padding-top: 16px;
 	display: flex;
 	align-items: center;
@@ -33,6 +34,10 @@
 	}
 }
 
+.wrapper {
+	width: 100%;
+}
+
 .comment_wrapper {
 	.subtitle {
 		padding-top: 16px;
@@ -41,13 +46,17 @@
 	}
 }
 
-.text {
-	max-height: 80px;
-	overflow-y: scroll;
-	padding-top: 16px;
+.text_wrapper {
+	width: 100%;
+	padding-top: 8px;
 	padding-right: 5px;
-	font: var(--fw-regular) var(--fz-text) var(--ff-first);
+	max-height: 80px;
+	overflow: scroll;
 	@include custom-scrollbar(5px, var(--accent-color), 5px);
+}
+
+.text {
+	font: var(--fw-regular) var(--fz-text) var(--ff-first);
 }
 
 .icon_wrapper {
@@ -86,10 +95,22 @@
 	margin-bottom: 30px;
 }
 
-
-:global(.react-time-picker__wrapper) {
-	font: var(--fw-medium) var(--fz-btn) var(--ff-first);
-	border: none;
+.time {
+	width: 50px;
+	div {
+		font: var(--fw-medium) var(--fz-btn) var(--ff-first);
+		padding: 0;
+		border: none;
+		border-bottom: var(--border);
+	}
+	& div {
+		justify-content: start;
+	}
 }
 
-
+.textarea {
+	width: 100%;
+	font: var(--fw-medium) 18px var(--ff-first);
+	resize: none;
+	@include custom-scrollbar(5px, var(--accent-color), 5px);
+}

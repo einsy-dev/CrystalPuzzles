@@ -16,7 +16,7 @@ import { ReactComponent as Pencil } from '@shared/assets/svg/pencil.svg';
 import { ReactComponent as CircleCloseIcon } from '@shared/assets/svg/circle-close.svg';
 import { ReactComponent as SaveIcon } from '@shared/assets/svg/circle-save.svg';
 import { getLessons } from '@app/providers/store/service/getLessons';
-import PlacesDropdown from 'features/placesDropdown/PlacesDropdown';
+import PlacesDropdown from 'features/placesDropdown/PlacesDropdown/PlacesDropdown';
 import { Lesson } from '@entities';
 import { type LessonI } from 'entities/lesson/api/lessonApi.interface';
 import 'react-time-picker/dist/TimePicker.css';
@@ -65,7 +65,7 @@ export const ScheduleCard = ({ item, className }: ScheduleCardProps) => {
 			dispatch(deleteLesson(id));
 		}
 	};
-	//TODO: переделать
+
 	return (
 		<li className={classNames(styles.component, className)}>
 			<div className={styles.trainer_wrapper}>
@@ -76,7 +76,7 @@ export const ScheduleCard = ({ item, className }: ScheduleCardProps) => {
 			<div className={styles.place_wrapper}>
 				<ClockIcon width={'26px'} />
 
-				<div>
+				<div className={styles.wrapper}>
 					{isEditing ? (
 						<CustomTimePicker
 							className={styles.time}
@@ -93,12 +93,14 @@ export const ScheduleCard = ({ item, className }: ScheduleCardProps) => {
 								}
 							}}
 						/>
+
 					) : (
 						<p>{moment(item.start).format('HH:mm')}</p>
 					)}
 
 					{isEditing ? (
 						<PlacesDropdown
+							editing
 							state={editLesson.space_id}
 							setState={(id: string) =>
 								setEditLesson({ ...editLesson, space_id: Number(id) })
@@ -116,6 +118,7 @@ export const ScheduleCard = ({ item, className }: ScheduleCardProps) => {
 				<div className={styles.subtitle}>Комментарии:</div>
 				{isEditing ? (
 					<textarea
+						rows={3}
 						className={styles.textarea}
 						value={editLesson.trainer_comments || ''}
 						onChange={(e) =>
@@ -126,7 +129,9 @@ export const ScheduleCard = ({ item, className }: ScheduleCardProps) => {
 						}
 					/>
 				) : (
-					<p className={styles.text}>{item.trainer_comments}</p>
+					<div className={styles.text_wrapper}>
+						<p className={styles.text}>{item.trainer_comments}</p>
+					</div>
 				)}
 			</div>
 			<div className={styles.icon_wrapper}>
