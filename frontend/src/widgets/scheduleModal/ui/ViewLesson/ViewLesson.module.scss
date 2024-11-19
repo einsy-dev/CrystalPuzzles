@@ -1,6 +1,18 @@
+@use '~styles/mixins' as *;
+
 .cards_content {
 	padding: 32px;
 	display: grid;
 	grid-template-columns: repeat(2, calc(50% - 27px));
 	gap: 50px;
+
+	@include lg() {
+
+		grid-template-columns: 1fr;
+		gap: 30px;
+	}
+
+	@include md() {
+		padding: 8px;
+	}
 }

@@ -93,7 +93,6 @@ export const ScheduleCard = ({ item, className }: ScheduleCardProps) => {
 								}
 							}}
 						/>
-
 					) : (
 						<p>{moment(item.start).format('HH:mm')}</p>
 					)}

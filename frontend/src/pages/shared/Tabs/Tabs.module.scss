@@ -1,3 +1,5 @@
+@use '~styles/mixins' as *;
+
 .header {
 	padding: var(--margin-lg) var(--padding-lg);
 	display: flex;
@@ -6,11 +8,20 @@
 	gap: calc(var(--gap-md) * 2);
 	background-color: var(--btn-bg-color);
 	border-bottom: var(--border);
+
+	@include md() {
+		padding: 10px;
+		gap: 20px;
+	}
 }
 
 .btn_wrapper {
 	display: flex;
 	gap: calc(var(--gap-md) * 2);
+
+	@include md() {
+		gap: 16px;
+	}
 }
 
 .tab {
@@ -23,6 +34,10 @@
 	&:hover {
 		color: var(--accent-color);
 		text-decoration: underline;
+	}
+
+	@include md() {
+		font-size: 16px;
 	}
 }
 

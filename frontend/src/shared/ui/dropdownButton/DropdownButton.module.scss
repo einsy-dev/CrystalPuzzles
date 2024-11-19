@@ -74,6 +74,10 @@
 
 	span {
 		font: var(--fw-regular) var(--fz-btn) var(--ff-first);
+		
+		@include xl() {
+			font-size: 20px;
+		}
 	}
 }
 
