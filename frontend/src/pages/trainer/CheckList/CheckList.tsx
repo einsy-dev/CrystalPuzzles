@@ -55,7 +55,7 @@ export default function CheckListPage({ title }: CheckListPageProps) {
 				<Info className={styles.info} lessonId={id} />
 
 				<section className={styles.panel_container}>
-					<DropStudents onChange={(ids: any) => (students = ids)} />
+					<DropStudents onChange={(ids: number[]) => (students = ids)} />
 					{/* <StudentsDropdown state={students} setState={setStudents} /> */}
 					{/* <PlacesDropdown /> */}
 					<Button

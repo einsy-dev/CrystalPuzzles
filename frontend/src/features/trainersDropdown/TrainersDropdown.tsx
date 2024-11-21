@@ -44,7 +44,7 @@ export default function TrainersDropdown({
 	const changeCurrentTrainer = (id: number) => {
 		if (trainers) {
 			const newCurrentTrainer = trainers.find(
-				({ id: tainerId }) => id === tainerId
+				({ id: trainerId }) => id === trainerId
 			);
 			newCurrentTrainer && dispatch(setCurrentTrainer(newCurrentTrainer));
 		}

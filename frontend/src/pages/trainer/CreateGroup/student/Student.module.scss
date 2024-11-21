@@ -1,6 +1,5 @@
-@use '~styles/mixins' as *; 
+@use '~styles/mixins' as *;
 
- 
 .container {
 	width: 100%;
 	max-width: 491px;
@@ -21,6 +20,7 @@
 	align-items: center;
 	gap: 5px;
 	.checkbox {
+		aspect-ratio: 1/1;
 		width: 30px;
 		height: 30px;
 		border: var(--border);
