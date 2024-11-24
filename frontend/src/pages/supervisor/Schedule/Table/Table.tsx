@@ -28,7 +28,7 @@ const Table = ({ className }: TableProps) => {
 
 	useEffect(() => {
 		getLessons(trainer_id!, date);
-	}, [trainer_id, date]);
+	}, [trainer_id, date, modalActive]);
 
 	return (
 		<div className={classNames(styles.datepicker, className)}>

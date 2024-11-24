@@ -25,7 +25,7 @@ export class LessonApi {
 		return data;
 	}
 
-	async getById(id: string) {
+	async getById(id: string | number) {
 		const data = await this.#host
 			.get('/lesson/' + id)
 			.then(({ data }: any) => [data, null])
