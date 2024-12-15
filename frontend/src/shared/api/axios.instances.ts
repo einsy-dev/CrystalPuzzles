@@ -24,6 +24,14 @@ class AxiosConfig {
 
 	init() {
 		axios.defaults.baseURL = process.env.REACT_APP_SERVER_API || window.API_URL;
+		axios.interceptors.request.use((config) => {
+			store.dispatch(setIsLoading(true));
+			return config;
+		});
+		axios.interceptors.response.use((res) => {
+			store.dispatch(setIsLoading(false));
+			return res;
+		});
 
 		this.$authHost = axios.create();
 		this.$host = axios.create();
@@ -38,18 +46,8 @@ class AxiosConfig {
 			}
 		);
 
-		this.$authHost.interceptors.request.use(
-			(config: InternalAxiosRequestConfig) => {
-				// store.dispatch(setIsLoading(true)); // set loading to true
-				return config;
-			}
-		);
-
 		this.$authHost.interceptors.response.use(
-			(res: AxiosResponse) => {
-				// store.dispatch(setIsLoading(false)); // set loading to false
-				return res;
-			},
+			(res: AxiosResponse) => res,
 			async (err: ErrorResponse) => {
 				if (
 					err.status === 403 &&

@@ -8,8 +8,14 @@ interface SpinnerProps {
 
 export default function Spinner({ children, isLoading }: SpinnerProps) {
 	return (
-		<div className={styles.container}>
-			{isLoading ? <Preloader /> : children}
-		</div>
+		<>
+			{isLoading ? (
+				<div className={styles.container}>
+					<Preloader />
+				</div>
+			) : (
+				children
+			)}
+		</>
 	);
 }
