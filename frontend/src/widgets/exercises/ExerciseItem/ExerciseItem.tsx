@@ -24,7 +24,12 @@ export default function ExerciseItem({
 				<img className={styles.icon} src={snowflake} />
 			</div>
 			<span className={styles.text}>{text}</span>
-			<Checkbox id={id} checked={checked} disabled={disabled} />
+			<Checkbox
+				id={id}
+				checked={checked}
+				disabled={disabled}
+				className={styles.checkbox}
+			/>
 		</li>
 	);
 }
