@@ -21,8 +21,8 @@ export default function Page({ title, children, className }: PageProps) {
 	}, [title]);
 
 	return (
-		<main className={classNames(styles.body, className)}>
-			<Spinner isLoading={isLoading}>{children}</Spinner>
-		</main>
+		<Spinner isLoading={isLoading}>
+			<main className={classNames(styles.body, className)}>{children}</main>
+		</Spinner>
 	);
 }

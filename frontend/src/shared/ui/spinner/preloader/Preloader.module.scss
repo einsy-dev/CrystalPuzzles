@@ -1,6 +1,6 @@
 .component {
 	width: fit-content;
-	height: fit-content;	
+	height: fit-content;
 	display: grid;
 	grid-template-columns: repeat(2, 1fr);
 	grid-template-rows: repeat(2, 1fr);
@@ -37,10 +37,12 @@
 }
 
 @keyframes puzzle {
-    0%, 25% {
+	0%,
+	25% {
 		opacity: 1;
-	  }
-	  50%, 100% {
+	}
+	50%,
+	100% {
 		opacity: 0;
-	  }
+	}
 }

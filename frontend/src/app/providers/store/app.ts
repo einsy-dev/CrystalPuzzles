@@ -16,7 +16,7 @@ const initialState: AppState = {
 	places: null,
 	students: null,
 	trainers: null,
-	isLoading: true
+	isLoading: false
 };
 
 const appSlice = createSlice({

@@ -52,7 +52,6 @@ export default function MainPage({ title }: MainPageProps) {
 					onClick={() => navigate('/students')}
 				/>
 			</div>
-			<Preloader />
 		</Page>
 	);
 }
