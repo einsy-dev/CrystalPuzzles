@@ -2,7 +2,6 @@ import styles from './CheckList.module.scss';
 import { Page, Button } from '@shared/ui';
 import ProfileCard from './ProfileCard/ProfileCard';
 import Info from './Info/Info';
-import { Exercises } from '@widgets';
 import { useState } from 'react';
 import StudentsDropdown from 'features/studentsDropdown/StudentsDropdown';
 import { useLoaderData } from 'react-router-dom';

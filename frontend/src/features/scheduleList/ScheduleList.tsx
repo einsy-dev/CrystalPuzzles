@@ -6,6 +6,7 @@ import { Lesson } from '@entities';
 import ScheduleRouteTo from '@shared/lib/scheduleRouteTo';
 import { selectProfile } from '@app/providers/store';
 import styles from './ScheduleList.module.scss';
+import { Spinner } from '@shared/ui';
 
 interface ScheduleListProps {
 	today?: boolean;
@@ -43,7 +44,7 @@ export default function ScheduleList({
 	}
 	const Tag: any = link ? Link : 'div';
 	return (
-		<>
+		<Spinner isLoading={true}>
 			{data
 				? data.map((item: any, index: number) => (
 						<Tag
@@ -68,6 +69,6 @@ export default function ScheduleList({
 						</Tag>
 					))
 				: null}
-		</>
+		</Spinner>
 	);
 }
