@@ -1,4 +1,4 @@
-export { Preloader } from './preloader/Preloader';
+export { Preloader } from './spinner/preloader/Preloader';
 export { CustomTimePicker } from './customTimePicker/CustomTimePicker';
 export { default as EmojiCard } from './emojiCard/EmojiCard';
 export { default as Title } from './title/Title';

@@ -1,6 +1,6 @@
 import { memo } from 'react';
 import classNames from 'classnames';
-import { ReactComponent as Puzzle } from '../../assets/svg/puzzle.svg';
+import { ReactComponent as Puzzle } from '../assets/puzzle.svg';
 import styles from './Preloader.module.scss';
 
 interface PreloaderProps {

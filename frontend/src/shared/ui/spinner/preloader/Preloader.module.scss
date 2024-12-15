@@ -1,9 +1,13 @@
 .component {
-	width: 90px;
+	width: fit-content;
+	height: fit-content;	
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	grid-template-rows: repeat(2, 1fr);
 }
 
 .puzzle {
-	display: inline-block;
+	// display: inline-block;
 	fill: var(--bg-date-picker);
 	opacity: 0;
 	animation: puzzle 2s infinite;
