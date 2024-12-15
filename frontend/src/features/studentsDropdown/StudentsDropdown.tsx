@@ -1,9 +1,9 @@
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { selectStudents, setStudents } from '@app/providers/store/app';
 import { DropDownButton } from '@features';
 import { User } from '@entities';
 import joinName from 'entities/profile/assets/joinName';
-import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 
 interface StudentsDropdownProps {
 	className?: string;
@@ -18,10 +18,9 @@ export default function StudentsDropdown({
 	className,
 	single = false
 }: StudentsDropdownProps) {
-	const [data, setData] = useState<any>([]);
-
-	const students = useSelector(selectStudents);
 	const dispatch = useDispatch();
+	const students = useSelector(selectStudents);
+	const [data, setData] = useState<any>([]);
 
 	useEffect(() => {
 		getStudents();

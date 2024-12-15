@@ -1,0 +1,42 @@
+.component {
+	width: 90px;
+}
+
+.puzzle {
+	display: inline-block;
+	fill: var(--bg-date-picker);
+	opacity: 0;
+	animation: puzzle 2s infinite;
+
+	&:nth-child(n + 2):nth-child(-n + 3) {
+		fill: var(--accent-color);
+	}
+}
+
+.puzzle[data-number='0'] {
+	animation-delay: 0s;
+}
+
+.puzzle[data-number='1'] {
+	transform: rotate(90deg) translate(-7px, 8px);
+	animation-delay: 0.5s;
+}
+
+.puzzle[data-number='2'] {
+	transform: rotate(270deg) translate(26px, 7px);
+	animation-delay: 1.5s;
+}
+
+.puzzle[data-number='3'] {
+	transform: rotate(180deg) translate(1px, 33px);
+	animation-delay: 1s;
+}
+
+@keyframes puzzle {
+    0%, 25% {
+		opacity: 1;
+	  }
+	  50%, 100% {
+		opacity: 0;
+	  }
+}
