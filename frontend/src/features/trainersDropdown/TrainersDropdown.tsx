@@ -60,7 +60,7 @@ export default function TrainersDropdown({
 			title="Выберите тренера"
 			state={currentTrainer.id}
 			setState={changeCurrentTrainer}
-			data={trainers}
+			data={trainers as any}
 			single={single}
 		/>
 	);

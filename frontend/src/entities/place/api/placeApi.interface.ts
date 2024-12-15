@@ -1,5 +1,6 @@
 interface PlaceI {
-	name?: string;
+	id: number;
+	name: string;
 }
 
 export type { PlaceI };

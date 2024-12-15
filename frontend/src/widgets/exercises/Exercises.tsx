@@ -1,11 +1,18 @@
 import classNames from 'classnames';
 import ExerciseItem from './ExerciseItem/ExerciseItem';
 import styles from './Exercises.module.scss';
-import { useEffect, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 import { Exercise } from '@entities';
 import { v4 as uuid } from 'uuid';
 
-export default function Exercises({ data, className, disabled, checked }: any) {
+interface ExercisesProps {
+	data?: any;
+	className?: string;
+	disabled?: boolean;
+	checked?: boolean;
+}
+
+function Exercises({ data, className, disabled, checked }: ExercisesProps) {
 	const [exercises, setExercises] = useState(data);
 
 	useEffect(() => {
@@ -34,3 +41,6 @@ export default function Exercises({ data, className, disabled, checked }: any) {
 		</ul>
 	);
 }
+
+const ExercisesMemo = memo(Exercises);
+export default ExercisesMemo;

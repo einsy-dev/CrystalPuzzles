@@ -3,13 +3,20 @@ import classNames from 'classnames';
 import { ReactComponent as SmallArrow } from '@shared/assets/svg/small_arrow.svg';
 import Checkbox from '../checkbox/Checkbox';
 import styles from './DropdownButton.module.scss';
+import { v4 as uuid } from 'uuid';
+
+type DataType = {
+	id: string | number;
+	name: string;
+	[key: string]: any;
+};
 
 interface DropdownButtonProps {
 	className?: string;
 	title: string;
-	data?: any[];
-	state?: any;
-	setState: any;
+	data: DataType[];
+	state: any;
+	setState: (value: any) => void;
 	single?: boolean;
 	editing?: boolean;
 }
@@ -74,11 +81,10 @@ export default function DropdownButton({
 				{data?.length
 					? data.map((item: any) => (
 							<div
-								key={item.id}
+								key={uuid()}
 								className={styles.list_item}
 								onClick={() => handleCheckboxChange(item.id)}
 							>
-								{/* // data должна содержать name *нужно размапить */}
 								<span>{item.name}</span>
 								<Checkbox
 									id={item.id}

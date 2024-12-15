@@ -2,7 +2,7 @@ import { selectStudents, setStudents } from '@app/providers/store/app';
 import { DropDownButton } from '@features';
 import { User } from '@entities';
 import joinName from 'entities/profile/assets/joinName';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 interface StudentsDropdownProps {
@@ -16,11 +16,12 @@ export default function StudentsDropdown({
 	state,
 	setState,
 	className,
-	single = false
+	single
 }: StudentsDropdownProps) {
-	const [data, setData] = useState<any>([]);
-
-	const students = useSelector(selectStudents);
+	const students: any = useSelector(selectStudents)?.map((item: any) => ({
+		...item,
+		name: joinName(item)
+	}));
 	const dispatch = useDispatch();
 
 	useEffect(() => {
@@ -28,9 +29,7 @@ export default function StudentsDropdown({
 	}, [students]);
 
 	async function getStudents() {
-		if (students) {
-			setData(students.map((item: any) => ({ ...item, name: joinName(item) })));
-		} else {
+		if (!students) {
 			const [data, err] = await User.getStudents();
 			if (err) return;
 			dispatch(setStudents(data));
@@ -43,7 +42,7 @@ export default function StudentsDropdown({
 			title="Выберите учеников"
 			state={state}
 			setState={setState}
-			data={data}
+			data={students}
 			single={single}
 		/>
 	);
