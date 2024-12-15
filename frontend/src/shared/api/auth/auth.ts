@@ -8,15 +8,16 @@ import {
 import { Profile } from '@entities';
 import store from '@app/providers/store/store';
 import { setProfile } from '@app/providers/store';
+import { AxiosInstance, AxiosResponse } from 'axios';
 
 class Auth {
-	#host = AxiosConfig.$host;
-	#authHost = AxiosConfig.$authHost;
+	#host = AxiosConfig.$host as AxiosInstance;
+	#authHost = AxiosConfig.$authHost as AxiosInstance;
 
 	async register(params: RegisterParams): Promise<void | any> {
 		const data = await this.#host
 			.post('/user/register', params)
-			.then((res: Response) => {
+			.then((res: AxiosResponse) => {
 				if (res.status === 409) {
 					return [null, 'Такой пользователь уже существует'];
 				} else {

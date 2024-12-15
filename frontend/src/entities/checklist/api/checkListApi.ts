@@ -1,8 +1,9 @@
 import { AxiosConfig } from '@api';
 import { CheckListI } from './checkListApi.interface';
+import { AxiosInstance } from 'axios';
 
 export class CheckListApi {
-	#host = AxiosConfig.$authHost;
+	#host = AxiosConfig.$authHost as AxiosInstance;
 	async create(params: CheckListI) {
 		const data = await this.#host
 			.post(`/lesson/create-check`, params)

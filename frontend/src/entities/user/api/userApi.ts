@@ -1,8 +1,9 @@
 import { AxiosConfig } from '@api';
 import { PasswordParams } from './userApi.inerface';
+import { AxiosInstance } from 'axios';
 
 export class UserApi {
-	#host = AxiosConfig.$authHost;
+	#host = AxiosConfig.$authHost as AxiosInstance;
 
 	async getStudents({ search_string = '' } = {}) {
 		const data = await this.#host

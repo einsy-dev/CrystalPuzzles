@@ -1,6 +1,8 @@
 import { AxiosConfig } from '@api';
+import { AxiosInstance } from 'axios';
+
 export class PlaceApi {
-	#host = AxiosConfig.$authHost;
+	#host = AxiosConfig.$authHost as AxiosInstance;
 
 	async get() {
 		const data = await this.#host

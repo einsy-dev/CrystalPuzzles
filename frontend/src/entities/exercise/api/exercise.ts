@@ -1,8 +1,9 @@
 import { AxiosConfig } from '@api';
 import { ExerciseI, ExerciseUpdateI } from './exercise.interface';
+import { AxiosInstance } from 'axios';
 
 export class ExerciseApi {
-	#host = AxiosConfig.$authHost;
+	#host = AxiosConfig.$authHost as AxiosInstance;
 
 	async create(params: ExerciseI) {
 		const data = await this.#host

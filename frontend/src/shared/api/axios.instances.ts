@@ -1,6 +1,12 @@
-import axios from 'axios';
+import axios, {
+	AxiosInstance,
+	AxiosResponse,
+	InternalAxiosRequestConfig
+} from 'axios';
 import Cookies from 'js-cookie';
 import { ErrorResponse } from 'react-router-dom';
+import { store } from '@app/providers/store';
+import { setIsLoading } from '@app/providers/store/app';
 
 declare global {
 	interface Window {
@@ -9,8 +15,8 @@ declare global {
 }
 
 class AxiosConfig {
-	$authHost: any;
-	$host: any;
+	$authHost!: AxiosInstance;
+	$host!: AxiosInstance;
 
 	constructor() {
 		this.init();
@@ -22,16 +28,28 @@ class AxiosConfig {
 		this.$authHost = axios.create();
 		this.$host = axios.create();
 
-		this.$authHost.interceptors.request.use((config: any) => {
-			const token = Cookies.get('token');
-			if (!token) return config;
+		this.$authHost.interceptors.request.use(
+			(config: InternalAxiosRequestConfig) => {
+				const token = Cookies.get('token');
+				if (!token) return config;
 
-			config.headers.authorization = `Bearer ${token}`;
-			return config;
-		});
+				config.headers!.authorization = `Bearer ${token}`;
+				return config;
+			}
+		);
+
+		this.$authHost.interceptors.request.use(
+			(config: InternalAxiosRequestConfig) => {
+				// store.dispatch(setIsLoading(true)); // set loading to true
+				return config;
+			}
+		);
 
 		this.$authHost.interceptors.response.use(
-			(res: Response) => res,
+			(res: AxiosResponse) => {
+				// store.dispatch(setIsLoading(false)); // set loading to false
+				return res;
+			},
 			async (err: ErrorResponse) => {
 				if (
 					err.status === 403 &&
