@@ -18,7 +18,7 @@ export default function Spinner({ children, isLoading }: SpinnerProps) {
 				}
 				return [...prev, Math.random()];
 			});
-		}, 1000);
+		}, 500);
 		return () => clearInterval(interval);
 	}, []);
 
