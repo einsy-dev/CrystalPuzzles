@@ -38,7 +38,10 @@ class Auth {
 			.post('/auth/login', formData)
 			.then(
 				({ data: { access_token } }: { data: { access_token: string } }) => {
-					Cookies.set('token', access_token, { sameSite: 'strict' });
+					Cookies.set('token', access_token, {
+						sameSite: 'strict',
+						secure: true
+					});
 					return [null, null];
 				}
 			)
