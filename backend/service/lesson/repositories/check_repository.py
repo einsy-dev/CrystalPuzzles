@@ -73,7 +73,7 @@ class CheckRepository(BaseRepository):
             if await self.__checks_lesson_exist(lesson_id):
                 print(f"Lesson found. lesson_id: {lesson_id}.")
             else:
-                raise HTTPException(status_code=400, detail="The Lesson with id: {lesson_id} not exist.")
+                raise HTTPException(status_code=400, detail=f"The Lesson with id: {lesson_id} not exist.")
             
 
             for student_id in student_ids:
