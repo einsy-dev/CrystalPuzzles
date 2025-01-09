@@ -83,24 +83,6 @@ class LessonFilterSchema(BaseFilterSchema):
 class ChangeStatusSchema(BaseModel):
     status: Literal["created", "in_editing", "in_progress", "finished"]
 
-
-# { 
-#   "students_id": [ 
-#     1, 2, 3 
-#   ], 
-#   "lesson_id": 1, 
-#   "training_check": [ 
-#     { 
-#       "training_id": 1, 
-#       "repetitions": 5
-#     },
-#     { 
-#       "training_id": 2, 
-#       "repetitions": 8
-#     }  
-#   ] 
-# }
-
 class Train(BaseModel):
     training_id: int
     repetitions: int
@@ -113,7 +95,13 @@ class MakeCheckList(BaseModel):
     lesson_id: int
     training_check: List[Train]
 
-
+class GetCheckList(BaseModel):
+    '''
+    Схема Получения чек-листов
+    '''
+    lesson_id: int | None = Query(None, description="Фильтр по идентификатору урока")
+    student_id: int | None = Query(None, description="Фильтр по идентификатору студента")
+    
 
 # class TestChecksSchema:
 #     student_id: int

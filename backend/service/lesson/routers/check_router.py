@@ -12,7 +12,7 @@ from service.lesson.dependensies import CheckUOWDep, CheckServiceDep
 from service.lesson.unit_of_work.lesson_uow import LessonUOW
 from service.users.models import User
 from service.users.repository import UserRepository
-from service.lesson.schemas.lesson_schemas import MakeCheckList
+from service.lesson.schemas.lesson_schemas import MakeCheckList, GetCheckList
 
 from service.identity.security import get_current_user
 from service.lesson.repositories.lesson_repository import LessonRepository
@@ -45,6 +45,30 @@ def get_all_checks(
     # current_user: TrainerDep
 ):
     return {"responce": "Hello!"}
+
+@check_router.get(
+    "/list",
+    summary="Получение всех чек-листов с фильтрацией",
+    responses={
+        200: {"description": "Успешное получение данных"},
+        401: {"description": "Не авторизованный пользователь"},
+        400: {"model": Message, "description": "Некорректные данные"},
+        500: {"model": Message, "description": "Серверная ошибка"}
+    }
+)
+async def get_checklists(
+    model: GetCheckList,
+    uow: CheckUOWDep,
+    current_user: TrainerSupervisorAdminDep
+):
+    role = current_user.role  # Роль пользователя: тренер, супервизор или админ.
+
+    # Проверяем роль пользователя.
+    if role not in ["trainer", "supervisor", "admin"]:
+        raise HTTPException(status_code=403, detail="Недостаточно прав для выполнения операции")
+
+    print("/list!")
+    return True
 
 @check_router.post(
     "/",
@@ -82,8 +106,6 @@ async def create_check(
         status_code=HTTPStatus.CONFLICT.value,
         content={"detail": "Check existing"}
     )
-
-
 
     return True
 
