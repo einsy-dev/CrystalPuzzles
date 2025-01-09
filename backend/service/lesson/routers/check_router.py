@@ -83,9 +83,9 @@ async def get_checklists(
         if role == "trainer":
             # Тренеры могут видеть только свои уроки
             filters["trainer_id"] = current_user.id
-        elif role == "supervisor":
-            # Супервизоры могут видеть уроки тренеров, которыми они управляют
-            filters["supervisor_id"] = current_user.id
+        # elif role == "supervisor":
+            # Супервизоры могут видеть уроки тренеров, которыми они управляют и фильтров не надо
+            # filters["supervisor_id"] = current_user.id 
         # Админ видит все данные без дополнительных фильтров
 
         checklists = await uow.repo.get_checks_by_filter(**filters)

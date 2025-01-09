@@ -77,8 +77,6 @@ class CheckRepository(BaseRepository):
             stmt = stmt.filter(self.model.student_id == filters["student_id"])
         if "trainer_id" in filters:
             stmt = stmt.filter(self.model.lesson.has(trainer_id=filters["trainer_id"]))
-        if "supervisor_id" in filters:
-            stmt = stmt.filter(self.model.supervisor_id == filters["supervisor_id"])
 
         result = await self.session.execute(stmt)
         return result.scalars().all()
