@@ -24,21 +24,38 @@ class TrainingCheckResponseSchema(TrainingCheck):
 
 
 class CreateCheckSchema(BaseModel):
-    """ Схема создания моделей занятий """
-    student_ids: list[int]
-    lesson_id: int
-    training_check: list[TrainingCheck]
+    """ 
+    Схема создания моделей занятий 
+    Описывает входные данные для создания чек-листа, используя Pydantic
+    """
+    student_ids: list[int] # Список ID студентов, которым относится чек-лист
+    lesson_id: int # ID урока, для которого создаётся чек-лист
+    training_check: list[TrainingCheck] # Список упражнений. Для каждого: training_id, repetitions
+    date_add: datetime = Field(default_factory=datetime.now, hidden=True)
+    date_update: datetime = Field(default_factory=datetime.now, hidden=True)
+
+class CreateCheckSchemaTest(BaseModel):
+    """ 
+    Схема создания моделей занятий 
+    Описывает входные данные для создания чек-листа, используя Pydantic
+    """
+    student_ids: list[int] # Список ID студентов, которым относится чек-лист
+    lesson_id: int # ID урока, для которого создаётся чек-лист
+    # training_check: list[TrainingCheck] # Список упражнений. Для каждого: training_id, repetitions
     date_add: datetime = Field(default_factory=datetime.now, hidden=True)
     date_update: datetime = Field(default_factory=datetime.now, hidden=True)
 
 
 class CheckSchemaForTable(BaseModel):
-    """ Схема деталей чек-листа """
+    """ 
+    Схема деталей чек-листа 
+    """
     id: int
     student: UserShortSchema
     comment: Optional[str]
     awards: Optional[int]
     training_data: List[TrainingCheckResponseSchema]
+
 
 # class EditLessonSchema(BaseModel):
 #     """ Схема изменения моделей занятий """
@@ -77,3 +94,10 @@ class CheckSchemaForTable(BaseModel):
 #     """ Фильтрация и пагинация """
 #     date_begin: datetime | None = Query(default=None, description="Дата начала занятия")
 #     trainer: int | None = Query(default=None, description="Тренер")
+
+
+class TestSchema(BaseModel):
+    """ Помтраничный вывод деталей моделей тренировок """
+    name: str
+    lesson_id: int
+    descripton: Optional[str] = None
