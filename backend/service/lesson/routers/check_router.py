@@ -66,9 +66,32 @@ async def get_checklists(
     # Проверяем роль пользователя.
     if role not in ["trainer", "supervisor", "admin"]:
         raise HTTPException(status_code=403, detail="Недостаточно прав для выполнения операции")
+    
+    filters = {}
+    if model.lesson_id:
+        filters["lesson_id"] = model.lesson_id
+        print(f'lesson_id: {filters.get("lesson_id")}')
+    else:
+        print('no lesson_id')
+    if model.student_id:
+        filters["student_id"] = model.student_id
+        print(f'student_id: {filters.get("student_id")}')
+    else:
+        print('no student_id')
 
-    print("/list!")
-    return True
+    async with uow:
+        if role == "trainer":
+            # Тренеры могут видеть только свои уроки
+            filters["trainer_id"] = current_user.id
+        elif role == "supervisor":
+            # Супервизоры могут видеть уроки тренеров, которыми они управляют
+            filters["supervisor_id"] = current_user.id
+        # Админ видит все данные без дополнительных фильтров
+
+        checklists = await uow.repo.get_checks_by_filter(**filters)
+    
+    return {"data": checklists}
+
 
 @check_router.post(
     "/",

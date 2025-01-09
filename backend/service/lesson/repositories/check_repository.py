@@ -1,7 +1,7 @@
 from datetime import datetime
 from fastapi import HTTPException
 from sqlalchemy import insert, select, exists, delete
-from sqlalchemy.orm import selectinload
+from sqlalchemy.orm import selectinload, joinedload
 
 from common.repository.base_repository import BaseRepository
 from service.lesson.models import Check, TrainingCheck, Lesson
@@ -61,6 +61,27 @@ class CheckRepository(BaseRepository):
         data["training_check"] = training_check_list
         return check_id
 
+    async def get_checks_by_filter(self, **filters):
+        """
+        Получение чек-листов с фильтрацией по lesson_id, student_id и другим параметрам.
+        """
+        stmt = select(self.model).options(
+            joinedload(self.model.lesson),    # Загрузка связанного урока
+            joinedload(self.model.student)   # Загрузка связанного студента
+        )
+
+        # Применяем фильтры
+        if "lesson_id" in filters:
+            stmt = stmt.filter(self.model.lesson_id == filters["lesson_id"])
+        if "student_id" in filters:
+            stmt = stmt.filter(self.model.student_id == filters["student_id"])
+        if "trainer_id" in filters:
+            stmt = stmt.filter(self.model.lesson.has(trainer_id=filters["trainer_id"]))
+        if "supervisor_id" in filters:
+            stmt = stmt.filter(self.model.supervisor_id == filters["supervisor_id"])
+
+        result = await self.session.execute(stmt)
+        return result.scalars().all()
 
     # Добавление записи check в урок
     async def add_check_for_lesson(self, data: dict) -> bool:       
@@ -113,7 +134,9 @@ class CheckRepository(BaseRepository):
             .limit(1)
         )).scalar_one_or_none().training_data
         data["training_check"] = (
-            {"training_id": training.training_id, "repetitions": training.repetitions} for training in training_data
+            {
+                "training_id": training.training_id, "repetitions": training.repetitions
+                } for training in training_data
         )
         data["lesson_id"] = lesson_id
         check_id = await self.add(data)
