@@ -66,8 +66,10 @@ class CheckRepository(BaseRepository):
         Получение чек-листов с фильтрацией по lesson_id, student_id и другим параметрам.
         """
         stmt = select(self.model).options(
-            joinedload(self.model.lesson),    # Загрузка связанного урока
-            joinedload(self.model.student)   # Загрузка связанного студента
+            joinedload(self.model.lesson),               # Загрузка связанного урока
+            joinedload(self.model.student),              # Загрузка связанного студента
+            joinedload(self.model.training_data)         # Загрузка данных тренировки
+            .joinedload(TrainingCheck.training)          # Загрузка данных тренировок
         )
 
         # Применяем фильтры
@@ -78,8 +80,9 @@ class CheckRepository(BaseRepository):
         if "trainer_id" in filters:
             stmt = stmt.filter(self.model.lesson.has(trainer_id=filters["trainer_id"]))
 
+        print(f"Filters applied: {filters}")
         result = await self.session.execute(stmt)
-        return result.scalars().all()
+        return result.unique().scalars().all()
 
     # Добавление записи check в урок
     async def add_check_for_lesson(self, data: dict) -> bool:       

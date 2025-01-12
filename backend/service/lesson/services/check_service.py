@@ -36,3 +36,13 @@ class CheckService(BaseService):
             return result
         
         return True
+    
+
+    # @staticmethod
+    # async def get_all_by_filters(uow: CheckUOW, filters: CheckFilterSchema, **kwargs):
+    #     async with uow:
+    #         if kwargs["user"].role.__eq__("student"):
+    #             result = await uow.repo.get_all_lesson_by_filter(filters, student_id=kwargs["user"].id)
+    #         else:
+    #             result = await uow.repo.get_all_lesson_by_filter(filters)
+            # return result
