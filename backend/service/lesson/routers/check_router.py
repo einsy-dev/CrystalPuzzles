@@ -3,6 +3,7 @@ from http import HTTPStatus
 from typing import Annotated
 
 from fastapi import APIRouter, Depends, HTTPException, Response
+from fastapi.encoders import jsonable_encoder
 from starlette.responses import JSONResponse
 
 from common.dependensies import TrainerSupervisorAdminDep, TrainerDep
@@ -12,11 +13,11 @@ from service.lesson.dependensies import CheckUOWDep, CheckServiceDep
 from service.lesson.unit_of_work.lesson_uow import LessonUOW
 from service.users.models import User
 from service.users.repository import UserRepository
-from service.lesson.schemas.lesson_schemas import MakeCheckList
+from service.lesson.schemas.lesson_schemas import MakeCheckList, GetCheckList
 
 from service.identity.security import get_current_user
 from service.lesson.repositories.lesson_repository import LessonRepository
-from service.lesson.schemas.check_schema import CreateCheckSchema, CreateCheckSchemaTest
+from service.lesson.schemas.check_schema import CheckViewSchemaForPage, CreateCheckSchema, CreateCheckSchemaTest, TrainingCheckResponseSchema
 
 from service.lesson.dependensies import LessonServiceDep, LessonUOWDep, LessonFilterDep, SpaceUOWDep, CheckUOWDep, MakeCheckListDep
 
@@ -30,21 +31,97 @@ check_router = APIRouter(
 @check_router.get(
     "/",
     summary=" Получение всех занятий",
-    # response_model=LessonViewSchemaForPage,
+    # response_model=CheckViewSchemaForPage,
+    # response_model=TrainingCheckResponseSchema,
     responses={
         200: {"description": "Успешная обработка данных"},
         401: {"description": "Не авторизованный пользователь"},
         400: {"model": Message, "description": "Некорректные данные"},
         500: {"model": Message, "description": "Серверная ошибка"}}
 )
-def get_all_checks(
+async def get_all_checks(
     # model: MakeCheckList, # MakeCheckListDep = Annotated[MakeCheckListDep, Depends(MakeCheckListDep)]
     uow: CheckUOWDep, # Ещё один UOW для работы с репозиториями чек-листов.
-    lesson_service: LessonServiceDep,
     check_service: CheckServiceDep,    
-    # current_user: TrainerDep
+    current_user: TrainerSupervisorAdminDep,
+    page: int = 1,
+    per_page: int = 10
 ):
-    return {"responce": "Hello!"}
+    role = current_user.role  # Роль пользователя: тренер, супервизор или админ.
+
+    # Проверяем роль пользователя.
+    if role not in ["trainer", "supervisor", "admin"]:
+        raise HTTPException(status_code=403, detail="Недостаточно прав для выполнения операции")
+    
+    filters = {}
+    
+    async with uow:
+        checklists = await uow.repo.get_checks_by_filter(**filters)
+        print(f"Retrieved checklists: {checklists}")
+        pprint(jsonable_encoder(checklists))
+
+    # Сериализуем данные
+    serialized_checklists = jsonable_encoder(checklists)
+
+    # Пагинация
+    total_count = len(serialized_checklists)
+    max_page_count = (total_count + per_page - 1) // per_page  # Вычисляем общее количество страниц
+    paginated_checklists = serialized_checklists[(page - 1) * per_page : page * per_page]
+
+    # Возвращаем данные
+    return CheckViewSchemaForPage(
+        count_records=total_count,
+        page=page,
+        max_page_count=max_page_count,
+        records=paginated_checklists
+    )
+
+@check_router.get(
+    "/list",
+    summary="Получение всех чек-листов с фильтрацией",
+    responses={
+        200: {"description": "Успешное получение данных"},
+        401: {"description": "Не авторизованный пользователь"},
+        400: {"model": Message, "description": "Некорректные данные"},
+        500: {"model": Message, "description": "Серверная ошибка"}
+    }
+)
+async def get_checklists(
+    model: GetCheckList,
+    uow: CheckUOWDep,
+    current_user: TrainerSupervisorAdminDep
+):
+    role = current_user.role  # Роль пользователя: тренер, супервизор или админ.
+
+    # Проверяем роль пользователя.
+    if role not in ["trainer", "supervisor", "admin"]:
+        raise HTTPException(status_code=403, detail="Недостаточно прав для выполнения операции")
+    
+    filters = {}
+    if model.lesson_id:
+        filters["lesson_id"] = model.lesson_id
+        print(f'lesson_id: {filters.get("lesson_id")}')
+    else:
+        print('no lesson_id')
+    if model.student_id:
+        filters["student_id"] = model.student_id
+        print(f'student_id: {filters.get("student_id")}')
+    else:
+        print('no student_id')
+
+    async with uow:
+        if role == "trainer":
+            # Тренеры могут видеть только свои уроки
+            filters["trainer_id"] = current_user.id
+        # elif role == "supervisor":
+            # Супервизоры могут видеть уроки тренеров, которыми они управляют и фильтров не надо
+            # filters["supervisor_id"] = current_user.id 
+        # Админ видит все данные без дополнительных фильтров
+
+        checklists = await uow.repo.get_checks_by_filter(**filters)
+    
+    return {"data": checklists}
+
 
 @check_router.post(
     "/",
@@ -82,8 +159,6 @@ async def create_check(
         status_code=HTTPStatus.CONFLICT.value,
         content={"detail": "Check existing"}
     )
-
-
 
     return True
 

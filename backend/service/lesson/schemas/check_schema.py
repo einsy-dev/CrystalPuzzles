@@ -3,7 +3,7 @@ from pydantic import Field
 from datetime import datetime
 from typing import Optional, List
 
-from common.schema.base_schemas import BaseModel
+from common.schema.base_schemas import BaseModel, PageSchema, BaseFilterSchema
 from common.schema.base_user_schema import UserShortSchema
 from service.training.models import Training
 
@@ -56,7 +56,31 @@ class CheckSchemaForTable(BaseModel):
     awards: Optional[int]
     training_data: List[TrainingCheckResponseSchema]
 
+class CheckFilterSchema(BaseFilterSchema):
+    """ Фильтрация и пагинация """
+    id: int
+    student: UserShortSchema
+    comment: Optional[str]
+    awards: Optional[int]
+    training_data: List[TrainingCheckResponseSchema]
 
+class CheckViewSchemaForPage(PageSchema[CheckSchemaForTable]):
+    """ Постраничный вывод деталей чек-листа """
+    pass
+
+class TrainingCheckResponseSchema(BaseModel):
+    """Схема ответа для `TrainingCheck`"""
+    training_id: int
+    # id: int  
+    # training_id: int
+    # repetitions: int = Field(ge=1)
+    # assessment: Optional[int] = Field(default=None, le=10, ge=1)
+    # training: TrainingSchema
+    
+    # class Config:
+    #     orm_mode = True
+
+        
 # class EditLessonSchema(BaseModel):
 #     """ Схема изменения моделей занятий """
 #     id: int
