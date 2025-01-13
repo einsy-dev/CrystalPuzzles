@@ -32,7 +32,7 @@ check_router = APIRouter(
     "/",
     summary=" Получение всех занятий",
     # response_model=CheckViewSchemaForPage,
-    response_model=TrainingCheckResponseSchema,
+    # response_model=TrainingCheckResponseSchema,
     responses={
         200: {"description": "Успешная обработка данных"},
         401: {"description": "Не авторизованный пользователь"},

@@ -71,12 +71,14 @@ class CheckViewSchemaForPage(PageSchema[CheckSchemaForTable]):
 class TrainingCheckResponseSchema(BaseModel):
     """Схема ответа для `TrainingCheck`"""
     training_id: int
-    repetitions: int
-    assessment: Optional[int]
-    training: TrainingSchema  # Обязательное поле, чтобы подгружать данные тренировок
-
-    class Config:
-        orm_mode = True
+    # id: int  
+    # training_id: int
+    # repetitions: int = Field(ge=1)
+    # assessment: Optional[int] = Field(default=None, le=10, ge=1)
+    # training: TrainingSchema
+    
+    # class Config:
+    #     orm_mode = True
 
         
 # class EditLessonSchema(BaseModel):
