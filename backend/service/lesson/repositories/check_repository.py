@@ -84,6 +84,22 @@ class CheckRepository(BaseRepository):
         result = await self.session.execute(stmt)
         return result.unique().scalars().all()
 
+    async def get_check_by_id(self, check_id: int):
+        """
+        Получение чек-листа по идентификатору.
+        """
+
+        print(f'repository: check_id: {check_id}')
+        
+        stmt = select(self.model).options(
+            joinedload(self.model.lesson),        # Подгрузка связанного урока
+            joinedload(self.model.student),       # Подгрузка связанного студента
+            joinedload(self.model.training_data)  # Подгрузка данных тренировки
+        ).filter(self.model.id == check_id)
+
+        result = await self.session.execute(stmt)
+        return result.unique().scalar_one_or_none()
+
     # Добавление записи check в урок
     async def add_check_for_lesson(self, data: dict) -> bool:       
 
@@ -151,3 +167,4 @@ class CheckRepository(BaseRepository):
         stmt = delete(TrainingCheck).filter(TrainingCheck.check_id == check.id)
         await self.session.execute(stmt)
         await self.delete_db(check.id)
+

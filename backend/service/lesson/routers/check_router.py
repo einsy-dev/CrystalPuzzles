@@ -17,7 +17,7 @@ from service.lesson.schemas.lesson_schemas import MakeCheckList, GetCheckList
 
 from service.identity.security import get_current_user
 from service.lesson.repositories.lesson_repository import LessonRepository
-from service.lesson.schemas.check_schema import CheckViewSchemaForPage, CreateCheckSchema, CreateCheckSchemaTest, TrainingCheckResponseSchema
+from service.lesson.schemas.check_schema import CheckSchemaForTable, CheckViewSchemaForPage, CreateCheckSchema, CreateCheckSchemaTest, TrainingCheckResponseSchema
 
 from service.lesson.dependensies import LessonServiceDep, LessonUOWDep, LessonFilterDep, SpaceUOWDep, CheckUOWDep, MakeCheckListDep
 
@@ -77,6 +77,36 @@ async def get_all_checks(
     )
 
 @check_router.get(
+    "/{check_id}",
+    summary="Получение чек-листа по check_id",
+    # response_model=CheckSchemaForTable,
+    responses={
+        200: {"description": "Успешная обработка данных"},
+        401: {"description": "Не авторизованный пользователь"},
+        400: {"model": Message, "description": "Некорректные данные"},
+        500: {"model": Message, "description": "Серверная ошибка"}},
+)
+async def get_check(
+        check_id: int,
+        uow: CheckUOWDep,
+        check_service: CheckServiceDep,
+        current_user: TrainerSupervisorAdminDep,
+):
+    """ admin, supervisor, trainer """
+    role = current_user.role  # Проверяем роль пользователя
+    if role not in ["trainer", "supervisor", "admin"]:
+        raise HTTPException(status_code=403, detail="Недостаточно прав для выполнения операции")
+    
+    print(f'check_id: {check_id}')
+
+    check  = await check_service.get_check_by_id(uow, check_id)
+
+    if not check:
+        raise HTTPException(status_code=404, detail="Чек-лист не найден")
+
+    return check
+
+@check_router.get(
     "/list",
     summary="Получение всех чек-листов с фильтрацией",
     responses={
@@ -113,9 +143,6 @@ async def get_checklists(
         if role == "trainer":
             # Тренеры могут видеть только свои уроки
             filters["trainer_id"] = current_user.id
-        # elif role == "supervisor":
-            # Супервизоры могут видеть уроки тренеров, которыми они управляют и фильтров не надо
-            # filters["supervisor_id"] = current_user.id 
         # Админ видит все данные без дополнительных фильтров
 
         checklists = await uow.repo.get_checks_by_filter(**filters)
@@ -160,107 +187,3 @@ async def create_check(
         content={"detail": "Check existing"}
     )
 
-    return True
-
-# async def create_check_to_base(
-#     model: CreateCheckSchema,
-#     lesson_uow: LessonUOW = Depends(),
-#     uow: CheckUOWDep = Depends(),
-#     check_service=Depends(get_check_service) 
-# ) -> bool:
-#     """
-#     Сохранение чек-листа в базу данных.
-#     """
-#     print("Сохранение данных в базу:")
-#     pprint(model.dict())
-
-#     # Вызов сервиса для добавления чек-листа к уроку
-#     result = await check_service.add_check_for_lesson(
-#         uow=uow,
-#         model=model,
-#         lesson_uow=lesson_uow
-#     )
-
-#     # Проверка результата и возврат ответа
-#     if result:
-#         print("Чек-лист успешно создан.")
-#         return True
-
-#     # Возвращаем ответ с ошибкой, если чек-лист уже существует
-#     print("Ошибка: Чек-лист уже существует.")
-#     raise JSONResponse(
-#         status_code=HTTPStatus.CONFLICT.value,
-#         content={"detail": "Check existing"}
-#     )
-
-
-# """
-# Переход на страницу составления чек-листов.
-# Заполняем форму, а именно:
-#     - Состав учеников
-#     - Состав упражнений на занятие и количество повторений
-# """
-# @check_router.post(
-#     "/",
-#     summary="Создание Чек-листа",
-#     response_model=bool, #модель, которая описывает тип возвращаем данных
-#     responses={
-#         200: {"description": "Успешная обработка данных"},
-#         401: {"description": "Не авторизованный пользователь"},
-#         400: {"model": Message, "description": "Некорректные данные"},
-#         500: {"model": Message, "description": "Серверная ошибка"}},
-# )
-# async def create_check(
-#         model: CreateCheckSchema, # Описывает входные данные (ID студентов, ID урока, даты и т. д.).
-#         lesson_uow: LessonUOW, # Это объект Unit of Work (UOW), который используется для управления транзакциями и доступом к репозиторию уроков.
-#         uow: CheckUOWDep, # Ещё один UOW для работы с репозиториями чек-листов.
-#         check_service: CheckServiceDep, # Сервис для работы с логикой чек-листов. Это зависимость, созданная с помощью Annotated и Depends. Она создаёт экземпляр CheckService, который затем передаётся в обработчики запросов.
-#         current_user: TrainerDep # Зависимость, определяющая текущего пользователя. Используется для контроля доступа.
-# ):
-#     """ trainer """
-#     print('model')
-#     pprint(model)
-#     result = await check_service.add_check_for_lesson(
-#         uow, #  для работы с транзакциями
-#         model, #  данные, которые пришли от клиента
-#         lesson_uow=lesson_uow # для работы с уроками
-#         )
-#     if result:
-#         return result
-#     return JSONResponse(status_code=HTTPStatus.CONFLICT.value, content="Check existing")
-
-
-# from fastapi import Request
-
-# @check_router.post(
-#     "/",
-#     summary="Создание Чек-листа",
-#     response_model=None,
-#     responses={
-#         200: {"description": "Успешная обработка данных"},
-#         401: {"description": "Не авторизованный пользователь"},
-#         400: {"model": Message, "description": "Некорректные данные"},
-#         500: {"model": Message, "description": "Серверная ошибка"}},
-# )
-# async def create_check(
-#     request: Request,
-#     lesson_uow=Depends(LessonUOW),
-#     uow=Depends(CheckUOWDep),
-#     check_service=Depends(CheckServiceDep),
-#     current_user=Depends(TrainerDep)
-# ):
-#     data = await request.json()
-#     print('Полученные данные:', data)
-
-#     # Преобразование данных в Pydantic модель
-#     model = CreateCheckSchema(**data)
-#     pprint(model.dict())
-
-#     result = await check_service.add_check_for_lesson(
-#         uow,
-#         model,
-#         lesson_uow=lesson_uow
-#     )
-#     if result:
-#         return result
-#     return JSONResponse(status_code=HTTPStatus.CONFLICT.value, content="Check existing")
