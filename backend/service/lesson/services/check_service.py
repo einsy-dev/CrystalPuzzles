@@ -37,12 +37,13 @@ class CheckService(BaseService):
         
         return True
     
+    @staticmethod
+    async def get_check_by_id(uow: CheckUOW, check_id: int):
+        """
+        Получение чек-листа по идентификатору.
+        """
 
-    # @staticmethod
-    # async def get_all_by_filters(uow: CheckUOW, filters: CheckFilterSchema, **kwargs):
-    #     async with uow:
-    #         if kwargs["user"].role.__eq__("student"):
-    #             result = await uow.repo.get_all_lesson_by_filter(filters, student_id=kwargs["user"].id)
-    #         else:
-    #             result = await uow.repo.get_all_lesson_by_filter(filters)
-            # return result
+        print(f'staticmethod: check_id: {check_id}')
+        async with uow:
+            check = await uow.repo.get_check_by_id(check_id)
+        return check
