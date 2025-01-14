@@ -12,21 +12,21 @@ from service.training.models import Training  # Импорт Training
 # Создаем клиента для тестирования
 client = TestClient(app)
 
-# @pytest.fixture
-# def auth_token():
-#     # Делаем запрос к эндпоинту авторизации для получения токена
-#     response = client.post(
-#         "/api/v1/auth/login/",  # Эндпоинт для авторизации
-#         headers={"Content-Type": "application/x-www-form-urlencoded"},  # Правильный заголовок
-#         data={
-#             "grant_type": "password",
-#             "username": "supervisor@crystal.com",
-#             "password": "supervisorpass",
-#             "scope": "",
-#             "client_id": "string",
-#             "client_secret": "string",
-#         },
-#     )
+@pytest.fixture
+def auth_token():
+    # Делаем запрос к эндпоинту авторизации для получения токена
+    response = client.post(
+        "/api/v1/auth/login/",  # Эндпоинт для авторизации
+        headers={"Content-Type": "application/x-www-form-urlencoded"},  # Правильный заголовок
+        data={
+            "grant_type": "password",
+            "username": "supervisor@crystal.com",
+            "password": "supervisorpass",
+            "scope": "",
+            "client_id": "string",
+            "client_secret": "string",
+        },
+    )
 
 
 @pytest.fixture
