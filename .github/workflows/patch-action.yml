@@ -11,44 +11,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v3 
+        uses: actions/checkout@v3
 
       - name: Set up Docker
         uses: docker/setup-buildx-action@v3
-      - name: Set up Docker Compose
-        run: sudo apt-get update && sudo apt-get install docker-compose
 
-      - name: Build and Start Docker Compose
-        run: docker-compose -f docker-compose.prod.yml up -d
+      - name: Install Docker Compose
+        run: sudo apt-get update && sudo apt-get install -y docker-compose
 
-      - name: Wait for PostgreSQL
-        run: |
-          for i in {1..10}; do
-            nc -z localhost 5432 && echo "PostgreSQL is up" && exit 0
-            echo "Waiting for PostgreSQL..."
-            sleep 5
-          done
-          echo "PostgreSQL did not start in time" && exit 1
+      - name: Build and Start Test Containers
+        run: docker compose -f docker-compose.test.yml up --build --abort-on-container-exit --exit-code-from tests
 
-      - name: Set up Python 3.11
-        uses: actions/setup-python@v4  
-        with:
-          python-version: 3.11
-
-      - name: Install pipenv
-        run: pip install pipenv
-        
-      - name: Install dependencies
-        run: cd backend && pipenv install
-
-      - name: Install pytest
-        run: cd backend && pipenv install pytest && pipenv install httpx
-        
-      - name: Copy env
-        run: cp .env backend/.env
-
-      - name: Run tests
-        run: cd backend && ls && PYTHONPATH=$(pwd) pipenv run pytest
+      - name: Shut Down Docker Compose
+        if: always()
+        run: docker compose -f docker-compose.test.yml down
           
   app_tests:
     runs-on: ubuntu-latest
