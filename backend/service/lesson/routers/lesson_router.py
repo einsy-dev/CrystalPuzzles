@@ -3,7 +3,6 @@ from http import HTTPStatus
 from fastapi import APIRouter, Response
 from starlette.responses import JSONResponse
 
-from service.lesson.schemas.check_schema import TestSchema
 from common.dependensies import AdminDep, SupervisorAdminDep, UserDep, TrainerSupervisorAdminDep, TrainerDep
 from common.schema.base_schemas import Message
 from service.lesson.dependensies import LessonServiceDep, LessonUOWDep, LessonFilterDep, SpaceUOWDep, CheckUOWDep

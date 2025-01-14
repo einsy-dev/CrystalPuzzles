@@ -68,9 +68,8 @@ class CheckViewSchemaForPage(PageSchema[CheckSchemaForTable]):
     """ Постраничный вывод деталей чек-листа """
     pass
 
-class TrainingCheckResponseSchema(BaseModel):
-    """Схема ответа для `TrainingCheck`"""
-    training_id: int
+# class TrainingCheckResponseSchema(BaseModel):
+#     """Схема ответа для `TrainingCheck`"""
     # id: int  
     # training_id: int
     # repetitions: int = Field(ge=1)
@@ -80,48 +79,3 @@ class TrainingCheckResponseSchema(BaseModel):
     # class Config:
     #     orm_mode = True
 
-        
-# class EditLessonSchema(BaseModel):
-#     """ Схема изменения моделей занятий """
-#     id: int
-#     space_id: int
-#     trainer_id: int
-#     trainer_comments: Optional[str]
-#     start: datetime
-#
-#
-# class TrainerShortSchema(BaseModel):
-#     id: int
-#     firstname: Optional[str] = None
-#     lastname: Optional[str] = None
-#     surname: Optional[str] = None
-#
-#
-# class LessonSchemaForTable(BaseModel):
-#     """ Схема деталей занятия """
-#     id: int
-#     space: SpaceSchemaForTable
-#     trainer: TrainerShortSchema
-#     trainer_comments: Optional[str]
-#     start: datetime
-#
-#
-# class LessonViewSchemaForPage(BaseModel):
-#     """ Помтраничный вывод деталей моделей тренировок """
-#     page: int
-#     max_page_count: int
-#     count_records: int
-#     records: List[LessonSchemaForTable]
-#
-#
-# class LessonFilterSchema(BaseFilterSchema):
-#     """ Фильтрация и пагинация """
-#     date_begin: datetime | None = Query(default=None, description="Дата начала занятия")
-#     trainer: int | None = Query(default=None, description="Тренер")
-
-
-class TestSchema(BaseModel):
-    """ Помтраничный вывод деталей моделей тренировок """
-    name: str
-    lesson_id: int
-    descripton: Optional[str] = None
