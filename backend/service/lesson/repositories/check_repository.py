@@ -7,6 +7,7 @@ from sqlalchemy.orm import selectinload, joinedload
 from common.repository.base_repository import BaseRepository
 from service.lesson.models import Check, TrainingCheck, Lesson
 
+from service.lesson.schemas.check_schema import CreateCheckSchema
 from service.users.models import User
 
 
@@ -21,12 +22,22 @@ class CheckRepository(BaseRepository):
         )
         await self.session.execute(stmt)
 
-    async def __checks_exist(self, lesson_id: int):
-        return (await self.session.execute(
-            select(exists(self.model))
-            .filter(self.model.lesson_id == lesson_id)
-            .limit(1)
-        )).scalar_one_or_none()
+    # async def __checks_exist(self, lesson_id: int):
+    #     print(f'***********lesson_id= {lesson_id}')
+    #     return (await self.session.execute(
+    #         select(exists(self.model))
+    #         .filter(self.model.id == lesson_id)
+    #         .limit(1)
+    #     )).scalar_one_or_none()
+
+    async def __checks_exist(self, lesson_id: int) -> bool:
+        stmt = select(
+            exists().where(self.model.lesson_id == lesson_id)  
+        )
+        result = await self.session.execute(stmt)
+        exists_check = result.scalar() 
+        print(f"Check exists for lesson_id {lesson_id}: {exists_check}")
+        return exists_check
     
     async def __checks_student_exist(self, student_id: int):
         return (await self.session.execute(
@@ -102,34 +113,55 @@ class CheckRepository(BaseRepository):
         return result.unique().scalar_one_or_none()
 
     # Добавление записи check в урок
-    async def add_check_for_lesson(self, data: dict) -> bool:       
+    async def add_check_for_lesson(self, data: CreateCheckSchema) -> bool:       
 
-        lesson_id = data.get("lesson_id")
+        data = data.model_dump()
 
+        lesson_id = data["lesson_id"]
+        print(f'lesson_id: {lesson_id}')
+        
         if not await self.__checks_exist(lesson_id):
-            student_ids = data.pop("students_id")
+            student_ids = data["student_ids"]
+            print(f"Student IDs: {student_ids}")
 
             if await self.__checks_lesson_exist(lesson_id):
                 print(f"Lesson found. lesson_id: {lesson_id}.")
             else:
-                raise HTTPException(status_code=400, detail=f"The Lesson with id: {lesson_id} not exist.")
-            
+                print(f"Lesson NOT found. lesson_id: {lesson_id}.")
+                raise HTTPException(status_code=400, detail=f"The Lesson with id: {lesson_id} not exist.")            
 
             for student_id in student_ids:
                 
                 print(f'student_id: {student_id}')
-                
-                data["student_id"] = student_id
-                check_id = await self.add(data)
 
-                print(f'check_id: {check_id}')
-
-                # Проверка наличия студента в базе.
                 if await self.__checks_student_exist(student_id):
                     print(f"Record found for student_id {student_id}.")
                 else:
                     print(f"No record found for student_id {student_id}")
-                    raise HTTPException(status_code=400, detail="No record found for student_id: {lesson_id}.")
+                    raise HTTPException(status_code=400, detail="No record found for student_id: {lesson_id}.") 
+                
+                # data["student_id"] = student_id
+                # check_id = await self.add(data)
+
+                check_data = {
+                    "student_id": student_id,
+                    "lesson_id": lesson_id,
+                    "comment": data.get("comment"),
+                    "awards": data.get("awards"),
+                    "date_add": data.get("date_add"),
+                    "date_update": data.get("date_update"),
+                    "deleted": data.get("deleted", False),
+                    "training_check": data.get("training_check"),
+                }
+
+                print(f'training_check: {data["training_check"]}')
+
+                # Добавляем запись в базу
+                check_id = await self.add(check_data)
+                print(f"Check created with ID: {check_id}")
+
+                # Проверка наличия студента в базе.
+                     
 
             return True
         

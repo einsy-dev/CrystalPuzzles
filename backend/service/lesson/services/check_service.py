@@ -4,6 +4,11 @@ from fastapi import HTTPException
 from common.service.base_service import BaseService
 from service.lesson.unit_of_work.check_uow import CheckUOW
 
+from service.users.services.user_service import UserService
+from service.training.service import TrainingService
+# from service.lesson.services.lesson_service import LessonService
+
+from service.lesson.schemas.check_schema import CreateCheckSchema
 
 class CheckService(BaseService):
     """
@@ -27,14 +32,28 @@ class CheckService(BaseService):
             return result
 
     @staticmethod
-    async def add_check_for_lesson(uow: CheckUOW, lesson_id, data: dict):
-        
-        print(f'add_check_for_lesson: lesson_id: {lesson_id}') 
-        pprint(dict)
+    async def add_check_for_lesson(
+        model: CreateCheckSchema,
+        # lesson_uow,
+        check_uow,
+        user_uow,
+        training_uow,
+        **kwargs):
 
-        async with uow:
-            result = await uow.repo.add_check_for_lesson(data)
-            await uow.commit()
+        # Проверка на наличие студента
+        for student_id in model.student_ids:
+            await UserService.student_check(user_uow, student_id)
+        for training in model.training_check:
+            # Проверка на наличинее тренировки
+            await TrainingService.training_exist(training_uow, training.training_id)
+        
+        # Проверка на наличинее урока
+        # await LessonService.lesson_exist(lesson_uow, model.lesson_id)
+        
+
+        async with check_uow:
+            result = await check_uow.repo.add_check_for_lesson(model)
+            await check_uow.commit()
             return result
         
         return True
