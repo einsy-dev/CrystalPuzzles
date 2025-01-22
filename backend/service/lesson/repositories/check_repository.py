@@ -158,10 +158,7 @@ class CheckRepository(BaseRepository):
 
                 # Добавляем запись в базу
                 check_id = await self.add(check_data)
-                print(f"Check created with ID: {check_id}")
-
-                # Проверка наличия студента в базе.
-                     
+                print(f"Check created with ID: {check_id}")                     
 
             return True
         
