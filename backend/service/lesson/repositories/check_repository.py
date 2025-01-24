@@ -22,22 +22,12 @@ class CheckRepository(BaseRepository):
         )
         await self.session.execute(stmt)
 
-    # async def __checks_exist(self, lesson_id: int):
-    #     print(f'***********lesson_id= {lesson_id}')
-    #     return (await self.session.execute(
-    #         select(exists(self.model))
-    #         .filter(self.model.id == lesson_id)
-    #         .limit(1)
-    #     )).scalar_one_or_none()
-
-    async def __checks_exist(self, lesson_id: int) -> bool:
-        stmt = select(
-            exists().where(self.model.lesson_id == lesson_id)  
-        )
-        result = await self.session.execute(stmt)
-        exists_check = result.scalar() 
-        print(f"Check exists for lesson_id {lesson_id}: {exists_check}")
-        return exists_check
+    async def __checks_exist(self, lesson_id: int):
+        return (await self.session.execute(
+            select(exists(self.model))
+            .filter(self.model.id == lesson_id)
+            .limit(1)
+        )).scalar_one_or_none()
     
     async def __checks_student_exist(self, student_id: int):
         return (await self.session.execute(
@@ -49,9 +39,17 @@ class CheckRepository(BaseRepository):
     async def __checks_lesson_exist(self, lesson_id: int):
         return (await self.session.execute(
             select(Lesson)
-            .filter(Lesson.id == lesson_id)
+            .where(Lesson.id == lesson_id)
             .limit(1)
         )).scalar_one_or_none()
+    
+    async def get_all_check(self, filters):
+        stmt = select(self.model).where(self.model.deleted.__eq__(False))
+        count_records = await self._get_count_records(stmt)
+        records = await self._get_records(count_records, stmt, filters)
+        response = await self._convert_response(count_records, records, filters)
+        print(f'response: {response}')
+        return response
 
     async def get_by_filter(self, **kwargs):
         stmt = select(self.model)
@@ -78,10 +76,10 @@ class CheckRepository(BaseRepository):
         Получение чек-листов с фильтрацией по lesson_id, student_id и другим параметрам.
         """
         stmt = select(self.model).options(
-            joinedload(self.model.lesson),               # Загрузка связанного урока
-            joinedload(self.model.student),              # Загрузка связанного студента
-            joinedload(self.model.training_data)         # Загрузка данных тренировки
-            .joinedload(TrainingCheck.training)          # Загрузка данных тренировок
+            joinedload(self.model.lesson),               
+            joinedload(self.model.student),              
+            joinedload(self.model.training_data)         
+            .joinedload(TrainingCheck.training)          
         )
 
         # Применяем фильтры
@@ -104,9 +102,9 @@ class CheckRepository(BaseRepository):
         print(f'repository: check_id: {check_id}')
         
         stmt = select(self.model).options(
-            joinedload(self.model.lesson),        # Подгрузка связанного урока
-            joinedload(self.model.student),       # Подгрузка связанного студента
-            joinedload(self.model.training_data)  # Подгрузка данных тренировки
+            joinedload(self.model.lesson),        
+            joinedload(self.model.student),       
+            joinedload(self.model.training_data)  
         ).filter(self.model.id == check_id)
 
         result = await self.session.execute(stmt)
@@ -128,7 +126,7 @@ class CheckRepository(BaseRepository):
                 print(f"Lesson found. lesson_id: {lesson_id}.")
             else:
                 print(f"Lesson NOT found. lesson_id: {lesson_id}.")
-                raise HTTPException(status_code=400, detail=f"The Lesson with id: {lesson_id} not exist.")            
+                raise HTTPException(status_code=400, detail=f"The Lesson with id: {lesson_id} not exist.")  
 
             for student_id in student_ids:
                 
@@ -139,9 +137,6 @@ class CheckRepository(BaseRepository):
                 else:
                     print(f"No record found for student_id {student_id}")
                     raise HTTPException(status_code=400, detail="No record found for student_id: {lesson_id}.") 
-                
-                # data["student_id"] = student_id
-                # check_id = await self.add(data)
 
                 check_data = {
                     "student_id": student_id,

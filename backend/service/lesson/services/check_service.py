@@ -42,9 +42,11 @@ class CheckService(BaseService):
 
         # Проверка на наличие студента
         for student_id in model.student_ids:
+            print(f'check in servise if student {student_id} exist')
             await UserService.student_check(user_uow, student_id)
         for training in model.training_check:
             # Проверка на наличинее тренировки
+            print(f'check in servise if training {training} exist')
             await TrainingService.training_exist(training_uow, training.training_id)
         
         # Проверка на наличинее урока
@@ -57,6 +59,17 @@ class CheckService(BaseService):
             return result
         
         return True
+    
+    @staticmethod
+    async def get_all_check(uow: CheckUOW, filters):
+        """
+        Получение всех чек-листов.
+        """
+        async with uow:
+            check = await uow.repo.get_all_check(filters)
+
+            print(f'check: {check}')
+        return check
     
     @staticmethod
     async def get_check_by_id(uow: CheckUOW, check_id: int):

@@ -64,9 +64,20 @@ class CheckFilterSchema(BaseFilterSchema):
     awards: Optional[int]
     training_data: List[TrainingCheckResponseSchema]
 
-class CheckViewSchemaForPage(PageSchema[CheckSchemaForTable]):
+class CheckNoFilterSchema(BaseFilterSchema):
+    """ Фильтрация и пагинация """
+    pass
+
+class CheckSimpleFilterSchema(BaseFilterSchema):
+    """ Фильтрация и пагинация """
+    id: int
+    lesson_id: int
+    student_id: int
+
+class CheckViewSchemaForPage(PageSchema[CheckSimpleFilterSchema]):
     """ Постраничный вывод деталей чек-листа """
     pass
+
 
 # class TrainingCheckResponseSchema(BaseModel):
 #     """Схема ответа для `TrainingCheck`"""

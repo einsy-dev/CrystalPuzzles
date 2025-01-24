@@ -9,16 +9,13 @@ from starlette.responses import JSONResponse
 from common.dependensies import TrainerSupervisorAdminDep, TrainerDep
 from common.schema.base_schemas import Message
 from core.logger import logger
-from service.lesson.dependensies import CheckUOWDep, CheckServiceDep
-# from service.lesson.unit_of_work.lesson_uow import LessonUOW
-# from service.users.models import User
-from service.users.repository import UserRepository
+from service.lesson.dependensies import CheckUOWDep, CheckServiceDep, CheckViewSchemaForPageDep, CheckNoFilterSchemaDep
 from service.users.dependensies import UserUOWDep
 from service.training.dependensies import TrainingUOWDep
 from service.lesson.schemas.lesson_schemas import MakeCheckList, GetCheckList
 
-from service.identity.security import get_current_user
-from service.lesson.repositories.lesson_repository import LessonRepository
+# from service.identity.security import get_current_user
+# from service.lesson.repositories.lesson_repository import LessonRepository
 from service.lesson.schemas.check_schema import CheckSchemaForTable, CheckViewSchemaForPage, CreateCheckSchema, CreateCheckSchemaTest, TrainingCheckResponseSchema
 
 from service.lesson.dependensies import LessonServiceDep, LessonUOWDep, LessonFilterDep, SpaceUOWDep, CheckUOWDep, MakeCheckListDep
@@ -33,8 +30,7 @@ check_router = APIRouter(
 @check_router.get(
     "/",
     summary=" Получение всех занятий",
-    # response_model=CheckViewSchemaForPage,
-    # response_model=TrainingCheckResponseSchema,
+    response_model=CheckViewSchemaForPage,
     responses={
         200: {"description": "Успешная обработка данных"},
         401: {"description": "Не авторизованный пользователь"},
@@ -42,36 +38,42 @@ check_router = APIRouter(
         500: {"model": Message, "description": "Серверная ошибка"}}
 )
 async def get_all_checks(
-    # model: MakeCheckList, # MakeCheckListDep = Annotated[MakeCheckListDep, Depends(MakeCheckListDep)]
     uow: CheckUOWDep, # Ещё один UOW для работы с репозиториями чек-листов.
     check_service: CheckServiceDep,    
+    filters: CheckNoFilterSchemaDep,
     current_user: TrainerSupervisorAdminDep,
-    page: int = 1,
-    per_page: int = 10
 ):
     
-    filters = {}
+    check  = await check_service.get_all_check(uow, filters)
+    print(f'check')
+
+    print(f'check (router): {check}')
+
+    return check
+
+
+    # filters = {}
     
-    async with uow:
-        checklists = await uow.repo.get_checks_by_filter(**filters)
-        print(f"Retrieved checklists: {checklists}")
-        pprint(jsonable_encoder(checklists))
+    # async with uow:
+    #     checklists = await uow.repo.get_checks_by_filter(**filters)
+    #     print(f"Retrieved checklists: {checklists}")
+    #     pprint(jsonable_encoder(checklists))
 
-    # Сериализуем данные
-    serialized_checklists = jsonable_encoder(checklists)
+    # # Сериализуем данные
+    # serialized_checklists = jsonable_encoder(checklists)
 
-    # Пагинация
-    total_count = len(serialized_checklists)
-    max_page_count = (total_count + per_page - 1) // per_page  # Вычисляем общее количество страниц
-    paginated_checklists = serialized_checklists[(page - 1) * per_page : page * per_page]
+    # # Пагинация
+    # total_count = len(serialized_checklists)
+    # max_page_count = (total_count + per_page - 1) // per_page  # Вычисляем общее количество страниц
+    # paginated_checklists = serialized_checklists[(page - 1) * per_page : page * per_page]
 
-    # Возвращаем данные
-    return CheckViewSchemaForPage(
-        count_records=total_count,
-        page=page,
-        max_page_count=max_page_count,
-        records=paginated_checklists
-    )
+    # # Возвращаем данные
+    # return CheckViewSchemaForPage(
+    #     count_records=total_count,
+    #     page=page,
+    #     max_page_count=max_page_count,
+    #     records=paginated_checklists
+    # )
 
 @check_router.get(
     "/{check_id}",
@@ -138,45 +140,6 @@ async def get_checklists(
     return {"data": checklists}
 
 
-# @check_router.post(
-#     "/",
-#     summary="Создание Чек-листа",
-#     response_model=bool,
-#     responses={
-#         200: {"description": "Успешная обработка данных"},
-#         401: {"description": "Не авторизованный пользователь"},
-#         400: {"model": Message, "description": "Некорректные данные"},
-#         500: {"model": Message, "description": "Серверная ошибка"}},
-# )
-# async def create_check(
-#     model: MakeCheckList, # MakeCheckListDep = Annotated[MakeCheckListDep, Depends(MakeCheckListDep)]
-#     uow: CheckUOWDep, # Ещё один UOW для работы с репозиториями чек-листов.
-#     lesson_service: LessonServiceDep,
-#     check_service: CheckServiceDep,    
-#     current_user: TrainerDep
-# ):
-#     # Проверка наличия id упражнения и проверка наличия id студента и id упражнения перенесены в сервис
-
-#     # Вызов сервиса для добавления чек-листа к уроку
-#     result = True
-#     result = await check_service.add_check_for_lesson(
-#         uow=uow,
-#         lesson_id=model.lesson_id,
-#         data=model.dict()
-#     )
-
-#     # Проверка результата и возврат ответа
-#     if result:
-#         print("Чек-лист успешно создан.")
-#         return True
-
-#     # Возвращаем ответ с ошибкой, если чек-лист уже существует
-#     print("Ошибка: Чек-лист уже существует.")
-#     raise JSONResponse(
-#         status_code=HTTPStatus.CONFLICT.value,
-#         content={"detail": "Check existing"}
-#     )
-
 @check_router.post(
     "/",
     summary="Создание Чек-листа",
@@ -187,14 +150,15 @@ async def get_checklists(
         400: {"model": Message, "description": "Некорректные данные"},
         500: {"model": Message, "description": "Серверная ошибка"}},
 )
-async def create_check(model: CreateCheckSchema,
-        lesson_uow: LessonUOWDep,
-        check_uow: CheckUOWDep,
-        user_uow: UserUOWDep,
-        training_uow: TrainingUOWDep,
-        lesson_service: LessonServiceDep,
-        check_service: CheckServiceDep, 
-        current_user: TrainerDep
+async def create_check(
+    model: CreateCheckSchema,
+    lesson_uow: LessonUOWDep,
+    check_uow: CheckUOWDep,
+    user_uow: UserUOWDep,
+    training_uow: TrainingUOWDep,
+    lesson_service: LessonServiceDep,
+    check_service: CheckServiceDep, 
+    current_user: TrainerDep
 ):
     print('model')
     pprint(model)
