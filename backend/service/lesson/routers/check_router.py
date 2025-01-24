@@ -52,33 +52,10 @@ async def get_all_checks(
     return check
 
 
-    # filters = {}
-    
-    # async with uow:
-    #     checklists = await uow.repo.get_checks_by_filter(**filters)
-    #     print(f"Retrieved checklists: {checklists}")
-    #     pprint(jsonable_encoder(checklists))
-
-    # # Сериализуем данные
-    # serialized_checklists = jsonable_encoder(checklists)
-
-    # # Пагинация
-    # total_count = len(serialized_checklists)
-    # max_page_count = (total_count + per_page - 1) // per_page  # Вычисляем общее количество страниц
-    # paginated_checklists = serialized_checklists[(page - 1) * per_page : page * per_page]
-
-    # # Возвращаем данные
-    # return CheckViewSchemaForPage(
-    #     count_records=total_count,
-    #     page=page,
-    #     max_page_count=max_page_count,
-    #     records=paginated_checklists
-    # )
-
 @check_router.get(
     "/{check_id}",
     summary="Получение чек-листа по check_id",
-    # response_model=CheckSchemaForTable,
+    # response_model=CheckViewSchemaForPage,
     responses={
         200: {"description": "Успешная обработка данных"},
         401: {"description": "Не авторизованный пользователь"},
@@ -236,3 +213,4 @@ async def delete_check(
     await check_service.mark_check_as_deleted(uow, check_id)
 
     return {"message": "Чек-лист успешно удалён"}
+
