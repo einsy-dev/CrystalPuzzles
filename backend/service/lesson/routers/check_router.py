@@ -16,7 +16,7 @@ from service.lesson.schemas.lesson_schemas import MakeCheckList, GetCheckList
 
 # from service.identity.security import get_current_user
 # from service.lesson.repositories.lesson_repository import LessonRepository
-from service.lesson.schemas.check_schema import CheckSchemaForTable, CheckViewSchemaForPage, CreateCheckSchema, CreateCheckSchemaTest, TrainingCheckResponseSchema
+from service.lesson.schemas.check_schema import ChecSchemaId, CheckSimpleFilterSchema, CheckViewSchemaForPage, CreateCheckSchema
 
 from service.lesson.dependensies import LessonServiceDep, LessonUOWDep, LessonFilterDep, SpaceUOWDep, CheckUOWDep, MakeCheckListDep
 
@@ -38,24 +38,18 @@ check_router = APIRouter(
         500: {"model": Message, "description": "Серверная ошибка"}}
 )
 async def get_all_checks(
-    uow: CheckUOWDep, # Ещё один UOW для работы с репозиториями чек-листов.
+    uow: CheckUOWDep, 
     check_service: CheckServiceDep,    
     filters: CheckNoFilterSchemaDep,
     current_user: TrainerSupervisorAdminDep,
-):
-    
+):    
     check  = await check_service.get_all_check(uow, filters)
-    print(f'check')
-
-    print(f'check (router): {check}')
-
     return check
-
 
 @check_router.get(
     "/{check_id}",
     summary="Получение чек-листа по check_id",
-    # response_model=CheckViewSchemaForPage,
+    response_model=ChecSchemaId,
     responses={
         200: {"description": "Успешная обработка данных"},
         401: {"description": "Не авторизованный пользователь"},
@@ -68,8 +62,6 @@ async def get_check(
         check_service: CheckServiceDep,
         current_user: TrainerSupervisorAdminDep,
 ):
-    print(f'check_id: {check_id}')
-
     check  = await check_service.get_check_by_id(uow, check_id)
 
     if not check:
