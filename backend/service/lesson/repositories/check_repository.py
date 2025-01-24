@@ -1,4 +1,5 @@
 from datetime import datetime
+from pprint import pprint
 from fastapi import HTTPException
 import sqlalchemy as sa
 from sqlalchemy import insert, select, exists, delete
@@ -48,7 +49,10 @@ class CheckRepository(BaseRepository):
         count_records = await self._get_count_records(stmt)
         records = await self._get_records(count_records, stmt, filters)
         response = await self._convert_response(count_records, records, filters)
-        print(f'response: {response}')
+
+        for record in response['records']:
+            pprint(vars(record))
+
         return response
 
     async def get_by_filter(self, **kwargs):
@@ -108,6 +112,9 @@ class CheckRepository(BaseRepository):
         ).filter(self.model.id == check_id)
 
         result = await self.session.execute(stmt)
+        print(result)
+        pprint(result)
+
         return result.unique().scalar_one_or_none()
 
     # Добавление записи check в урок
