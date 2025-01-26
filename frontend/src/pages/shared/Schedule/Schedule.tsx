@@ -3,11 +3,12 @@ import { useSelector } from 'react-redux';
 import moment from 'moment';
 import { Page, Wrapper } from 'shared/ui';
 import { CalendarBlock } from 'features';
-import ScheduleItem from './ScheduleItem/ScheduleItem';
+import ScheduleItem from '../../../widgets/schedule/ScheduleItem/ScheduleItem';
 import { Lesson } from 'entities/lesson';
 import ScheduleRouteTo from 'shared/lib/scheduleRouteTo';
 import { selectProfile } from 'app/providers/store';
 import styles from './Schedule.module.scss';
+import Schedule from 'widgets/schedule/Schedule';
 
 interface SchedulePageProps {
 	title: string;
@@ -38,26 +39,7 @@ export default function SchedulePage({ link, title }: SchedulePageProps) {
 	return (
 		<Page title={title}>
 			<div className={styles.wrapper}>
-				<div className={styles.table}>
-					{data.length
-						? data
-								.sort((a: any, b: any) =>
-									moment(a.start).isSameOrAfter(b.start)
-								)
-								.map((item: any, index: number) => (
-									<ScheduleItem
-										data={item}
-										key={index}
-										link={
-											link
-												? link + item.id
-												: ScheduleRouteTo(item.status) + item.id
-										}
-										className={index === 0 ? styles.last : ''}
-									/>
-								))
-						: null}
-				</div>
+				<Schedule />
 				<Wrapper>
 					<CalendarBlock date={date} setDate={setDate} />
 				</Wrapper>

@@ -10,7 +10,7 @@ import { Modal } from 'shared/ui';
 import { getCurrentTrainer } from 'app/providers/store';
 import { getLessons } from 'app/providers/store/service/getLessons';
 import styles from './Table.module.scss';
-import { ScheduleModal } from 'widgets/scheduleModal/ui/ScheduleModal/ScheduleModal';
+import { ScheduleModal } from 'widgets/Table/scheduleModal/ui/ScheduleModal/ScheduleModal';
 
 interface TableProps {
 	className?: string;
