@@ -45,7 +45,6 @@
 
 	.logo {
 		display: flex;
-		// #{$assetsURL}/images/image-file-name.jpg
 		&::after {
 			content: url('#{$assets}/header/logo_title.svg');
 			margin-left: 10px;
