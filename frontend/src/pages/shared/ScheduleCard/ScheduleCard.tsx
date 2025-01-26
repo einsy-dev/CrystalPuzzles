@@ -15,7 +15,7 @@ import { ReactComponent as Pencil } from 'shared/assets/svg/pencil.svg';
 import { ReactComponent as CircleCloseIcon } from 'shared/assets/svg/circle-close.svg';
 import { ReactComponent as SaveIcon } from 'shared/assets/svg/circle-save.svg';
 import { getLessons } from 'app/providers/store/service/getLessons';
-import PlacesDropdown from 'features/placesDropdown/PlacesDropdown/PlacesDropdown';
+import PlacesDropdown from 'entities/place/ui/PlacesDropdown/PlacesDropdown';
 import { Lesson } from 'entities/lesson';
 import { type LessonI } from 'entities/lesson/api/lessonApi.interface';
 import 'react-time-picker/dist/TimePicker.css';

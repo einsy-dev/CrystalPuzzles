@@ -1,5 +1,6 @@
 import { ScheduleHeader } from 'features';
 
+//TODO: merge with the ScheduleHeader component
 export default function Header({ startDate, setStartDate }: any) {
 	const generateHeader = (): any => {
 		const endDate = startDate.clone().add(13, 'days');

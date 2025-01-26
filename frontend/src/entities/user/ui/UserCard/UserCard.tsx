@@ -1,5 +1,5 @@
 import { ReactNode, useState } from 'react';
-import Card from '../card/Card';
+import Card from './card/Card';
 import styles from './UserCard.module.scss';
 
 interface UserCardProps {

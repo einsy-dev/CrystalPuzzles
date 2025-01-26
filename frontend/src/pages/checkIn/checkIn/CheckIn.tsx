@@ -1,9 +1,9 @@
 import styles from './CheckIn.module.scss';
 import { FormEvent, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import Wrapper from './wrapper/Wrapper';
-import Input from './input/Input';
-import Password from './password/Password';
+import Wrapper from '../../shared/ui/page/CheckInPage/CheckInPage';
+import Input from '../../shared/ui/input/input/Input';
+import Password from '../../shared/ui/input/password/Password';
 import Politics from './policy/Policy';
 import { Button } from 'shared/ui';
 import { mapUserForm } from 'entities/profile';

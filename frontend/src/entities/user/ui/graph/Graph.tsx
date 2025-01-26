@@ -1,7 +1,7 @@
 import { ResponsiveLine } from '@nivo/line';
 import styles from './Graph.module.scss';
 import { Title } from 'shared/ui';
-
+// TODO: refactor
 const data = [
 	{
 		id: 'занятия с группой',

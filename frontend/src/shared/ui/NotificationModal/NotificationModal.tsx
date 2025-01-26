@@ -1,13 +1,14 @@
 import classNames from 'classnames';
 import { createPortal } from 'react-dom';
 import { useEffect } from 'react';
-import Title from '../../title/Title';
+import Title from '../title/Title';
 import envelopeIcon from 'shared/assets/svg/envelope.svg';
 import envelopeSecondIcon from 'shared/assets/svg/envelope-2.svg';
 import line from 'shared/assets/svg/wavy_line.svg';
 import styles from './NotificationModal.module.scss';
 
-export const NotificationModal = ({ onHide }: any) => {
+// TODO: Refactor this component to use the new text prop and interface
+export const NotificationModal = ({ onHide, text }: any) => {
 	useEffect(() => {
 		setTimeout(() => {
 			onHide();
@@ -43,7 +44,7 @@ export const NotificationModal = ({ onHide }: any) => {
 				/>
 			</div>
 			<Title tag="h2" className={styles.title}>
-				Комментарий отправлен
+				{text}
 			</Title>
 		</div>,
 		document.getElementById('portal') as HTMLElement

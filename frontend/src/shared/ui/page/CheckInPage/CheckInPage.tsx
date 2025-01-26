@@ -1,6 +1,7 @@
-import styles from './Wrapper.module.scss';
+import styles from './CheckInPage.module.scss';
 import { Header } from 'widgets';
-export default function Wrapper({ children }: any) {
+// Rename
+export default function CheckInPage({ children }: any) {
 	return (
 		<div className={styles.container}>
 			<Header check_in />
