@@ -1,9 +1,9 @@
 import styles from './Analytics.module.scss';
 import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { Card, UserCard, Page, Button } from '@shared/ui';
-import { CalendarButton } from '@features';
-import { serverUrl } from '@entities';
+import { Card, UserCard, Page, Button } from 'shared/ui';
+import { CalendarButton } from 'features';
+import { serverUrl } from 'entities';
 import joinName from 'entities/profile/assets/joinName';
 import moment from 'moment';
 

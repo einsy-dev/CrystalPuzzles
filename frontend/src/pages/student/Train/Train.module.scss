@@ -1,4 +1,4 @@
-@use '~styles/mixins' as *;
+@use 'app/styles/mixins' as *;
 .container {
 	display: grid;
 	grid-template-columns: 2fr max-content;

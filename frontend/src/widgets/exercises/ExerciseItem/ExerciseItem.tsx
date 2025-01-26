@@ -1,5 +1,5 @@
-import snowflake from '@shared/assets/svg/snowflake2.svg';
-import Checkbox from '@shared/ui/checkbox/Checkbox';
+import snowflake from 'shared/assets/svg/snowflake2.svg';
+import Checkbox from 'shared/ui/checkbox/Checkbox';
 import styles from './ExerciseItem.module.scss';
 
 interface ExerciseItemProps {

@@ -1,11 +1,11 @@
-import { SchedulePage } from '@pages/shared';
+import { SchedulePage } from 'pages/shared';
 import {
 	MainPage,
 	ExercisePage,
 	TrainPage,
 	SurveyPage,
 	RewardPage
-} from '@student';
+} from 'pages/student';
 import schedule from 'assets/sidebar/schedule.svg';
 import home from 'assets/sidebar/home.svg';
 import survey from 'assets/sidebar/survey.svg';

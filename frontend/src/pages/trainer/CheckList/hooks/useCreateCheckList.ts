@@ -1,4 +1,4 @@
-import { CheckList } from '@entities';
+import { CheckList } from 'entities';
 import { TrainingI } from 'entities/checklist/api/checkListApi.interface';
 import { FormEvent } from 'react';
 

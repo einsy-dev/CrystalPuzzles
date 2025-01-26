@@ -1,10 +1,10 @@
 import styles from './Progress.module.scss';
-import { Page, Button, UserCard } from '@shared/ui';
-import { CalendarButton } from '@features';
+import { Page, Button, UserCard } from 'shared/ui';
+import { CalendarButton } from 'features';
 import { Graph } from './graph/Graph';
 import { useLocation } from 'react-router-dom';
 import { useState } from 'react';
-import { serverUrl } from '@entities';
+import { serverUrl } from 'entities';
 import joinName from 'entities/profile/assets/joinName';
 
 interface ProgressPageProps {

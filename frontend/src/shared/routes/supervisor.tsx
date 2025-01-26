@@ -3,7 +3,7 @@ import {
 	NotificationPage,
 	ProfilePage,
 	UsersSearchPage
-} from '@pages/shared';
+} from 'pages/shared';
 import {
 	MainPage,
 	ProgressPage,
@@ -11,7 +11,7 @@ import {
 	EvaluationPage,
 	UsersListPage,
 	SchedulePage
-} from '@supervisor';
+} from 'pages/supervisor';
 import analytics from 'assets/sidebar/analytics.svg';
 import progress from 'assets/sidebar/progress.svg';
 import tables from 'assets/sidebar/tables.svg';

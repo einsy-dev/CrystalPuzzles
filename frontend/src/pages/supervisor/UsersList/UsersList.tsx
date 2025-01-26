@@ -1,7 +1,7 @@
-import { serverUrl } from '@entities';
-import { User } from '@entities';
-import { Page } from '@shared/ui';
-import { UserCard } from '@shared/ui/card';
+import { serverUrl } from 'entities';
+import { User } from 'entities';
+import { Page } from 'shared/ui';
+import { UserCard } from 'shared/ui/card';
 import joinName from 'entities/profile/assets/joinName';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';

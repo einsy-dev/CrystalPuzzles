@@ -1,8 +1,8 @@
 import styles from './NavMenu.module.scss';
 import { useEffect, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import { supervisorRouter, studentRouter, trainerRouter } from '@shared/routes';
-import { roleAdapter } from '@entities';
+import { supervisorRouter, studentRouter, trainerRouter } from 'shared/routes';
+import { roleAdapter } from 'entities';
 
 import { ReactComponent as Arrow } from 'assets/svg/arrow.svg';
 import home from 'assets/sidebar/home.svg';
