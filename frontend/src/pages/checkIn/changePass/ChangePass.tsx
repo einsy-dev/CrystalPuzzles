@@ -1,4 +1,4 @@
-import { mapUserForm } from 'entities';
+import { mapUserForm } from 'entities/profile';
 import { Button } from 'shared/ui';
 import Politics from '../policy/Policy';
 import Password from '../password/Password';

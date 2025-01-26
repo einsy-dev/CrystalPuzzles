@@ -6,7 +6,7 @@ import Input from './input/Input';
 import Password from './password/Password';
 import Politics from './policy/Policy';
 import { Button } from 'shared/ui';
-import { mapUserForm } from 'entities';
+import { mapUserForm } from 'entities/profile';
 import { Auth } from 'shared/api';
 import { useDispatch } from 'react-redux';
 import { selectProfile, setProfile } from 'app/providers/store';

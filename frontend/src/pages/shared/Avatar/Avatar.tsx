@@ -5,7 +5,7 @@ import { Button } from 'shared/ui';
 import { ReactComponent as UploadIcon } from 'shared/assets/svg/upload.svg';
 import { useSelector } from 'react-redux';
 import { selectProfile } from 'app/providers/store/profile';
-import { User } from 'entities';
+import { User } from 'entities/user';
 import avatar from 'shared/assets/avatar/0.png';
 import { Auth } from 'shared/api';
 

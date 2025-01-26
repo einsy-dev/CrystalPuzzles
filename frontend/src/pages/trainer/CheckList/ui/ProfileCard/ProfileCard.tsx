@@ -11,7 +11,9 @@ interface ProfileProps {
 export default function ProfileCard({ className }: ProfileProps) {
 	const user = useSelector(selectProfile);
 	const [userPhoto] = useState(
-		user.photo ? user.photo : require(`assets/avatar/${user.avatar || 0}.png`)
+		user.photo
+			? user.photo
+			: require(`shared/assets/avatar/${user.avatar || 0}.png`)
 	);
 
 	return (

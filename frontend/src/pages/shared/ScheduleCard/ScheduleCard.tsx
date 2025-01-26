@@ -5,8 +5,7 @@ import moment from 'moment';
 import {
 	deleteLesson,
 	getCurrentDate,
-	getCurrentTrainer,
-	updateLesson
+	getCurrentTrainer
 } from 'app/providers/store';
 import { Button, CustomTimePicker, Modal } from 'shared/ui';
 import joinName from 'entities/profile/assets/joinName';
@@ -17,7 +16,7 @@ import { ReactComponent as CircleCloseIcon } from 'shared/assets/svg/circle-clos
 import { ReactComponent as SaveIcon } from 'shared/assets/svg/circle-save.svg';
 import { getLessons } from 'app/providers/store/service/getLessons';
 import PlacesDropdown from 'features/placesDropdown/PlacesDropdown/PlacesDropdown';
-import { Lesson } from 'entities';
+import { Lesson } from 'entities/lesson';
 import { type LessonI } from 'entities/lesson/api/lessonApi.interface';
 import 'react-time-picker/dist/TimePicker.css';
 import styles from './ScheduleCard.module.scss';
@@ -46,12 +45,11 @@ export const ScheduleCard = ({ item, className }: ScheduleCardProps) => {
 	});
 
 	const handleUpdate = async () => {
-		const [updatedLesson, err] = await Lesson.update({ ...editLesson });
+		const [, err] = await Lesson.update({ ...editLesson });
 		if (err) {
 			setError('Не удалось обновить урок. Попробуйте ещё раз');
 			return;
 		}
-		dispatch(updateLesson(updatedLesson));
 		setIsEditing(false);
 		getLessons(trainer_id!, moment(currentDate));
 	};

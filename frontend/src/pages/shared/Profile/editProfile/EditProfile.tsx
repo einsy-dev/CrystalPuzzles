@@ -1,9 +1,9 @@
 import { Dispatch, FormEvent, SetStateAction, useState } from 'react';
 import { useSelector } from 'react-redux';
 import moment from 'moment';
-import { User } from 'entities';
+import { User } from 'entities/user';
 import { Button, Modal, Title } from 'shared/ui';
-import { mapUserForm } from 'entities';
+import { mapUserForm } from 'entities/profile';
 import joinName from 'entities/profile/assets/joinName';
 import UploadAvatar from './uploadAvatar/UploadAvatar';
 import { selectProfile } from 'app/providers/store';

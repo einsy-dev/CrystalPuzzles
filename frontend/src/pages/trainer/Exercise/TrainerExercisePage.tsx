@@ -4,10 +4,10 @@ import { useLoaderData } from 'react-router-dom';
 import { DateChanger, Feedback } from 'features';
 import { Button, DropdownButton, EmojiCard, Page, UserCard } from 'shared/ui';
 import { Exercises } from 'widgets';
-import { Lesson } from 'entities';
+import { Lesson } from 'entities/lesson';
 import joinName from 'entities/profile/assets/joinName';
 import avatar from 'shared/assets/avatar/0.png';
-import { serverUrl } from 'entities';
+import { serverUrl } from 'entities/profile';
 
 interface TrainerExercisePageProps {
 	title: string;

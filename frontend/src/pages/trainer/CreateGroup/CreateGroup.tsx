@@ -3,7 +3,7 @@ import { Page, Button } from 'shared/ui';
 import { useState } from 'react';
 import GroupName from './groupName/GroupName';
 import Search from './search/Search';
-import { Group } from 'entities';
+import { Group } from 'entities/group';
 import { useSelector } from 'react-redux';
 import { selectProfile } from 'app/providers/store/profile';
 import { useNavigate } from 'react-router-dom';

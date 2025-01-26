@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import moment from 'moment';
 import { useSelector } from 'react-redux';
-import { Lesson } from 'entities';
+import { Lesson } from 'entities/lesson';
 import { Button, CustomTimePicker } from 'shared/ui';
 import TrainersDropdown from 'features/trainersDropdown/TrainersDropdown';
 import PlacesDropdown from 'features/placesDropdown/PlacesDropdown/PlacesDropdown';

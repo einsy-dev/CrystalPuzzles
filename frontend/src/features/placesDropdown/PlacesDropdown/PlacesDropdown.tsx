@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { DropdownButton } from 'shared/ui';
-import { Place } from 'entities';
+import { Place } from 'entities/place';
 import { selectPlaces, setPlaces } from 'app/providers/store/app';
 import { useDispatch, useSelector } from 'react-redux';
 import { type PlaceI } from 'entities/place/api/placeApi.interface';

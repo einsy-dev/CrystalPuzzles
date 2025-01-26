@@ -5,7 +5,7 @@ import {
 	LoginParams,
 	RegisterParams
 } from './auth.interface';
-import { Profile } from 'entities';
+import { Profile } from 'entities/profile';
 import store from 'app/providers/store/store';
 import { setProfile } from 'app/providers/store';
 import { AxiosInstance, AxiosResponse } from 'axios';
